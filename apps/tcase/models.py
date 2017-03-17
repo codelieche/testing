@@ -23,6 +23,27 @@ class Case(models.Model):
         verbose_name_plural = verbose_name
 
 
+
+class Excute(models.Model):
+    """
+    测试用例执行Model
+    """
+    # name规范：测试用例版本N第n次执行
+    name = models.CharField(max_length=100, blank=True, verbose_name="执行名字")
+    # name也可以取case.name加个时间
+    code = models.ForeignKey(to="CaseCode", verbose_name="测试代码")
+    time_start = models.DateTimeField(blank=True, null=True, verbose_name="开始时间")
+    time_end = models.DateTimeField(blank=True, null=True, verbose_name="结束时间")
+
+    def __str__(self):
+        # return '{0}:测试结果'.format(self.code.case.name)
+        return self.name
+
+    class Meta:
+        verbose_name = "执行测试"
+        verbose_name_plural = "执行测试列表"
+
+
 @python_2_unicode_compatible
 class CaseCode(models.Model):
     """
