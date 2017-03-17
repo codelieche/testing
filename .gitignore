@@ -3,7 +3,7 @@
 
 .css.map
 *pyc
-.ide/**
+.idea/**
 .python-version
 
 migrations
