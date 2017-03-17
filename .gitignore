@@ -1,0 +1,15 @@
+.DS_modules
+.DS_Store
+
+.css.map
+*pyc
+.ide/**
+.python-version
+
+migrations
+__pycache__
+db.sqlite3
+
+
+
+

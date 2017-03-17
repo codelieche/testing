@@ -1,0 +1,2 @@
+locustio==0.8a2
+Django==1.10.5
