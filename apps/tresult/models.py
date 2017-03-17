@@ -11,11 +11,19 @@ from tcase.models import Execute
 
 
 @python_2_unicode_compatible
-class Result(models.Model):
+class Detail(models.Model):
     """
-    测试结果Model
+    测试结果详情Model
     """
+    STATE_CHOICES = (
+        ('running', "运行中"),
+        ("stoped", "停止中"),
+    )
     execute = models.ForeignKey(to=Execute, verbose_name="用例执行")
+    content = models.TextField(verbose_name="运行结果")
+    add_time = models.DateTimeField(verbose_name="时间")
+    state = models.CharField(max_length=10, choices=STATE_CHOICES,
+                             default='running', verbose_name="状态")
 
     def __str__(self):
         return '{0}:执行结果'.format(self.execute.name)
@@ -29,13 +37,25 @@ class Result(models.Model):
 class Summary(models.Model):
     """
     测试摘要Model
-    并发数、TPS(每秒吞吐量)、失败率、响应时间
+    并发数、RPS(每秒吞吐量)、失败率、响应时间
     """
-    execute = models.ForeignKey(to=Execute, verbose_name="用例执行")
-    user_num = models.IntegerField(default=0, verbose_name="并发用户数")
-    tps = models.IntegerField(default=0, verbose_name="每秒处理笔数")
-    per_fail = models.FloatField(default=0.0, verbose_name="失败率")
-    time = models.FloatField(default=0, verbose_name="响应时间")
+    STATE_CHOICES = (
+        ('running', "运行中"),
+        ("stoped", "停止中"),
+    )
+    execute = models.ForeignKey(to=Execute, blank=True, verbose_name="用例执行")
+    user_count = models.IntegerField(default=0, verbose_name="并发用户数")
+    total_rps = models.FloatField(default=0.0, verbose_name="每秒处理数量")
+    fail_ratio = models.FloatField(default=0.0, verbose_name="失败率")
+    time_min = models.FloatField(default=0, verbose_name="最快响应时间")
+    time_avg = models.FloatField(default=0, verbose_name="平均响应时间")
+    time_midian = models.FloatField(default=0, verbose_name="响应(中位数)")
+    time_max = models.FloatField(default=0, verbose_name="最慢响应时间")
+    num_requests = models.IntegerField(default=0, verbose_name="总共请求数")
+    num_failures = models.IntegerField(default=0, verbose_name="失败请求数")
+    state = models.CharField(choices=STATE_CHOICES, max_length=10,
+                             default='running', verbose_name="状态")
+
     add_time = models.DateTimeField(auto_now_add=True, verbose_name="添加时间")
 
     def __str__(self):
@@ -55,7 +75,7 @@ class StatsCSV(models.Model):
     """
     CSV_TYPE_CHOICES = (
             ('request', "请求统计"),
-            ('request', "响应统计"),
+            ('response', "响应统计"),
             ('exception', "异常统计"),
         )
     execute = models.ForeignKey(to=Execute, verbose_name="用例执行")
@@ -66,13 +86,9 @@ class StatsCSV(models.Model):
     add_time = models.DateTimeField(auto_now_add=True, verbose_name="添加时间")
 
     def __str__(self):
-        return self.csv_type
+        return '{0}_{1}'.format(self.execute.name, self.csv_type)
 
     class Meta:
         verbose_name = "执行结果统计"
         verbose_name_plural = verbose_name
-
-
-
-
 

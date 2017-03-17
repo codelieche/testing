@@ -57,7 +57,7 @@ class CaseCode(models.Model):
     add_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
 
     def __str__(self):
-        return '{0}:code_{1}'.format(self.case.nam, self.code_num)
+        return '{0}:code_{1}'.format(self.case.name, self.code_num)
 
     class Meta:
         verbose_name = "测试代码"

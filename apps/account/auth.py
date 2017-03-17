@@ -18,7 +18,7 @@ class CustomBackend(ModelBackend):
             # 用户有可能传入的是邮箱或者用户名
             # 用Q来让查询条件实现或的功能
             user = UserProfile.objects.get(
-                Q(username=username) | @(email=username)
+                Q(username=username) | Q(email=username)
             )
             if user.check_password(password):
                 return user

@@ -1,9 +1,11 @@
 # _*_ coding:utf-8 _*_
 import os
+import time
 import random
 
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
+
 
 class ImageStorage(FileSystemStorage):
     """
@@ -25,7 +27,7 @@ class ImageStorage(FileSystemStorage):
         # 定义文件名：年/月/日/分秒随机数
         file_name = time.strftime("%Y%m%H%M%S")
         # 加个0-100的随机数字，防止同时上传多个文件的时候重名
-        file_name = file_name + '_%d' % random.randint(0, 100)
+        file_name += '_%d' % random.randint(0, 100)
         # 合成文件名
         name = os.path.join(d, file_name + file_ext)
         # 调用父类方法
