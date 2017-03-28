@@ -1,4 +1,4 @@
-# _*_ coding:utf-8 _*_
+# -*- coding:utf-8 -*-
 """
 Django settings for webpts project.
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'account',
     'tcase',
     'tresult',

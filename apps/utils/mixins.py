@@ -1,4 +1,4 @@
-# _*_ coding:utf-8 _*_
+# -*- coding:utf-8 -*-
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt

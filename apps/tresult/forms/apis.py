@@ -1,4 +1,4 @@
-# _*_ coding:utf-8 _*_
+# -*- coding:utf-8 -*-
 
 """
 这个是api相关的form表单
@@ -7,6 +7,7 @@
 from django import forms
 
 from ..models import Summary
+
 
 class StatsCSVForm(forms.Form):
     """
