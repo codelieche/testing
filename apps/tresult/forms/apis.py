@@ -24,4 +24,4 @@ class SummaryForm(forms.ModelForm):
         model = Summary
         fields = ['execute', 'user_count', 'total_rps', 'fail_ratio',
                   'time_min', 'time_avg', 'time_midian', 'time_max',
-                  'num_requests', 'num_failures', 'state']
+                  'num_requests', 'num_failures', 'status']

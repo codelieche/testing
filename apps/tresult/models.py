@@ -15,15 +15,15 @@ class Detail(models.Model):
     """
     测试结果详情Model
     """
-    STATE_CHOICES = (
+    STATUS_CHOICES = (
         ('running', "运行中"),
-        ("stoped", "停止中"),
+        ("stoped", "停止"),
     )
     execute = models.ForeignKey(to=Execute, verbose_name="用例执行")
     content = models.TextField(verbose_name="运行结果")
     add_time = models.DateTimeField(verbose_name="时间")
-    state = models.CharField(max_length=10, choices=STATE_CHOICES,
-                             default='running', verbose_name="状态")
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES,
+                              default='running', verbose_name="状态")
 
     def __str__(self):
         return '{0}:执行结果'.format(self.execute.name)
@@ -39,9 +39,9 @@ class Summary(models.Model):
     测试摘要Model
     并发数、RPS(每秒吞吐量)、失败率、响应时间
     """
-    STATE_CHOICES = (
+    STATUS_CHOICES = (
         ('running', "运行中"),
-        ("stoped", "停止中"),
+        ("stoped", "停止"),
     )
     execute = models.ForeignKey(to=Execute, blank=True, verbose_name="用例执行")
     user_count = models.IntegerField(default=0, verbose_name="并发用户数")
@@ -53,8 +53,8 @@ class Summary(models.Model):
     time_max = models.FloatField(default=0, verbose_name="最慢响应时间")
     num_requests = models.IntegerField(default=0, verbose_name="总共请求数")
     num_failures = models.IntegerField(default=0, verbose_name="失败请求数")
-    state = models.CharField(choices=STATE_CHOICES, max_length=10,
-                             default='running', verbose_name="状态")
+    status = models.CharField(choices=STATUS_CHOICES, max_length=10,
+                              default='running', verbose_name="状态")
 
     add_time = models.DateTimeField(auto_now_add=True, verbose_name="添加时间")
 

@@ -1,12 +1,17 @@
 # -*- coding:utf-8 -*-
 """
 这个是收集测试结果数据的api
+已经废弃，使用rest_framwork代替
+# url(r'^stats/add/$', api.AddStatsView.as_view(), name="add_stats"),
+# 添加summary
+# url(r'^summary/add/$', api.AddSummaryView.as_view(), name="add_summary"),
 """
+
 
 from django.views.generic import View
 from django.http import JsonResponse
 
-from tresult.models import StatsCSV, Summary
+from tresult.models import StatsCSV
 from tresult.forms.apis import StatsCSVForm, SummaryForm
 from utils.mixins import CsrfExemptMixin
 
