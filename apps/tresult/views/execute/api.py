@@ -8,9 +8,9 @@ from rest_framework.response import Response
 
 from tcase.models import Execute
 
-from ..models import Detail, Summary, StatsCSV
-from ..serializers import DetailSerializer, StatsCSVSerializer
-from ..serializers import SummarySerializer
+from tresult.models import Detail, Summary, StatsCSV
+from tresult.serializers import DetailSerializer, StatsCSVSerializer
+from tresult.serializers import SummarySerializer
 
 
 @api_view(['GET', 'POST'])

@@ -19,7 +19,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # 测试结果api
-    url(r'^api/1.0/', include('tresult.urls.api',
-                              namespace="result:api")),
-    # 测试结果页展示
+    url(r'^api/1.0/', include('tresult.urls.api', namespace="api")),
+    # 首页
+    url(r'^', include('tcase.urls', namespace="tcase")),
 ]
