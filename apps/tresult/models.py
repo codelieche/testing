@@ -46,7 +46,7 @@ class Summary(models.Model):
     execute = models.ForeignKey(to=Execute, blank=True, verbose_name="用例执行")
     user_count = models.IntegerField(default=0, verbose_name="并发用户数")
     total_rps = models.FloatField(default=0.0, verbose_name="每秒处理数量")
-    fail_ratio = models.FloatField(default=0.0, verbose_name="失败率")
+    fail_ratio = models.FloatField(default=0.00, verbose_name="失败率")
     time_min = models.FloatField(default=0, verbose_name="最快响应时间")
     time_avg = models.FloatField(default=0, verbose_name="平均响应时间")
     time_midian = models.FloatField(default=0, verbose_name="响应(中位数)")
@@ -57,6 +57,15 @@ class Summary(models.Model):
                               default='running', verbose_name="状态")
 
     add_time = models.DateTimeField(auto_now_add=True, verbose_name="添加时间")
+
+    def save(self, *args, **kwargs):
+        """
+        对象保存前对float字段取2位数
+        :return:
+        """
+        # print(self.time_avg, 'time_avg', type(self.time_avg))
+        self.time_avg = float('%0.2f' % self.time_avg)
+        super(Summary, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.execute.name + ":summary"
