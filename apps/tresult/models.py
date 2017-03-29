@@ -64,7 +64,7 @@ class Summary(models.Model):
         :return:
         """
         # print(self.time_avg, 'time_avg', type(self.time_avg))
-        self.time_avg = float('%0.2f' % self.time_avg)
+        self.time_avg = round(self.time_avg, 2)
         super(Summary, self).save(*args, **kwargs)
 
     def __str__(self):
