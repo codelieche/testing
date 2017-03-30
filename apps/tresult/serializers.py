@@ -17,7 +17,10 @@ class DetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Detail
-        fields = ('id', 'execute', 'content', 'add_time', 'status')
+        # fields = ('id', 'execute', 'content', 'add_time', 'status')
+        fields = ('id', 'execute', 'user_count', 'time_avg', 'total_rps',
+                  'fail_ratio', 'num_requests', 'num_failures', 'add_time',
+                  'status')
 
 
 class SummarySerializer(serializers.ModelSerializer):

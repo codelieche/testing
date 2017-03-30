@@ -21,10 +21,16 @@ class Detail(models.Model):
         ("stoped", "停止"),
     )
     execute = models.ForeignKey(to=Execute, verbose_name="用例执行")
-    content = models.TextField(verbose_name="运行结果")
-    add_time = models.DateTimeField(verbose_name="时间")
+    # content = models.TextField(verbose_name="运行结果")
+    user_count = models.IntegerField(default=0, verbose_name="并发用户数")
+    time_avg = models.FloatField(default=0, verbose_name="响应时间")
+    total_rps = models.FloatField(default=0.0, verbose_name="每秒处理数")
+    fail_ratio = models.FloatField(default=0.00, verbose_name="失败率")
+    num_requests = models.IntegerField(default=0, verbose_name="总共请求数")
+    num_failures = models.IntegerField(default=0, verbose_name="失败请求数")
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,
                               default='running', verbose_name="状态")
+    add_time = models.DateTimeField(verbose_name="时间")
 
     def __str__(self):
         return '{0}:执行结果'.format(self.execute.name)
@@ -57,7 +63,7 @@ class Summary(models.Model):
     status = models.CharField(choices=STATUS_CHOICES, max_length=10,
                               default='running', verbose_name="状态")
 
-    add_time = models.DateTimeField(auto_now_add=True, verbose_name="添加时间")
+    add_time = models.DateTimeField(verbose_name="添加时间")
 
     def save(self, *args, **kwargs):
         """
@@ -93,7 +99,7 @@ class StatsCSV(models.Model):
                                 verbose_name="结果类型")
     # 统计内容是csv格式的，后面再做处理
     content = models.TextField(verbose_name="统计内容")
-    add_time = models.DateTimeField(auto_now_add=True, verbose_name="添加时间")
+    add_time = models.DateTimeField(verbose_name="添加时间")
 
     def __str__(self):
         return '{0}_{1}'.format(self.execute.name, self.csv_type)

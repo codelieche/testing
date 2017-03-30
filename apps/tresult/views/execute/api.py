@@ -39,6 +39,8 @@ def execute_detail(request, pk):
 
             return Response(detail_obj.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'POST'])
