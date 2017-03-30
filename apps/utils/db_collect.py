@@ -41,7 +41,7 @@ class CollectOperation(object):
         保存详细数据
         :return:
         """
-        print('add detail')
+        # print('add detail')
         if (datetime.now() - self.now).seconds < 5:
             # 如果现在的时间和self.now的差距小于5秒，就返回
             return
@@ -143,6 +143,29 @@ class CollectOperation(object):
             post_url = '{}api/1.0/execute/stats/add/'.format(self.host_target)
             response = requests.post(post_url, data)
             print("添加stats数据:{}:{}".format(csv_type, response.ok))
+
+    def add_log(self, log_type='info'):
+        """
+        添加log
+        :param log_type: 日志类型，默认info
+        :return:
+        """
+        url = self.host_locust + 'stats/requests'
+        # 先用requests获取数据
+        r = requests.get(url)
+        if r.ok:
+            data = {
+                'execute': self.execute,
+                'log_type': log_type,
+                'content': r.content,
+                'add_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            }
+            # 把数据post到服务器
+            post_url = '{}api/1.0/execute/log/add/'.format(self.host_target)
+            response = requests.post(post_url, data)
+            print('execute {} add log: {}'.format(self.execute, response.ok))
+        else:
+            print('execute {} add log: False'.format(self.execute))
 
     def trigger_start(self, locust_count=100, hatch_rate=1):
         """

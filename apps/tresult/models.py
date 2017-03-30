@@ -48,7 +48,7 @@ class Summary(models.Model):
     """
     STATUS_CHOICES = (
         ('running', "运行中"),
-        ("stoped", "停止"),
+        ("stopped", "停止"),
     )
     execute = models.ForeignKey(to=Execute, blank=True, verbose_name="用例执行")
     user_count = models.IntegerField(default=0, verbose_name="并发用户数")

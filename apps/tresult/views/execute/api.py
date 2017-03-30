@@ -67,6 +67,7 @@ def execute_summary(request, pk):
             summary_obj.save()
             return Response(summary_obj.data)
         else:
+            print(summary_obj.errors)
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -152,6 +153,7 @@ def execute_add_log(request):
             serializer.save()
             return Response({"status": "success"})
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
