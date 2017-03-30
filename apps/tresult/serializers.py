@@ -30,7 +30,7 @@ class SummarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Summary
         fields = ('id', 'execute', 'user_count', 'total_rps', 'fail_ratio',
-                  'time_min', 'time_avg', 'time_midian', 'time_max',
+                  'time_min', 'time_avg', 'time_median', 'time_max',
                   'num_requests', 'num_failures', 'status', 'add_time')
 
 

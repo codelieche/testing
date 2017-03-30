@@ -56,7 +56,7 @@ class Summary(models.Model):
     fail_ratio = models.FloatField(default=0.00, verbose_name="失败率")
     time_min = models.FloatField(default=0, verbose_name="最快响应时间")
     time_avg = models.FloatField(default=0, verbose_name="平均响应时间")
-    time_midian = models.FloatField(default=0, verbose_name="响应(中位数)")
+    time_median = models.FloatField(default=0, verbose_name="响应(中位数)")
     time_max = models.FloatField(default=0, verbose_name="最慢响应时间")
     num_requests = models.IntegerField(default=0, verbose_name="总共请求数")
     num_failures = models.IntegerField(default=0, verbose_name="失败请求数")
