@@ -15,6 +15,7 @@ class Detail(models.Model):
     """
     测试结果详情Model
     """
+    # TODO:详情model需要变更
     STATUS_CHOICES = (
         ('running', "运行中"),
         ("stoped", "停止"),
@@ -121,7 +122,7 @@ class Log(models.Model):
     content = models.TextField(verbose_name="日志内容")
     log_type = models.CharField(choices=TYPE_CHOICES, max_length=10,
                                 verbose_name="日志类型")
-    add_time = models.DateTimeField(auto_now_add=True, verbose_name="添加时间")
+    add_time = models.DateTimeField(verbose_name="添加时间")
 
     def __str__(self):
         return "{}:log:{}".format(self.execute.name, self.add_time)

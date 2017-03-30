@@ -2,7 +2,7 @@
 """
 rest_framework序列化模型
 """
-from .models import Detail, Summary, StatsCSV
+from .models import Detail, Summary, StatsCSV, Log
 
 from rest_framework import serializers
 
@@ -40,5 +40,10 @@ class StatsCSVSerializer(serializers.ModelSerializer):
         fields = ('id', 'execute', 'csv_type', 'content', 'add_time')
 
 
-
-
+class LogSerializer(serializers.ModelSerializer):
+    """
+    测试日志序列化模型
+    """
+    class Meta:
+        model = Log
+        fields = ('id', 'execute', 'log_type', 'content', 'add_time')

@@ -8,8 +8,9 @@ from rest_framework.response import Response
 
 from tcase.models import Execute
 
-from tresult.models import Detail, Summary, StatsCSV
-from tresult.serializers import DetailSerializer, StatsCSVSerializer
+from tresult.models import Detail, Summary, StatsCSV, Log
+from tresult.serializers import DetailSerializer, StatsCSVSerializer,\
+    LogSerializer
 from tresult.serializers import SummarySerializer
 
 
@@ -67,7 +68,6 @@ def execute_summary(request, pk):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-
 @api_view(['GET'])
 def execute_stats(request, pk, type_):
     """
@@ -103,5 +103,53 @@ def execute_add_stats(request):
             return Response(serializer.data, template_name=None)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def execute_log(request, pk):
+    """
+    获取request日志
+    :param request: request的GET可以传递type字段：info, start, end
+    :param pk: execute的id
+    :return:
+    """
+    # 先对pk进行判断是否存在execute
+    execute = get_object_or_404(Execute, pk=pk)
+    log_type = request.GET.get('type', '')
+    log_list = Log.objects.filter(execute=execute)
+    if log_type:
+        log_list = log_list.filter(log_type=log_type)
+        if log_type in ['info', 'error']:
+            # 如果log_type是info、error就返回列表
+            serializer = LogSerializer(log_list, many=True)
+            return Response(serializer.data)
+
+        elif log_type in ['start', 'stop']:
+            # 如果是 start 或者 stop就只返回一条
+            if log_list:
+                serializer = LogSerializer(log_list[0])
+                return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+    else:
+        # 没传入type的话 就返回全部的数据
+        serializer = LogSerializer(log_list, many=True)
+        return Response(serializer.data)
+
+
+@api_view(['POST'])
+def execute_add_log(request):
+    """
+    添加用例执行的日志信息
+    """
+    if request.method == 'POST':
+        serializer = LogSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"status": "success"})
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)

@@ -15,5 +15,9 @@ urlpatterns = [
     # 执行统计
     url(r'(?P<pk>\d+)/stats/(?P<type_>.*?)/$', api.execute_stats, name='stats'),
     # 添加执行统计
-    url(r'stats/add/$', api.execute_add_stats, name='add_stats'),
+    url(r'^stats/add/$', api.execute_add_stats, name='add_stats'),
+    # 获取日志
+    url(r'(?P<pk>\d+)/log/$', api.execute_log, name='log'),
+    # 添加日志
+    url(r'^log/add/$', api.execute_add_log, name='add_log'),
 ]
