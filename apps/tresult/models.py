@@ -101,3 +101,31 @@ class StatsCSV(models.Model):
         verbose_name = "执行结果统计"
         verbose_name_plural = verbose_name
 
+
+@python_2_unicode_compatible
+class Log(models.Model):
+    """
+    执行日志Model
+    记录 测试过程中的日志：添加并发用户数，错误日志啊
+    在数据收集脚本中设置，出错N次就停止测试
+    在性能测试过程中，我们需要对错误的日志进行记录
+    """
+    TYPE_CHOICES = (
+        ('start', "开始"),
+        ('info', "信息"),
+        ('error', "错误"),
+        ('stop', "停止")
+    )
+    # execute ： start、info、error、stop都需要记录
+    execute = models.ForeignKey(to=Execute, verbose_name="用例执行")
+    content = models.TextField(verbose_name="日志内容")
+    log_type = models.CharField(choices=TYPE_CHOICES, max_length=10,
+                                verbose_name="日志类型")
+    add_time = models.DateTimeField(auto_now_add=True, verbose_name="添加时间")
+
+    def __str__(self):
+        return "{}:log:{}".format(self.execute.name, self.add_time)
+
+    class Meta:
+        verbose_name = "执行日志"
+        verbose_name_plural = verbose_name
