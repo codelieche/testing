@@ -1,0 +1,24 @@
+Metadata-Version: 1.1
+Name: locustio
+Version: 0.8a2
+Summary: Website load testing framework
+Home-page: http://locust.io
+Author: Jonatan Heyman, Carl Bystrom, Joakim Hamrén, Hugo Heyman
+Author-email: UNKNOWN
+License: MIT
+Description: Locust is a python utility for doing easy, distributed load testing of a web site
+Platform: UNKNOWN
+Classifier: Topic :: Software Development :: Testing :: Traffic Generation
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
