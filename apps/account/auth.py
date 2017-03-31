@@ -8,6 +8,7 @@ from django.db.models import Q
 
 from .models import UserProfile
 
+
 class CustomBackend(ModelBackend):
     """
     自定义用户验证
@@ -25,4 +26,4 @@ class CustomBackend(ModelBackend):
             else:
                 return None
         except Exception as e:
-            return Nonepy
+            return None

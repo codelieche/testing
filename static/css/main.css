@@ -1,0 +1,413 @@
+@charset "UTF-8";
+body {
+  background-color: #eee;
+  font-size: 14px;
+  color: #555;
+  font: 14px/1.5 arial,pingfang,”Microsoft Yahei”,\\5B8B\4F53,”Hiragino Sans GB”,sans-serif; }
+
+.container {
+  margin: 0 auto;
+  max-width: 1320px;
+  position: relative; }
+
+a {
+  text-decoration: none;
+  color: #555; }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 0; }
+  ul li {
+    padding-left: 0; }
+
+.fl {
+  float: left; }
+
+.fr {
+  float: right; }
+
+.clear {
+  clear: both; }
+
+.clearfix:after {
+  content: '';
+  clear: both;
+  display: block;
+  height: 0;
+  visibility: hidden; }
+
+/* 按钮样式开始*/
+.btn {
+  display: inline-block;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 3px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent; }
+
+.btn-default {
+  color: #666;
+  background-color: #fff;
+  border-color: #C3C4C9; }
+  .btn-default:hover {
+    color: #333;
+    background-color: #adadad; }
+
+.btn-primary {
+  color: #fff;
+  background-color: #009dff;
+  border: none;
+  border-radius: 3px; }
+  .btn-primary:hover {
+    background-color: #286090;
+    border-color: #204d74; }
+
+/* 按钮样式end*/
+.circle {
+  position: relative;
+  top: -1px;
+  left: 0;
+  display: inline-block;
+  width: 8px;
+  margin-left: 4px; }
+  .circle:before {
+    content: 'o';
+    font-size: 16px;
+    font-weight: 600;
+    color: #666; }
+
+.container .sidebar-left {
+  position: fixed;
+  width: 190px;
+  z-index: 99;
+  background-color: #fff; }
+  .container .sidebar-left .logo {
+    width: 170px;
+    background-color: #4A90E2;
+    padding: 30px 10px; }
+    .container .sidebar-left .logo img {
+      width: 160px; }
+  .container .sidebar-left .nav {
+    font-size: 15px;
+    color: #666;
+    /*li end*/ }
+    .container .sidebar-left .nav li a {
+      padding-left: 20px;
+      font-size: 16px;
+      line-height: 40px;
+      color: #444;
+      display: block; }
+      .container .sidebar-left .nav li a:hover {
+        background-color: #eee;
+        border-left: solid 3px #4A90E2; }
+
+/*
+  这里只控制 .main区域内，content 和sidebar的比例，布局
+  而.main区域里面的内容样式，在其它文件中编写
+*/
+/* .main样式开始 */
+.container .main {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-flow: row;
+  /* 中间内容区域 开始 */
+  /* 中间内容区域 end*/
+  /* 最右边侧边栏 开始 */
+  /* 最右边侧边栏 end */ }
+  .container .main .content {
+    flex: 1;
+    margin-left: 190px;
+    padding: 20px 25px 0;
+    overflow: hidden;
+    min-height: 560px; }
+  .container .main .sidebar {
+    width: 300px;
+    padding-top: 20px;
+    padding-right: 5px;
+    min-height: 560px; }
+
+/* .main样式end */
+/* 响应式布局 */
+/* 屏幕最大是960px的时候右边栏不显示 */
+@media all and (max-width: 960px) {
+  .container .main {
+    width: 100%; }
+    .container .main .sidebar {
+      display: none; } }
+/* 屏幕小于760px的时候左边也不显示了*/
+@media all and (max-width: 760px) {
+  .container {
+    width: 100%;
+    /* 左边侧边栏设置不可见*/ }
+    .container .sidebar-left {
+      display: none; }
+    .container .main {
+      width: 100%; }
+      .container .main .content {
+        margin: 0 auto;
+        padding: 10px 10px 0; }
+      .container .main .sidebar {
+        display: none; }
+
+  /* 底部也不显示了 */
+  .footer {
+    display: none; } }
+/*
+  右边栏样式
+  主要是 面板样式的控制
+*/
+.container .main {
+  /* sidebar样式开始*/
+  /* sidebar样式end*/ }
+  .container .main .sidebar {
+    right: 0;
+    /* 面板panel样式开始 */
+    /* 面板panel样式end */ }
+    .container .main .sidebar .panel {
+      width: 300px;
+      background-color: #fff;
+      margin-bottom: 15px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      /* 面板header头部开始 */
+      /* 面板header头部end */
+      /* 面板inner内容样式开始*/
+      /* 面板inner内容样式end*/ }
+      .container .main .sidebar .panel .header {
+        color: #51585c;
+        -webkit-border-radius: 5px 5px 0 0;
+        -moz-border-radius: 5px 5px 0 0;
+        border-radius: 5px 5px 0 0;
+        padding: 10px 10px 10px 0;
+        font-size: 18px;
+        margin-left: 20px;
+        border-bottom: solid 1px #9B9B9B; }
+      .container .main .sidebar .panel .inner {
+        background-color: #fff;
+        padding: 10px; }
+
+/*
+  右边面板inner中不同样式编写
+*/
+.container .main .sidebar .panel {
+  /* 根据不同的面板内容，编写不同的样式 */
+  /* 不同面板inner样式开始*/
+  /* 不同面板inner样式end*/ }
+  .container .main .sidebar .panel .inner {
+    /* row样式开始*/
+    margin-left: 10px;
+    /* row样式end*/
+    /* 出错日志样式开始 */
+    /* 出错日志样式end */ }
+    .container .main .sidebar .panel .inner .row span {
+      display: inline-block;
+      font-size: 14px;
+      margin-bottom: 5px; }
+    .container .main .sidebar .panel .inner .row .config {
+      width: 70px;
+      text-align: inherit;
+      color: #999; }
+    .container .main .sidebar .panel .inner .row .config-value {
+      margin-left: 5px;
+      color: #666; }
+    .container .main .sidebar .panel .inner .row.errors {
+      margin-bottom: 5px;
+      /* 时间与count */
+      /* 状态样式 */ }
+      .container .main .sidebar .panel .inner .row.errors .time {
+        font-size: 13px;
+        color: #999; }
+        .container .main .sidebar .panel .inner .row.errors .time .count {
+          font-size: 16px;
+          color: #666;
+          font-weight: 500; }
+      .container .main .sidebar .panel .inner .row.errors .stats {
+        font-size: 13px;
+        border-left: 2px solid #999;
+        padding-left: 10px;
+        margin-left: 15px;
+        height: 24px;
+        color: #999;
+        border-bottom: 1px dashed #d4d4d4; }
+        .container .main .sidebar .panel .inner .row.errors .stats .number {
+          font-size: 16px;
+          font-weight: 500;
+          color: #666; }
+
+/*
+  测试报告摘要信息页面样式
+*/
+.container .main {
+  /* 报告摘要样式开始*/
+  /* 报告摘要样式end*/ }
+  .container .main .content .report {
+    background-color: #fff;
+    padding: 10px 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    /* 报告头部内容开始 */
+    /* 报告头部内容end */
+    /* 报告内容report-content区域样式开始 */
+    /* 报告内容report-content区域样式end */ }
+    .container .main .content .report .header {
+      border-bottom: 1px solid #979797;
+      /* 头部右边按钮样式开始*/
+      /* 头部右边按钮样式end*/ }
+      .container .main .content .report .header .controls {
+        margin-top: 15px; }
+        .container .main .content .report .header .controls a {
+          display: inline-block;
+          width: 80px; }
+        .container .main .content .report .header .controls .btn + .btn {
+          margin-left: 15px; }
+    .container .main .content .report .report-content {
+      width: 100%;
+      font-size: 15px;
+      line-height: 1.5;
+      margin-top: 10px;
+      margin-bottom: 10px; }
+
+/*报告摘要样式开始*/
+.container .main .content .report .summary .top-stats {
+  display: flex;
+  /* 统计信息box */
+  /* 统计信息box样式end */ }
+  .container .main .content .report .summary .top-stats .box {
+    flex: 1;
+    border: 1px solid #9B9B9B;
+    border-radius: 1px;
+    padding: 5px 10px;
+    /*统计信息样式*/
+    /* 统计的名字 */ }
+    .container .main .content .report .summary .top-stats .box .box-stats {
+      box-shadow: none;
+      display: block;
+      max-width: 100%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden; }
+      .container .main .content .report .summary .top-stats .box .box-stats .count {
+        line-height: 1em;
+        font-size: 2.5em; }
+      .container .main .content .report .summary .top-stats .box .box-stats .units {
+        color: #ababab;
+        font-size: 1.5em;
+        margin-left: 5px; }
+    .container .main .content .report .summary .top-stats .box .box-name {
+      color: #6f6f6f;
+      font-size: 1.1em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-top: 8px;
+      overflow: hidden; }
+  .container .main .content .report .summary .top-stats .box + .box {
+    margin-left: 10px; }
+  .container .main .content .report .summary .top-stats .users {
+    border-left: #43cb83 solid 4px;
+    color: #43cb83; }
+  .container .main .content .report .summary .top-stats .rps {
+    border-left: #f9b954 solid 4px;
+    color: #f9b954; }
+  .container .main .content .report .summary .top-stats .errors {
+    border-left: #f57846 solid 4px;
+    color: #f57846; }
+  .container .main .content .report .summary .top-stats .response {
+    border-left: #55bbe0 solid 4px;
+    color: #55bbe0; }
+
+/*报告摘要样式end*/
+/*
+  报告结果也的section样式：表单，图形等。
+*/
+.container .main .content .report .section {
+  margin-top: 20px;
+  margin-bottom: 15px;
+  width: 100%;
+  /* title样式 */
+  /* 统计表单样式开始 */
+  /* 统计表单样式end */
+  /* 图表展示样式开始*/
+  /* 图表展示样式end*/ }
+  .container .main .content .report .section .title {
+    font-size: 16px;
+    color: #666;
+    border-bottom: 1px solid #eeeeee; }
+  .container .main .content .report .section .inner {
+    padding-top: 15px; }
+  .container .main .content .report .section .echarts {
+    width: 100%;
+    height: 400px; }
+
+/* 统计结果表单样式开始 */
+.container .main .content .report .section .stats-table {
+  /* tbody样式开始 */
+  /* tbody样式end */ }
+  .container .main .content .report .section .stats-table table {
+    width: 100%;
+    border: 1px solid #eeeeee;
+    font-size: 14px;
+    border-spacing: 0;
+    /* thead样式开始 */
+    /* thead样式end */ }
+    .container .main .content .report .section .stats-table table tr {
+      width: 100%;
+      display: flex; }
+      .container .main .content .report .section .stats-table table tr td, .container .main .content .report .section .stats-table table tr th {
+        flex: 1;
+        overflow: hidden;
+        text-align: center; }
+      .container .main .content .report .section .stats-table table tr td.error {
+        background-color: #f9b954;
+        color: red; }
+    .container .main .content .report .section .stats-table table thead {
+      background-color: #E2E2E2; }
+      .container .main .content .report .section .stats-table table thead th {
+        font-weight: 500;
+        font-size: 14px;
+        color: #666; }
+      .container .main .content .report .section .stats-table table thead th span {
+        color: #999;
+        font-size: 11px;
+        font-weight: 400; }
+  .container .main .content .report .section .stats-table tbody tr {
+    font-weight: normal;
+    text-align: center;
+    color: #666;
+    line-height: 24px;
+    /* tr的第二个td 网址左对齐 */ }
+    .container .main .content .report .section .stats-table tbody tr:nth-child(2n) {
+      background-color: #EEE; }
+    .container .main .content .report .section .stats-table tbody tr:last-child {
+      background-color: #E2E2E2; }
+    .container .main .content .report .section .stats-table tbody tr:hover {
+      background-color: #999;
+      color: #fff; }
+    .container .main .content .report .section .stats-table tbody tr td:nth-child(2) {
+      text-align: left; }
+
+/* 统计结果表单样式end */
+/*
+  网站底部样式
+*/
+.footer {
+  margin-top: 20px;
+  text-align: center; }
+  .footer .copyright {
+    padding: 15px 0;
+    margin-top: 10px;
+    text-align: center;
+    line-height: 25px;
+    color: #999;
+    font-size: 13px; }
+    .footer .copyright a {
+      text-decoration: none;
+      color: #999; }
+
+footer {
+  width: 100%; }

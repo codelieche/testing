@@ -18,6 +18,8 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    # 用户相关的路由
+    url(r'^user/', include('account.urls', namespace='user')),
     # 测试结果api
     url(r'^api/1.0/', include('tresult.urls.api', namespace="api")),
     # 首页

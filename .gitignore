@@ -1,7 +1,9 @@
 .DS_modules
 .DS_Store
 
-.css.map
+*.css.map
+.sass-cache
+
 *pyc
 .idea/**
 .python-version
