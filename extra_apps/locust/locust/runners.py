@@ -176,6 +176,15 @@ class LocustRunner(object):
             else:
                 self.spawn_locusts(wait=wait)
 
+    def add_hatching(self, locust_count=None, hatch_rate=None, wait=False):
+        self.num_clients += locust_count
+        if locust_count > 0:
+            # 当传入的locust_count大于0的时候，增加并发用户数
+            self.spawn_locusts(spawn_count=locust_count)
+        elif locust_count < 0:
+            # 当传入的locust_count是个负数的时候，减少并发用户数
+            self.kill_locusts(kill_count=locust_count)
+
     def stop(self):
         # if we are currently hatching locusts we need to kill the hatching greenlet first
         if self.hatching_greenlet and not self.hatching_greenlet.ready():
@@ -204,6 +213,12 @@ class LocalLocustRunner(LocustRunner):
     def start_hatching(self, locust_count=None, hatch_rate=None, wait=False):
         self.hatching_greenlet = gevent.spawn(lambda: super(LocalLocustRunner, self).start_hatching(locust_count, hatch_rate, wait=wait))
         self.greenlet = self.hatching_greenlet
+
+    def add_hatching(self, locust_count=None, hatch_rate=None, wait=False):
+        # 添加并发用户数修改
+        self.hatching_greenlet = gevent.spawn(lambda: super(LocalLocustRunner, self).add_hatching(locust_count, hatch_rate, wait=wait))
+        self.greenlet = self.hatching_greenlet
+
 
 class DistributedLocustRunner(LocustRunner):
     def __init__(self, locust_classes, options):

@@ -55,6 +55,24 @@ def swarm():
     response.headers["Content-type"] = "application/json"
     return response
 
+
+@app.route('/swarm/add', methods=["POST"])
+def swarm_add():
+    """
+    由于在测试过程中，要逐步增加并发用户数，需要添加接口
+    同时还需要修改runners.py
+    :return:
+    """
+    assert request.method == "POST"
+
+    locust_count = int(request.form["locust_count"])
+    hatch_rate = float(request.form["hatch_rate"])
+    runners.locust_runner.add_hatching(locust_count, hatch_rate)
+    response = make_response(json.dumps({'success': True, 'message': 'Swarming add user number'}))
+    response.headers["Content-type"] = "application/json"
+    return response
+
+
 @app.route('/stop')
 def stop():
     runners.locust_runner.stop()
