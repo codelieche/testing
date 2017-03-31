@@ -5,7 +5,7 @@ locust性能测试脚本Demo
 import sys
 
 from locust import HttpLocust, TaskSet, task, events
-# from locust import runners
+from locust import runners
 
 from db_collect import CollectOperation
 from locust_events_ext import LocustEventsExt
@@ -27,11 +27,16 @@ class TestTaskSet(TaskSet):
 
     @task(10)
     def task_01(self):
-        self.client.get('/')
+        self.client.get('/', timeout=10)
+        l = runners.locust_runner
+        # print(l.stats)
+        # print(dir(l.stats))
+        # print(l.stats.max_requests)
 
     @task(5)
     def task_about(self):
-        self.client.get('/about.html')
+        self.client.get('/about.html', timeout=10)
+        self.client.get('/book', timeout=10)
 
 
 class PerformanceTesting(HttpLocust):

@@ -2,6 +2,7 @@
 """
 Locust性能测试事件拓展
 """
+from locust import runners
 
 
 class LocustEventsExt(object):
@@ -30,6 +31,7 @@ class LocustEventsExt(object):
         """
         self.operator.add_detail()
 
+
     def on_request_failure(self, request_type, name, response_time,
                            exception):
         """
@@ -37,7 +39,7 @@ class LocustEventsExt(object):
         :param request_type:
         :param name:
         :param response_time:
-        :param response_length:
+        :param exception:
         :return:
         """
         # 添加日志
