@@ -1,0 +1,114 @@
+@charset "UTF-8";
+/*
+  测试报告摘要信息页面样式
+*/
+
+.container .main {
+  /* 报告摘要样式开始*/
+  .content .report {
+    background-color: #fff;
+    padding: 10px 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    /* 报告头部内容开始 */
+    .header {
+      border-bottom: 1px solid #979797;
+      .title {
+
+      }
+
+      /* 头部右边按钮样式开始*/
+      .controls {
+        margin-top: 15px;
+        a {
+          display: inline-block;
+          width: 80px;
+        }
+        .btn + .btn {
+          margin-left: 15px;
+        }
+      }
+      /* 头部右边按钮样式end*/
+
+    }
+    /* 报告头部内容end */
+
+    /* 报告内容report-content区域样式开始 */
+    .report-content {
+      width: 100%;
+      font-size: 15px;
+      line-height: 1.5;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    /* 报告内容report-content区域样式end */
+
+  }
+  /* 报告摘要样式end*/
+}
+
+/*报告摘要样式开始*/
+.container .main .content .report {
+  .summary {
+    .top-stats {
+      display: flex;
+      /* 统计信息box */
+      .box {
+        flex: 1;
+        border: 1px solid #9B9B9B;
+        border-radius: 1px;
+        padding: 5px 10px;
+        /*统计信息样式*/
+        .box-stats {
+          box-shadow: none;
+          display: block;
+          max-width: 100%;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          .count {
+            line-height: 1em;
+            font-size: 2.5em;
+          }
+          .units {
+            color: #ababab;
+            font-size: 1.5em;
+            margin-left: 5px;
+          }
+        }
+        /* 统计的名字 */
+        .box-name {
+          color: #6f6f6f;
+          font-size: 1.1em;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          margin-top: 8px;
+          overflow: hidden;
+        }
+      }
+      .box + .box {
+        margin-left: 10px;
+      }
+      /* 统计信息box样式end */
+      .users {
+        border-left: #43cb83 solid 4px;
+        color: #43cb83;
+      }
+      .rps {
+        border-left: #f9b954 solid 4px;
+        color: #f9b954;
+      }
+      .errors {
+        border-left: #f57846 solid 4px;
+        color: #f57846;
+      }
+      .response {
+        border-left: #55bbe0 solid 4px;
+        color: #55bbe0;
+      }
+    }
+  }
+}
+/*报告摘要样式end*/
+
+//引入报告section样式
+@import "report-section";

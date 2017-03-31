@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+//定义颜色
+$logoColor: #4A90E2;
+$bodyBackgroundColor: #eee;
+
+
+body {
+  background-color: $bodyBackgroundColor;
+  font-size: 14px;
+  color: #555;
+  font: 14px/1.5 arial,pingfang,”Microsoft Yahei”,\\5B8B\4F53,”Hiragino Sans GB”,sans-serif;
+}
+
+.container{
+    margin: 0 auto;
+    max-width: 1320px;
+    position: relative;
+}
+
+//引入基本样式
+@import "scss/base";
+
+//引入左边栏样式
+@import "scss/sidebar-left";
+
+//引入 main区域：中间content,右边sidebar布局样式
+@import "scss/main_content_sidebar";
+
+//引入右边sidebar的样式
+@import "scss/sidebar";
+
+//引入报告内容样式
+@import "scss/report-content";
+
+//引入网站底部样式
+@import "scss/footer";

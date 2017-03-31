@@ -1,13 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}首页 | 性能测试{% endblock %}
+{% block  content %}
+
     <h1>This is <a href="{% url 'tcase:index' %}">index</a></h1>
     <a href="{% url 'api:execute:detail' 1 %}">execute 1的detail</a>
-    <a href="{% url 'user:login' %}">Login</a>
+    {% if request.user %}
+        <h2>
+            Hello {{ request.user.username }}
+            <a href="/user/logout/">Logout</a>
+        </h2>
 
-</body>
-</html>
+    {% else %}
+        <a href="{% url 'user:login' %}">Login</a>
+    {% endif %}
+
+{% endblock %}

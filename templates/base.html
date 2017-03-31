@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    {% load staticfiles %}
+	<head>
+		<meta charset="UTF-8">
+		<title>{% block title %}性能测试{% endblock %}</title>
+		<link rel="stylesheet" href="{% static 'css/main.css' %}" />
+		<script src="{% static 'js/echarts.min.js' %}"></script>
+        {% block custom_css %}
+        {% endblock %}
+	</head>
+	<body>
+		<div class="container">
+			<!--左边栏开始-->
+			<div class="sidebar-left">
+				<!--logo开始-->
+				<div class="logo">
+					<a href="/" title="性能测试">
+						<img src="{% static 'images/logo.svg' %}" alt="" />
+					</a>
+				</div>
+				<!--logo结束-->
+
+                {% block nav_left %}
+				<!--左边导航列表start-->
+				<ul class="nav">
+					<li><a href="">测试结果01</a></li>
+					<li><a href="">测试结果02</a></li>
+					<li><a href="">测试结果03</a></li>
+					<li><a href="">测试结果04</a></li>
+					<li><a href="">测试结果05</a></li>
+				</ul>
+				<!--左边导航列表end-->
+                {% endblock %}
+			</div>
+			<!--左边栏结束-->
+
+			<!--右边主内容区开始-->
+			<div class="main">
+				<!--中间content开始-->
+				<div class="content fl">
+					{% block content %}
+                    {% endblock %}
+				<!--右边sidebar开始-->
+				<div class="sidebar fr">
+					{% block sidebar_right %}
+
+                    {% endblock %}
+				</div>
+				<!--右边sidebar end-->
+			</div>
+			<!--右边主内容区end-->
+		</div>
+        </div>
+		<!--底部内容开始-->
+		<div class="footer">
+			<div class="copyright">
+				Copyright @ 2011-2016 www.codelieche.com all Rights Reserved
+				<br />
+				<a href="http://www.miibeian.gov.cn">粤ICP备xxxxxxxxx号</a>
+
+			</div>
+		</div>
+		<!--底部内容end-->
+
+	</body>
+
+	{% block custom_js %}
+    {% endblock %}
+</html>

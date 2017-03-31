@@ -1,0 +1,104 @@
+@charset "UTF-8";
+/*
+  报告结果也的section样式：表单，图形等。
+*/
+
+.container .main .content .report {
+  .section {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    width: 100%;
+    /* title样式 */
+    .title {
+      font-size: 16px;
+      color: #666;
+      border-bottom: 1px solid #eeeeee;
+    }
+    .inner {
+      padding-top: 15px;
+    }
+    /* 统计表单样式开始 */
+    .stats-table {
+
+    }
+    /* 统计表单样式end */
+
+    /* 图表展示样式开始*/
+    .echarts {
+      width: 100%;
+      height: 400px;
+      //text-overflow: ellipsis;
+    }
+    /* 图表展示样式end*/
+  }
+}
+
+/* 统计结果表单样式开始 */
+.container .main .content .report {
+  .section .stats-table{
+    table {
+      width: 100%;
+      border: 1px solid #eeeeee;
+      font-size: 14px;
+      border-spacing: 0;
+      // 设置tr为flex布局
+      //每个td th占一个单元
+      tr {
+        width: 100%;
+        display: flex;
+        //display: -webkit-flex;
+        td, th{
+          flex: 1;
+          overflow: hidden;
+          text-align: center;
+        }
+        td.error {
+          background-color: #f9b954;
+          color: red;
+        }
+      }
+
+      /* thead样式开始 */
+      thead {
+        background-color: #E2E2E2;
+        th {
+          font-weight: 500;
+          font-size: 14px;
+          color: #666;
+          //background-color: #eee;
+        }
+        th span {
+          color: #999;
+          font-size: 11px;
+          font-weight: 400;
+        }
+      }
+      /* thead样式end */
+    }
+    /* tbody样式开始 */
+    tbody tr{
+      font-weight: normal;
+      text-align: center;
+      &:nth-child(2n){
+        background-color: #EEE;
+      }
+      &:last-child {
+        background-color: #E2E2E2;
+      }
+      color: #666;
+      line-height: 24px;
+
+      &:hover {
+        background-color: #999;
+        color: #fff;
+      }
+
+      /* tr的第二个td 网址左对齐 */
+      td:nth-child(2){
+        text-align: left;
+      }
+    }
+    /* tbody样式end */
+  }
+}
+/* 统计结果表单样式end */

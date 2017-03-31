@@ -1,0 +1,106 @@
+@charset "UTF-8";
+/*
+  右边栏样式
+  主要是 面板样式的控制
+*/
+
+.container .main {
+  /* sidebar样式开始*/
+  .sidebar {
+    right: 0;
+    /* 面板panel样式开始 */
+    .panel {
+      width: 300px;
+      background-color: #fff;
+      margin-bottom: 15px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+
+      /* 面板header头部开始 */
+      .header {
+        color: #51585c;
+        -webkit-border-radius: 5px 5px 0 0;
+        -moz-border-radius: 5px 5px 0 0;
+        border-radius: 5px 5px 0 0;
+        padding: 10px 10px 10px 0;
+        font-size: 18px;
+        margin-left: 20px;
+        border-bottom: solid 1px #9B9B9B;
+      }
+      /* 面板header头部end */
+
+      /* 面板inner内容样式开始*/
+      .inner {
+        background-color: #fff;
+        padding: 10px;
+      }
+      /* 面板inner内容样式end*/
+
+    }
+    /* 面板panel样式end */
+  }
+  /* sidebar样式end*/
+}
+
+/*
+  右边面板inner中不同样式编写
+*/
+.container .main .sidebar .panel {
+  /* 根据不同的面板内容，编写不同的样式 */
+  /* 不同面板inner样式开始*/
+  .inner {
+    /* row样式开始*/
+    margin-left: 10px;
+    .row {
+      span {
+        display: inline-block;
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+      .config {
+        width: 70px;
+        text-align: inherit;
+        color: #999;
+      }
+      .config-value {
+        margin-left: 5px;
+        color: #666;
+      }
+    }
+    /* row样式end*/
+
+    /* 出错日志样式开始 */
+    .row.errors {
+        margin-bottom: 5px;
+        /* 时间与count */
+        .time {
+          font-size: 13px;
+          color: #999;
+          .count {
+            font-size: 16px;
+            color: #666;
+            font-weight: 500;
+          }
+        }
+        /* 状态样式 */
+        .stats {
+          font-size: 13px;
+          border-left: 2px solid #999;
+          padding-left: 10px;
+          margin-left: 15px;
+          //vertical-align: bottom;
+          height: 24px;
+          color: #999;
+          border-bottom: 1px dashed #d4d4d4;
+          .number {
+            font-size: 16px;
+            font-weight: 500;
+            color: #666;
+          }
+        }
+    }
+    /* 出错日志样式end */
+  }
+  /* 不同面板inner样式end*/
+}

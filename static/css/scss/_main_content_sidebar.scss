@@ -1,0 +1,74 @@
+@charset "UTF-8";
+/*
+  这里只控制 .main区域内，content 和sidebar的比例，布局
+  而.main区域里面的内容样式，在其它文件中编写
+*/
+
+/* .main样式开始 */
+.container .main {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-flow: row;
+
+  /* 中间内容区域 开始 */
+  .content {
+    flex: 1;
+    margin-left: 190px;
+    padding: 20px 25px 0;
+    overflow: hidden;
+    min-height: 560px;
+    //background-color: #fff;
+  }
+  /* 中间内容区域 end*/
+
+  /* 最右边侧边栏 开始 */
+  .sidebar {
+    width: 300px;
+    padding-top: 20px;
+    padding-right: 5px;
+    min-height: 560px;
+  }
+  /* 最右边侧边栏 end */
+}
+/* .main样式end */
+
+
+/* 响应式布局 */
+/* 屏幕最大是960px的时候右边栏不显示 */
+@media all and (max-width: 960px) {
+  .container {
+    .main {
+      width: 100%;
+      .sidebar {
+        display: none;
+      }
+    }
+  }
+}
+
+/* 屏幕小于760px的时候左边也不显示了*/
+@media all and (max-width: 760px) {
+  .container {
+    width: 100%;
+    /* 左边侧边栏设置不可见*/
+    .sidebar-left {
+      display: none;
+    }
+
+    .main {
+      width: 100%;
+      .content {
+        margin: 0 auto;
+        padding: 10px 10px 0;
+      }
+      .sidebar {
+        display: none;
+      }
+    }
+  }
+  /* 底部也不显示了 */
+  .footer {
+    display: none;
+  }
+}

@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+.container {
+  //左边栏样式
+  .sidebar-left {
+    position: fixed;
+    width: 190px;
+    z-index: 99;
+    background-color: #fff;
+  //  站点logo样式
+    .logo {
+      width: 170px;
+      background-color: $logoColor;
+      padding: 30px 10px;
+      img {
+        width: 160px;
+      }
+    }
+  //  logo样式end
+
+  //  导航样式开始
+    .nav {
+      font-size: 15px;
+      color: #666;
+      li {
+        a {
+          padding-left: 20px;
+          font-size: 16px;
+          line-height: 40px;
+          color: #444;
+          display: block;
+          &:hover {
+            background-color: $bodyBackgroundColor;
+            border-left: solid 3px $logoColor;
+          }
+        }
+      }
+      /*li end*/
+    }
+  //  导航样式end
+  }
+
+}
