@@ -39,7 +39,6 @@ class PerformanceTesting(HttpLocust):
     locust性能测试类
     """
     task_set = TestTaskSet
-    # host = "http://www.wodehappy.com"
     min_wait = 2000
     max_wait = 5000
 

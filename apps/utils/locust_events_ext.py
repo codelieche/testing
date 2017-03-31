@@ -31,7 +31,7 @@ class LocustEventsExt(object):
         self.operator.add_detail()
 
     def on_request_failure(self, request_type, name, response_time,
-                           response_length):
+                           exception):
         """
         当请求失败的时候触发
         :param request_type:
@@ -45,6 +45,7 @@ class LocustEventsExt(object):
         self.operator.add_detail()
         self.error_num += 1
         if self.error_num >= self.error_num_max:
+            print('已经出现错误{}次，将触发stop事件'.format(self.error_num))
             self.operator.trigger_stop()
 
     def on_request_stop(self):

@@ -15,7 +15,6 @@ class Detail(models.Model):
     """
     测试结果详情Model
     """
-    # TODO:详情model需要变更
     STATUS_CHOICES = (
         ('running', "运行中"),
         ("stoped", "停止"),
