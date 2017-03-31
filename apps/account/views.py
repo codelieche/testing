@@ -39,3 +39,12 @@ class LoginView(View):
             })
 
 
+class LogoutView(View):
+    """
+    用户退出
+    """
+    def get(self, request):
+        logout(request)
+        next_url = request.GET.get('next', '/')
+        return redirect(next_url)
+

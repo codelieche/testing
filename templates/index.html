@@ -4,14 +4,15 @@
 
     <h1>This is <a href="{% url 'tcase:index' %}">index</a></h1>
     <a href="{% url 'api:execute:detail' 1 %}">execute 1的detail</a>
-    {% if request.user %}
+    {% if request.user.is_authenticated %}
         <h2>
             Hello {{ request.user.username }}
             <a href="/user/logout/">Logout</a>
         </h2>
-
     {% else %}
-        <a href="{% url 'user:login' %}">Login</a>
+        <h2>
+            <a href="{% url 'user:login' %}">Login</a>
+        </h2>
     {% endif %}
 
 {% endblock %}

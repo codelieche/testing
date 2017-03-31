@@ -1,0 +1,417 @@
+{% extends 'base.html' %}
+{% block title %}测试结果 | 性能测试{% endblock %}
+{% load staticfiles %}
+
+{% block content %}
+    <!--报告内容开始-->
+    <div class="report">
+        <!--报告头部内容开始-->
+        <div class="header clearfix">
+            <!--标题和按钮-->
+            <div class="title fl">
+                <h2>性能测试报告标题</h2>
+            </div>
+            <div class="controls fr">
+                <a class="btn btn-default">删除</a>
+                <a class="btn btn-primary">重新运行</a>
+            </div>
+        </div>
+        <!--报告头部内容end-->
+
+        <!--报告内容区域开始-->
+        <div class="report-content">
+
+            <!--报告摘要开始-->
+            <div class="summary">
+                <div class="top-stats">
+
+                    <!--box并发用户数-->
+                    <div class="box users">
+                        <div class="box-stats">
+                            <span class="count">38</span>
+                            <span class="units">个</span>
+                        </div>
+                        <div class="box-name">
+                            并发用户数
+                        </div>
+                    </div>
+
+                    <!--box每秒吞吐量-->
+                    <div class="box rps">
+                        <div class="box-stats">
+                            <span class="count">70.8</span>
+                            <span class="units"></span>
+                        </div>
+                        <div class="box-name">
+                            rps
+                        </div>
+                    </div>
+
+                    <!--box失败率-->
+                    <div class="box errors">
+                        <div class="box-stats">
+                            <span class="count">0</span>
+                            <span class="units">%</span>
+                        </div>
+                        <div class="box-name">
+                            失败率
+                        </div>
+                    </div>
+
+                    <!--box响应时间-->
+                    <div class="box response">
+                        <div class="box-stats">
+                            <span class="count">567</span>
+                            <span class="units">ms</span>
+                        </div>
+                        <div class="box-name">
+                            响应时间
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--报告摘要end-->
+
+            <!--section:请求统计 开始-->
+            <div class="section">
+                <div class="title">
+                    <span class="pts-icon circle"></span>
+                    请求统计
+                </div>
+                <div class="stats-table inner">
+                    <table>
+                        <thead>
+                          <tr>
+                              <th>类型<br><span>(Type)</span></th>
+                              <th>网址<br><span>(Name)</span></th>
+                              <th>请求数<br><span>(Request)</span></th>
+                              <th>失败数<br><span>(Fails)</span></th>
+                              <th>中位数<br><span>(Median)</span></th>
+                              <th>平均数<br><span>(Avg)</span></th>
+                              <th>最快<br><span>(Min)</span></th>
+                              <th>最慢<br><span>(Max)</span></th>
+                              <th>页面大小<br><span>(Size)</span></th>
+                              <th>每秒响应<br><span>(Reqs/Sec)</span></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                              <td>GET</td>
+                              <td>/</td>
+                              <td>972</td>
+                              <td>0</td>
+                              <td>43</td>
+                              <td>44.88</td>
+                              <td>37</td>
+                              <td>142</td>
+                              <td>6140</td>
+                              <td>18.8</td>
+                          </tr>
+                          <tr>
+                              <td>GET</td>
+                              <td>/about.html</td>
+                              <td>496</td>
+                              <td class="error">10</td>
+                              <td>40</td>
+                              <td>42.28</td>
+                              <td>35</td>
+                              <td>285</td>
+                              <td>5304</td>
+                              <td>9.5</td>
+                          </tr>
+                          <tr>
+                              <td>GET</td>
+                              <td>/book</td>
+                              <td>497</td>
+                              <td>0</td>
+                              <td>41</td>
+                              <td>43.54</td>
+                              <td>36</td>
+                              <td>137</td>
+                              <td>1073</td>
+                              <td>9.6</td>
+                          </tr>
+                          <tr>
+                              <td> </td>
+                              <td>Total</td>
+                              <td>1965</td>
+                              <td>0</td>
+                              <td>41</td>
+                              <td>43.89</td>
+                              <td>35</td>
+                              <td>285</td>
+                              <td>4647</td>
+                              <td>37.9</td>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--section:请求统计 end-->
+
+            <!--section: 图表展示开始-->
+            <div class="section">
+                <div class="title">
+                    <span class="pts-icon circle"></span>
+                    图表展示
+                </div>
+                <div class="echarts inner" id="echarts"></div>
+            </div>
+            <!--section: 图表展示end-->
+
+        </div>
+        <!--报告内容区域end-->
+
+        <div class="clear"></div>
+    </div>
+    <!--报告内容end-->
+{% endblock %}
+
+{% block sidebar_right %}
+    <!--右边面板：结果预览 开始-->
+    <div class="panel">
+        <div class="header">
+            结果预览
+        </div>
+        <div class="inner">
+            <div class="row">
+                <span class="config">持续时长:</span>
+                <span class="config-value">10分46秒</span>
+            </div>
+            <div class="row">
+                <span class="config">开始时间:</span>
+                <span class="config-value">2017-03-20 08:30:26</span>
+            </div>
+            <div class="row">
+                <span class="config">结束时间:</span>
+                <span class="config-value">2017-03-20 08:41:12</span>
+            </div>
+            <div class="row">
+                <span class="config">http响应码:</span>
+                <span class="config-value">2XX</span>
+            </div>
+        </div>
+    </div>
+    <!--右边面板：结果预览 end-->
+
+    <!--右边出错日志开始-->
+    <div class="panel">
+        <div class="header">
+            出错日志
+        </div>
+        <div class="inner">
+            <div class="row errors">
+                <div class="time">
+                    第<span class="count">1</span>次出错:
+                    <span class="time">: 2017-3-20 08:40:30</span>
+                </div>
+                <div class="stats">
+                    并发用户数
+                    <span class="number">59</span>
+                    ,RPS为
+                    <span class="number">45.6</span>
+                </div>
+
+            </div>
+            <div class="row errors">
+                <div class="time">
+                    第<span class="count">2</span>次出错:
+                    <span class="time">: 2017-3-20 08:40:50</span>
+                </div>
+                <div class="stats">
+                    并发用户数
+                    <span class="number">59</span>
+                    ,RPS为
+                    <span class="number">45.6</span>
+                </div>
+
+            </div>
+            <div class="row errors">
+                <div class="time">
+                    第<span class="count">3</span>次出错:
+                    <span class="time">: 2017-3-20 08:46:50</span>
+                </div>
+                <div class="stats">
+                    并发用户数
+                    <span class="number">59</span>
+                    ,RPS为
+                    <span class="number">47.6</span>
+                </div>
+
+            </div>
+            <div class="row errors">
+                <div class="time">
+                    第<span class="count">4</span>次出错:
+                    <span class="time">: 2017-3-20 08:50:50</span>
+                </div>
+                <div class="stats">
+                    并发用户数
+                    <span class="number">70</span>
+                    ,RPS为
+                    <span class="number">49.6</span>
+                </div>
+
+            </div>
+            <div class="row errors">
+                <div class="time">
+                    第<span class="count">5</span>次出错:
+                    <span class="time">: 2017-3-20 08:50:50</span>
+                </div>
+                <div class="stats">
+                    并发用户数
+                    <span class="number">80</span>
+                    ,RPS为
+                    <span class="number">90.6</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--右边出错日志 end-->
+{% endblock %}
+
+{% block custom_js %}
+    <script src="{% static 'js/echarts.js' %}"></script>
+	<script>
+		// 基于准备好的dom，初始化echarts实例
+		var myChart = echarts.init(document.getElementById('echarts'));
+		var colors = ['#5793f3', '#d14a61', '#675bba'];
+
+		// 指定图表的配置项和数据
+		var option = {
+			color: colors,
+			title: {
+//				text: "性能测试图标展示"
+			},
+			grid: {
+				left: '7.5%',
+				right: '7.5%',
+			},
+			tooltip: {
+				trigger: 'axis',
+				formatter: function (params) {
+					// console.log(params);
+					var result = "时间:" + params[0].axisValue
+					for(var i = 0; i < params.length; i++){
+						result += "<br>" + params[i].seriesName + ":" + params[i].data;
+					}
+					return result;
+//					return ("时间:" + params[0].axisValue + "<br>" + params[0].seriesName + ":" + params[0].data +
+//					" <br>响应时间: "  + params[1].data + "(ms) <br>每秒响应数: "  + params[2].data);
+				},
+				axisPointer: {
+					animation: false
+				}
+			},
+			legend: {
+				data: ['并发用户数', "响应时间", "每秒响应数"]
+			},
+			xAxis: {
+				data: ["9:20:20", "9:21:20", "9:22:20", "9:23:20", "9:24:20", "9:25:20", "9:26:20"],
+				type: 'category',
+				name: '时间',
+				nameGap:20,
+				nameRotate: "-45",
+				splitLine: {
+					show: false,
+				},
+				min: "dataMin",
+			},
+			yAxis: [
+				{
+					type: 'value',
+					axisTick: {
+						alignWithLabel: true,
+					},
+					axisLine: {
+						onZero: false,
+						lineStyle: {
+//							color: colors[1]
+						}
+					},
+					axisLabel:{
+						textStyle: {
+//							color: colors[0]
+						}
+					},
+					name: '并发用户数/每秒响应数数(个)',
+					nameLocation: 'middle',
+					nameGap: 35,
+					nameTextStyle: {
+//						color: colors[0],
+						fontSize: 13,
+					},
+//					nameRotate:45,
+					data: [0, 10, 20, 30, 40, 50, 60, 70, 80],
+					// 不显示网格线
+					splitLine: {
+						show: false,
+					}
+				},
+				{
+					type: 'value',
+					axisTick: {
+						alignWithLabel: true,
+					},
+					axisLine: {
+						onZero: false,
+						lineStyle: {
+//							color: colors[2]
+						}
+					},
+					axisPointer: {
+						label: {
+							formatter: function(params) {
+								return '并发用户: ' + params.value + ': ' + params.seriesDate[0] + 'test';
+							}
+						}
+					},
+					name: "响应时间(ms)",
+					data: [0, 100, 200, 300, 400, 500, 600, 700, 800],
+					// 不显示网格线
+                  // splitLine: {
+                  //    show: false,
+                  //}
+				}
+			],
+			series: [{
+				name: "并发用户数",
+				type: 'line',
+				data: [5, 20, 36, 10, 10, 20, 70],
+				yAxisIndex:0
+			},
+				{
+					name: "响应时间",
+					type: "line",
+					data: [50,100,1500,200,190,400,950],
+					// 使用第二个y轴坐标
+					yAxisIndex:1
+				},
+				{
+					name: "每秒响应数",
+					type: "line",
+					data: [5,10,15,20,19,40,35],
+					yAxisIndex:0,
+					smooth:true,
+					symbol: 'none',
+					sampling: 'average',
+					// 画个区域
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: '#F8F8F8'
+							}, {
+								offset: 1,
+								color: '#eee'
+							}])
+						}
+					},
+				}
+			]
+		};
+
+		// 使用刚指定的配置项和数据显示图表
+		myChart.setOption(option);
+	</script>
+{% endblock %}

@@ -4,6 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>{% block title %}性能测试{% endblock %}</title>
+		<link rel="stylesheet" href="{% static 'css/normalize.css' %}" />
 		<link rel="stylesheet" href="{% static 'css/main.css' %}" />
 		<script src="{% static 'js/echarts.min.js' %}"></script>
         {% block custom_css %}
@@ -24,11 +25,11 @@
                 {% block nav_left %}
 				<!--左边导航列表start-->
 				<ul class="nav">
-					<li><a href="">测试结果01</a></li>
-					<li><a href="">测试结果02</a></li>
-					<li><a href="">测试结果03</a></li>
-					<li><a href="">测试结果04</a></li>
-					<li><a href="">测试结果05</a></li>
+					<li><a href="{% url 'result:report' 1 %}">测试结果01</a></li>
+					<li><a href="{% url 'result:report' 2 %}">测试结果02</a></li>
+					<li><a href="{% url 'result:report' 3 %}">测试结果03</a></li>
+					<li><a href="{% url 'result:report' 4 %}">测试结果04</a></li>
+					<li><a href="{% url 'result:report' 5 %}">测试结果05</a></li>
 				</ul>
 				<!--左边导航列表end-->
                 {% endblock %}
@@ -41,6 +42,7 @@
 				<div class="content fl">
 					{% block content %}
                     {% endblock %}
+                </div>
 				<!--右边sidebar开始-->
 				<div class="sidebar fr">
 					{% block sidebar_right %}

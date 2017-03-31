@@ -24,4 +24,6 @@ urlpatterns = [
     url(r'^api/1.0/', include('tresult.urls.api', namespace="api")),
     # 首页
     url(r'^', include('tcase.urls', namespace="tcase")),
+    # 测试结果tresult app路由
+    url(r'^', include('tresult.urls.result', namespace='result')),
 ]
