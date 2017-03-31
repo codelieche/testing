@@ -149,6 +149,7 @@ class CollectOperation(object):
         添加log
         :param log_type: 日志类型，默认info
         :return:
+        TODO: 当log_type是info的时候，需要传入内容，content而不是去获取requests内容
         """
         url = self.host_locust + 'stats/requests'
         # 先用requests获取数据
