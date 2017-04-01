@@ -38,6 +38,7 @@
 
 			<!--右边主内容区开始-->
 			<div class="main">
+                {% block main %}
 				<!--中间content开始-->
 				<div class="content fl">
 					{% block content %}
@@ -50,6 +51,7 @@
                     {% endblock %}
 				</div>
 				<!--右边sidebar end-->
+                {% endblock %}
 			</div>
 			<!--右边主内容区end-->
 		</div>
