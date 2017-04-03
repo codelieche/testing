@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.views.generic import View
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 from utils.mixins import CsrfExemptMixin
 from .models import Project
@@ -23,7 +24,11 @@ class ProjectListView(CsrfExemptMixin, View):
         # 关键字过滤
         keyword = request.GET.get('keyword', '')
         if keyword:
-            all_projects = all_projects.filter(name__icontains=keyword)
+            all_projects = all_projects.filter(
+                Q(name__icontains=keyword) |
+                Q(address__icontains=keyword) |
+                Q(name_en__icontains=keyword)
+            )
 
         # 对课程列表进行分页
         page_num = page
