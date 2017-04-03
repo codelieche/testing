@@ -360,6 +360,36 @@ ul {
     color: #c8cdd2; }
 
 /* 列表 page 样式end */
+/* list search 样式开始 */
+.content .list .header {
+  padding: 5px 10px;
+  border-bottom: 1px solid #979797; }
+  .content .list .header .title h2 {
+    display: inline-block;
+    font-size: 20px;
+    line-height: 38px;
+    font-weight: 500;
+    margin: 5px;
+    color: #555; }
+  .content .list .header .search {
+    display: inline-block;
+    width: 300px;
+    text-align: left;
+    margin-top: 10px; }
+    .content .list .header .search .input-search {
+      display: inline-block;
+      width: 200px;
+      height: 24px;
+      padding: 4px 5px;
+      font-size: 14px;
+      margin-right: 6px;
+      border: 1px solid #d4d4d4;
+      border-radius: 3px;
+      outline: none; }
+    .content .list .header .search .btn-search {
+      width: 75px; }
+
+/* list search 样式end */
 /*
   测试报告摘要信息页面样式
 */

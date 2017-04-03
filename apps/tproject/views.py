@@ -3,11 +3,12 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.core.paginator import Paginator
 
+from utils.mixins import CsrfExemptMixin
 from .models import Project
 # Create your views here.
 
 
-class ProjectListView(View):
+class ProjectListView(CsrfExemptMixin, View):
     """
     项目列表View
     """
@@ -18,21 +19,22 @@ class ProjectListView(View):
         :return:
         """
         all_projects = Project.objects.all()
+
+        # 关键字过滤
+        keyword = request.GET.get('keyword', '')
+        if keyword:
+            all_projects = all_projects.filter(name__icontains=keyword)
+
         # 对课程列表进行分页
-        # page_num = 1
-        # try:
-        #     page_num = int(request.GET.get('page', '1'))
-        #     print(page_num)
-        # except TypeError:
-        #     page_num = 1
         page_num = page
-        p = Paginator(all_projects, 20)
+        p = Paginator(all_projects, 10)
         projects = p.page(page_num)
 
         content = {
             'projects': projects,
             'page_num_list': range(1, p.num_pages + 1),
             'last_page': p.num_pages,
+            'keyword': keyword,
         }
 
         return render(request, 'project/list.html', content)
