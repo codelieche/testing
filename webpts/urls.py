@@ -16,8 +16,14 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from tproject.views import ProjectListView
+
 urlpatterns = [
+    # 首页
+    url(r'^$', ProjectListView.as_view(), name="index"),
     url(r'^admin/', admin.site.urls),
+    # 项目相关的路由
+    url(r'^project/', include('tproject.urls', namespace='project')),
     # 用户相关的路由
     url(r'^user/', include('account.urls', namespace='user')),
     # 测试结果api

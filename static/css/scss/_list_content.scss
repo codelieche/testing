@@ -1,0 +1,130 @@
+@charset "UTF-8";
+/*
+这个文件主要是编写，首页，项目列表的样式
+*/
+
+.main .content .list {
+  /* item样式开始 */
+  background-color: #fff;
+  //padding: 15px 10px;
+  .item {
+    padding: 10px;
+    border-bottom: 1px solid #E2E2E2;
+    &:hover {
+      background-color: #F8F8F8;
+    }
+    .item-info {
+      padding-left: 10px;
+      //float: right;
+      .title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 0;
+        margin-bottom: 5px;
+        line-height: 30px;
+        color: #555;
+      }
+      .meta {
+        font-size: 12px;
+        color: #999999;
+        margin-top: 5px;
+        .meta-item {
+          min-width: 90px;
+          display: inline-block;
+          margin-right: 10px;
+          span {
+            //margin-right: 5px;
+          }
+          .name {
+            margin-right: 2px;
+          }
+          .meta-content {
+            a {
+              color: #999999;
+            }
+          }
+        }
+        .meta-item + .meta-item {
+          margin-left: 10px;
+        }
+      }
+    }
+    .report-num {
+      width: 49px;
+      height: 49px;
+      border-radius: 27px;
+      border: 1px solid #d4d4d4;
+      text-align: center;
+      color: #666;
+      padding: 2px;
+      &:hover {
+        border-color: #9B9B9B;
+        box-shadow: 0 0 18px rgba(0,0,0,.08) inset;
+        background-color: #fff;
+        .num {
+          color: #444;
+        }
+      }
+      span {
+        display: block;
+        width: 49px;
+        text-align: center;
+      }
+      .num {
+        padding-top: 6px;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 20px;
+      }
+      .name {
+        font-size: 8px;
+        padding-left: 2px;
+        color: #888;
+        -webkit-transform-origin-x: 0;
+        -webkit-transform: scale(0.90);
+      }
+    }
+  }
+  /* item样式end */
+}
+
+/* 列表 page 样式开始 */
+.content .wrap .page {
+  margin: 25px 0 auto;
+  overflow: hidden;
+  clear: both;
+  text-align: center;
+  padding-bottom: 20px;
+  a {
+    margin: 0 8px;
+    color: #4d555d;
+    border-radius: 16px;
+    padding: 0 4px;
+    min-width: 24px;
+    line-height: 32px;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+
+    -webkit-transition: border-color .2s;
+    -moz-transition: border-color .2s;
+    transition: border-color .2s;
+
+  }
+  .page-tag {
+    &:hover {
+      background: #d9dde1;
+      color: #4d555d;
+      text-decoration: none;
+    }
+    &.active {
+      background: #4d555d;
+      color: #fff;
+    }
+  }
+  .page-disabled {
+    height: 32px;
+    color: #c8cdd2;
+  }
+}
+/* 列表 page 样式end */

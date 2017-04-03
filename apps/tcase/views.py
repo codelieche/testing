@@ -8,4 +8,4 @@ class IndexView(View):
     网站首页View
     """
     def get(self, request):
-        return render(request, 'index.html')
+        return render(request, 'project/list.html')

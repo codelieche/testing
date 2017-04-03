@@ -104,3 +104,32 @@
   }
   /* 不同面板inner样式end*/
 }
+
+/* sidebar inner list 样式开始 */
+.container .main .sidebar{
+
+  .inner .right-list{
+    padding-bottom: 10px;
+    li {
+      //margin-left: 10px;
+      padding-left: 0;
+      list-style: none;
+      a {
+        //padding: 5px 0;
+        display: block;
+        font-size: 15px;
+        line-height: 30px;
+        border-bottom: solid 1px #eeeeee;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        height: 30px;
+        width: 270px;
+        &:hover {
+          color: $logoColor;
+        }
+      }
+    }
+  }/* sidebar inner list 样式end */
+}
