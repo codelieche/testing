@@ -447,6 +447,13 @@ ul {
 
 /* 测试列表样式end*/
 /* 结果列表样式开始 */
+.container .main .content .project-detail .report-list .no-report {
+  padding: 50px;
+  text-align: center;
+  margin: 50px auto; }
+  .container .main .content .project-detail .report-list .no-report span {
+    display: inline-block;
+    color: #999; }
 .container .main .content .project-detail .report-list .item {
   box-sizing: border-box;
   margin-top: 10px;
@@ -572,7 +579,7 @@ ul {
 /*
   报告结果也的section样式：表单，图形等。
 */
-.container .main .content .report .section {
+.container .main .content .section {
   margin-top: 20px;
   margin-bottom: 15px;
   width: 100%;
@@ -581,13 +588,13 @@ ul {
   /* 统计表单样式end */
   /* 图表展示样式开始*/
   /* 图表展示样式end*/ }
-  .container .main .content .report .section .title {
+  .container .main .content .section .title {
     font-size: 16px;
     color: #666;
     border-bottom: 1px solid #eeeeee; }
-  .container .main .content .report .section .inner {
+  .container .main .content .section .inner {
     padding-top: 15px; }
-  .container .main .content .report .section .echarts {
+  .container .main .content .section .echarts {
     width: 100%;
     height: 400px; }
 

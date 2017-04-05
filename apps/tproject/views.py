@@ -51,6 +51,14 @@ class ProjectDetailView(View):
     """
     def get(self, request, pk):
         project = get_object_or_404(Project, pk=pk)
+
+        # 测试用例列表
+        all_case = []
+
+        # 测试结果列表
+        all_report = []
         return render(request, 'project/detail.html', {
             "project": project,
+            'all_case': all_case,
+            'all_report': all_report,
         })
