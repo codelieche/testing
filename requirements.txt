@@ -1,8 +1,12 @@
+celery==3.1.25
 Django==1.10.5
+django-celery==3.2.1
 django-filter==1.0.2
 django-python3-ldap==0.9.13
 djangorestframework==3.6.2
 locustio==0.8a2
 Markdown==2.6.8
 ldap3==1.4.0
+redis==2.10.5
+
 

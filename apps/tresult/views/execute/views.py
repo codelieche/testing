@@ -5,12 +5,15 @@
 from django.shortcuts import render
 from django.views.generic import View
 
+from tresult.tasks import hello
+
 
 class ReportView(View):
     """
     测试报告view
     """
     def get(self, request, pk):
+        hello.delay()
         content = {
 
         }

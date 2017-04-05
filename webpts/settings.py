@@ -143,3 +143,7 @@ AUTH_USER_MODEL = 'account.UserProfile'
 AUTHENTICATION_BACKENDS = (
         'account.auth.CustomBackend',
     )
+
+# 配置Broker
+BROKER_URL = 'redis://127.0.0.1:6379/0'
+BROKER_TRANSPORT = 'redis'
