@@ -2,6 +2,7 @@
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
+from tproject.models import Project
 from utils.storage import ImageStorage
 # Create your models here.
 
@@ -11,8 +12,12 @@ class Case(models.Model):
     """
     性能测试用例Model
     """
+    project = models.ForeignKey(to=Project, verbose_name="项目")
     name = models.CharField(max_length=100, verbose_name="测试用例")
-    code_num = models.IntegerField(default=0, verbose_name="代码版本")
+    desc = models.CharField(max_length=512, blank=True, verbose_name="描述")
+
+    # code主要是：get、post访问页面的函数
+    code = models.TextField(blank=True, null=True, verbose_name="测试代码")
     add_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
 
     def __str__(self):

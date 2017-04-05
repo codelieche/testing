@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="wrap list">
+        <div class="header clearfix">
+            <!--标题和按钮-->
+            <div class="title fl">
+                <h2>测试用例列表</h2>
+            </div>
+            <form action="{% url 'project:list' 1 %}" class="search fr" method="GET">
+                <input type="text"  name="keyword"  class="input-search"
+                       placeholder="搜索项目:name address" value="{{ keyword }}">
+                <button type="submit" class="btn-search btn btn-primary">提交</button>
+
+            </form>
+        </div>
+
+        {% for project in all_case %}
+            <!--item开始-->
+            <div class="item clearfix">
+                <div class="item-info fl">
+                    <a href="{% url 'project:detail' project.pk %}">
+                        <h2 class="title">{{ project.name }}</h2>
+                    </a>
+                    <div class="meta">
+                        <div class="meta-item">
+                            <span class="name">简称:</span>
+                            <span class="meta-content">{{ project.name_en }}</span>
+                        </div>
+                        {% if project.address and project.address != ':' and project.address != 'null' %}
+                        <div class="meta-item">
+                            <span class="name">测试地址:</span>
+                            <span class="meta-content">
+                                <a href="http://{{ project.address }}" target="_blank">
+                                    {{ project.address }}
+                                </a>
+                            </span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="report-num fr">
+                    <span class="num">5</span>
+                    <span class="name">Report</span>
+                </div>
+            </div>
+            <!--item end-->
+        {% endfor %}
+                <!--Page列表开始-->
+                <div class="page">
+                    {% if projects.has_previous %}
+                        <a href="{% url 'project:list' 1 %}{% if keyword %}?keyword={{ keyword }} {% endif %}" >首页</a>
+                        <a href="{% url 'project:list' projects.previous_page_number %}{% if keyword %}?keyword={{ keyword }} {% endif %}">上一页</a>
+                    {% else %}
+                         <a class="page-disabled">首页</a>
+                         <a class="page-disabled">下一页</a>
+                    {% endif %}
+
+                    {% for page in page_num_list %}
+                        {% ifequal page projects.number %}
+                            <a class="page-tag active" href="{% url 'project:list' page %}{% if keyword %}?keyword={{ keyword }} {% endif %}">
+                                {{ page }}
+                            </a>
+                        {% else %}
+                            <a class="page-tag" href="{% url 'project:list' page %}{% if keyword %}?keyword={{ keyword }} {% endif %}">
+                                {{ page }}
+                            </a>
+                        {% endifequal %}
+                    {% endfor %}
+
+                    {% if projects.has_next %}
+                        {% if keyword %}
+                            <a href="{% url 'project:list' projects.next_page_number %}?keyword={{ keyword }}" >下一页</a>
+                        {% else %}
+                             <a href="{% url 'project:list' projects.next_page_number %}" >下一页</a>
+                        {% endif %}
+                        <a href="{% url 'project:list' last_page %}" >尾页</a>
+                    {% else %}
+                         <a class="page-disabled">下一页</a>
+                         <a class="page-disabled">尾页</a>
+                    {% endif %}
+                </div>
+                <!--Page列表end-->
+            </div>
+{% endblock %}
+
+{% block sidebar_right %}
+    <div class="panel">
+                <div class="header">
+                    最新报告
+                </div>
+                <div class="inner">
+                    <div class="right-list">
+                        <ur>
+                            <li><a href="">报告1</a></li>
+                            <li><a href="">报告1</a></li>
+                            <li><a href="">报告1</a></li>
+                            <li><a href="">报告1</a></li>
+                        </ur>
+                    </div>
+                </div>
+            </div>
+{% endblock %}

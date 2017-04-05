@@ -16,7 +16,7 @@ app = Celery('webpts')
 BROKER_URL = 'redis://127.0.0.1:6379/0'
 BACKEND_URL = 'redis://127.0.0.1:6379/1'
 
-app = Celery('webpts',broker=BROKER_URL,backend=BACKEND_URL,)
+app = Celery('webpts', broker=BROKER_URL, backend=BACKEND_URL)
 '''
 
 app.config_from_object('django.conf:settings')
