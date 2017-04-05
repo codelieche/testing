@@ -19,6 +19,14 @@
     overflow: hidden;
     min-height: 560px;
     //background-color: #fff;
+    .wrap {
+      background-color: #fff;
+      //padding: 10px 15px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+    }
   }
   /* 中间内容区域 end*/
 

@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+
+{% block title %}项目详情 | 性能测试{% endblock %}
+
+
+{% block content %}
+    <div class="wrap project-detail">
+                <div class="header clearfix">
+                    <div class="title">
+                        <h2>{{ project.name }}</h2>
+                    </div>
+                </div>
+                <!--测试用例列表开始-->
+                <div class="section">
+                    <div class="title">
+                        <span class="pts-icon circle"></span>
+                        测试列表
+                    </div>
+                    <div class="case-list">
+                        <div class="add-case">
+                            <span>还没有任何测试用例</span>
+                            <span >
+                                <a href="" class="plus">+</a>
+                                一个
+                            </span>
+                        </div>
+
+                        <ol>
+                            <li class="clearfix">
+                                <a href="" class="case">测试用例01</a>
+                                <div class="buttons fr">
+                                    <a href="" class="btn btn-default">删除</a>
+                                    <a href="" class="btn btn-primary">执行测试</a>
+                                </div>
+
+                            </li>
+                            <li class="clearfix">
+                                <a href="" class="case">用例01</a>
+                                <div class="buttons fr">
+                                    <a href="" class="btn btn-default">删除</a>
+                                    <a href="" class="btn btn-primary">执行测试</a>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <a href="" class="case">用例01</a>
+                                <div class="buttons fr">
+                                    <a href="" class="btn btn-default">删除</a>
+                                    <a href="" class="btn btn-primary">执行测试</a>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!--测试用例列表end-->
+
+                <!--section 测试报告列表-->
+                <div class="section">
+                    <div class="title">
+                        <span class="pts-icon circle"></span>
+                        测试结果列表
+                    </div>
+                    <div class="report-list">
+                        <div class="item">
+                            <div class="title">
+                                测试报告20170405001
+                            </div>
+                            <div class="stats">
+                                <!--box并发用户数-->
+                                <div class="box users">
+                                    <div class="box-stats">
+                                        <span class="count">38</span>
+                                        <span class="units">个</span>
+                                    </div>
+                                    <div class="box-name">
+                                        并发用户数
+                                    </div>
+                                </div>
+
+                                <!--box每秒吞吐量-->
+                                <div class="box rps">
+                                    <div class="box-stats">
+                                        <span class="count">70.8</span>
+                                        <span class="units"></span>
+                                    </div>
+                                    <div class="box-name">
+                                        rps
+                                    </div>
+                                </div>
+
+                                <!--box失败率-->
+                                <div class="box errors">
+                                    <div class="box-stats">
+                                        <span class="count">0</span>
+                                        <span class="units">%</span>
+                                    </div>
+                                    <div class="box-name">
+                                        失败率
+                                    </div>
+                                </div>
+
+                                <!--box响应时间-->
+                                <div class="box response">
+                                    <div class="box-stats">
+                                        <span class="count">567</span>
+                                        <span class="units">ms</span>
+                                    </div>
+                                    <div class="box-name">
+                                        响应时间
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="title">
+                                测试报告20170405001
+                            </div>
+                            <div class="stats">
+                                <!--box并发用户数-->
+                                <div class="box users">
+                                    <div class="box-stats">
+                                        <span class="count">38</span>
+                                        <span class="units">个</span>
+                                    </div>
+                                    <div class="box-name">
+                                        并发用户数
+                                    </div>
+                                </div>
+
+                                <!--box每秒吞吐量-->
+                                <div class="box rps">
+                                    <div class="box-stats">
+                                        <span class="count">70.8</span>
+                                        <span class="units"></span>
+                                    </div>
+                                    <div class="box-name">
+                                        rps
+                                    </div>
+                                </div>
+
+                                <!--box失败率-->
+                                <div class="box errors">
+                                    <div class="box-stats">
+                                        <span class="count">0</span>
+                                        <span class="units">%</span>
+                                    </div>
+                                    <div class="box-name">
+                                        失败率
+                                    </div>
+                                </div>
+
+                                <!--box响应时间-->
+                                <div class="box response">
+                                    <div class="box-stats">
+                                        <span class="count">567</span>
+                                        <span class="units">ms</span>
+                                    </div>
+                                    <div class="box-name">
+                                        响应时间
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="title">
+                                测试报告20170405001
+                            </div>
+                            <div class="stats">
+                                <!--box并发用户数-->
+                                <div class="box users">
+                                    <div class="box-stats">
+                                        <span class="count">38</span>
+                                        <span class="units">个</span>
+                                    </div>
+                                    <div class="box-name">
+                                        并发用户数
+                                    </div>
+                                </div>
+
+                                <!--box每秒吞吐量-->
+                                <div class="box rps">
+                                    <div class="box-stats">
+                                        <span class="count">70.8</span>
+                                        <span class="units"></span>
+                                    </div>
+                                    <div class="box-name">
+                                        rps
+                                    </div>
+                                </div>
+
+                                <!--box失败率-->
+                                <div class="box errors">
+                                    <div class="box-stats">
+                                        <span class="count">0</span>
+                                        <span class="units">%</span>
+                                    </div>
+                                    <div class="box-name">
+                                        失败率
+                                    </div>
+                                </div>
+
+                                <!--box响应时间-->
+                                <div class="box response">
+                                    <div class="box-stats">
+                                        <span class="count">567</span>
+                                        <span class="units">ms</span>
+                                    </div>
+                                    <div class="box-name">
+                                        响应时间
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+{% endblock %}
+
+{% block sidebar_right %}
+     <div class="panel">
+        <div class="header">
+            项目信息
+        </div>
+        <div class="inner">
+            项目名字
+            <br>
+            生产环境地址
+            <br>
+            相关信息
+            <br>
+            项目Logo
+        </div>
+    </div>
+{% endblock %}

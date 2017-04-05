@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^list/$', views.ProjectListView.as_view()),
     url(r'^list/(?P<page>\d+?)/$', views.ProjectListView.as_view(),
         name='list'),
+    url(r'(?P<pk>\d+)/$', views.ProjectDetailView.as_view(), name='detail'),
 ]

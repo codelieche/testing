@@ -126,6 +126,12 @@ ul {
     padding: 20px 25px 0;
     overflow: hidden;
     min-height: 560px; }
+    .container .main .content .wrap {
+      background-color: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px; }
   .container .main .sidebar {
     width: 300px;
     padding-top: 20px;
@@ -363,6 +369,8 @@ ul {
 /* list search 样式开始 */
 .content .list .header {
   padding: 5px 10px;
+  margin: 0 10px;
+  /*list 没设置padding，这样header下边线左右空10px就设置个margin*/
   border-bottom: 1px solid #979797; }
   .content .list .header .title h2 {
     display: inline-block;
@@ -390,6 +398,96 @@ ul {
       width: 75px; }
 
 /* list search 样式end */
+/*
+这个文件主要编写，项目详情页面的相关样式
+*/
+.container .main .content .project-detail {
+  padding: 5px 10px;
+  /* 头部样式开始 */
+  /* 头部样式end */ }
+  .container .main .content .project-detail .header {
+    border-bottom: 1px solid #979797; }
+    .container .main .content .project-detail .header .title h2 {
+      display: inline-block;
+      font-size: 20px;
+      line-height: 38px;
+      font-weight: 500;
+      margin: 5px;
+      color: #555; }
+
+/* 测试列表样式开始*/
+.container .main .content .project-detail .case-list .add-case {
+  text-align: center;
+  padding: 50px;
+  position: relative; }
+  .container .main .content .project-detail .case-list .add-case span, .container .main .content .project-detail .case-list .add-case a {
+    display: inline-block;
+    color: #999; }
+  .container .main .content .project-detail .case-list .add-case .plus {
+    font-size: 60px;
+    color: #009dff;
+    margin: 0 5px;
+    position: relative;
+    top: 15px; }
+.container .main .content .project-detail .case-list ol li {
+  margin-bottom: 5px;
+  border-bottom: 1px dashed #d9d9d9; }
+  .container .main .content .project-detail .case-list ol li .case {
+    display: inline-block;
+    padding-top: 10px; }
+  .container .main .content .project-detail .case-list ol li .buttons {
+    padding-right: 10px; }
+    .container .main .content .project-detail .case-list ol li .buttons .btn {
+      font-size: 14px;
+      padding: 3px 5px;
+      margin-bottom: 5px;
+      width: 70px; }
+    .container .main .content .project-detail .case-list ol li .buttons .btn + .btn {
+      margin-left: 10px; }
+
+/* 测试列表样式end*/
+/* 结果列表样式开始 */
+.container .main .content .project-detail .report-list .item {
+  box-sizing: border-box;
+  margin-top: 10px;
+  padding-bottom: 5px; }
+  .container .main .content .project-detail .report-list .item .title {
+    font-size: 14px;
+    line-height: 20px;
+    color: #666;
+    padding: 5px;
+    border: none; }
+  .container .main .content .project-detail .report-list .item .stats {
+    width: 100%;
+    border: 1px solid #ababab;
+    display: flex; }
+    .container .main .content .project-detail .report-list .item .stats .box + .box {
+      border-left: 1px solid #9B9B9B; }
+    .container .main .content .project-detail .report-list .item .stats .box {
+      flex: 1;
+      border-radius: 1px;
+      padding: 2px 5px; }
+      .container .main .content .project-detail .report-list .item .stats .box .box-stats {
+        max-width: 100%;
+        display: block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden; }
+        .container .main .content .project-detail .report-list .item .stats .box .box-stats .count {
+          font-size: 16px; }
+        .container .main .content .project-detail .report-list .item .stats .box .box-stats .units {
+          font-size: 12px;
+          color: #ababab;
+          margin-left: 3px; }
+      .container .main .content .project-detail .report-list .item .stats .box .box-name {
+        color: #6f6f6f;
+        font-size: 14px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-top: 3px;
+        overflow: hidden; }
+
+/* 结果列表样式end */
 /*
   测试报告摘要信息页面样式
 */

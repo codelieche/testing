@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -43,3 +43,14 @@ class ProjectListView(CsrfExemptMixin, View):
         }
 
         return render(request, 'project/list.html', content)
+
+
+class ProjectDetailView(View):
+    """
+    项目详情页View
+    """
+    def get(self, request, pk):
+        project = get_object_or_404(Project, pk=pk)
+        return render(request, 'project/detail.html', {
+            "project": project,
+        })
