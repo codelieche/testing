@@ -26,10 +26,10 @@ urlpatterns = [
     url(r'^project/', include('tproject.urls', namespace='project')),
     # 用户相关的路由
     url(r'^user/', include('account.urls', namespace='user')),
-    # 测试结果api
-    url(r'^api/1.0/', include('tresult.urls.api', namespace="api")),
+    # 网站api
+    url(r'^api/1.0/', include('webpts.urls_api', namespace="api")),
     # 测试用例
-    url(r'^case/', include('tcase.urls', namespace="case")),
+    url(r'^case/', include('tcase.urls.urls', namespace="case")),
     # 测试结果tresult app路由
     url(r'^', include('tresult.urls.result', namespace='result')),
 ]
