@@ -34,8 +34,7 @@ print(sys.argv)
 try:
     locust_port = int(sys.argv[2].split('=')[1])
     # 模版文件中的execute_id存放一个常量，每次执行，要修改这个值
-    # execute_id = 'EXECUTE_ID_FOR_REPLACE'
-    execute_id = 2
+    execute_id = EXECUTE_ID_FOR_REPLACE
 except TypeError:
     print("locust port TypeError")
     sys.exit(-1)
@@ -60,11 +59,12 @@ events.locust_stop_hatching += events_ext_obj.on_request_stop
 '''
 
 
-def make_case_file(code_content, file_name):
+def make_case_file(code_content, file_name, execute_id):
     """
     创建测试用例代码文件
     :param code_content: 测试代码主体内容
     :param file_name: 测试代码文件名
+    :param execute_id: 执行测试的id，储存数据都需要用到这个id的
     :return:
     """
     case_file_name = file_name
@@ -83,6 +83,9 @@ def make_case_file(code_content, file_name):
     if os.path.exists(file_path):
         return False
     with open(file_path, 'w', encoding="UTF-8") as f:
+        # 先对file_tail的execute_id进行替换
+        code_content = code_content.replace('EXECUTE_ID_FOR_REPLACE',
+                                            str(execute_id))
         f.write(file_header)
         f.write(code_content)
         f.write('\n')
