@@ -7,8 +7,9 @@
 from datetime import datetime
 
 from django.shortcuts import get_object_or_404
-from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
+from django.http import JsonResponse
 from django.views.generic import View
+from django.core.exceptions import PermissionDenied
 
 from utils.mixins import CsrfExemptMixin
 from ..models import Case, Execute
@@ -84,3 +85,20 @@ class ExecuteUpdateStatus(CsrfExemptMixin, View):
             case.status = status
             case.save(update_fields=('status',))
         return JsonResponse({"sucess": True})
+
+
+class CaseDelete(CsrfExemptMixin, View):
+    """
+    删除CaseView
+    """
+    # 只有是超级用户才可以删除
+    def post(self, request):
+        if request.user.is_superuser:
+
+            case_id = request.POST.get('case', '')
+            case = get_object_or_404(Case, pk=case_id)
+            case.status = 'delete'
+            case.save()
+            return JsonResponse({'status': "success"})
+        else:
+            raise PermissionDenied()

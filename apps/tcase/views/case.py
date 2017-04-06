@@ -4,8 +4,11 @@ from datetime import datetime
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
-from django.conf import  settings
+from django.http import JsonResponse
+from django.conf import settings
+from django.core.exceptions import PermissionDenied
 
+from utils.mixins import CsrfExemptMixin
 from utils.make_case_file import make_case_file
 from ..models import Case, Execute
 # Create your views here.
@@ -64,8 +67,7 @@ class CaseExecuteView(View):
             execute = Execute.objects.get(pk=case.execute_id)
             if execute.status in ['created', 'ready', 'running']:
                 # 跳转到execute的报告页面
-                # TODO
-                pass
+                return redirect(to='/execute/%d/report/' % execute.pk)
             else:
                 # 如果不是运行中，那么就直接创建一个新的执行吧
                 need_create_execute = True
