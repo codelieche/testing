@@ -6,6 +6,7 @@ import sys
 
 from locust import HttpLocust, TaskSet, task, events
 from locust import runners
+import requests
 
 from db_collect import CollectOperation
 from locust_events_ext import LocustEventsExt
@@ -57,15 +58,25 @@ try:
     locust_port = int(sys.argv[2].split('=')[1])
     # 模版文件中的execute_id存放一个常量，每次执行，要修改这个值
     # execute_id = 'EXECUTE_ID_FOR_REPLACE'
-    execute_id = 2
+    # execute_id = 2
+
 except TypeError:
     print("locust port TypeError")
     sys.exit(-1)
 
-# 如果代码中execute_id 不是整数，也退出
-if not isinstance(execute_id, int):
-    print('execute id is not int')
-    sys.exit(-1)
+CASE_ID = 'CASE_ID_FOR_REPLACE'
+CASE_ID = 1
+# 需要根据case_id，查询到最近执行的execute_id
+get_execute_id_url = 'http://127.0.0.1:8000/api/1.0/case/%s/executeid/'\
+                     % CASE_ID
+execute_id = 0
+try:
+    response = requests.post(get_execute_id_url)
+    # 如果代码中execute_id 不是整数，也退出
+    execute_id = int(response.json()['execute_id'])
+except Exception as e:
+    print(e)
+    sys.exit(1)
 
 # 先实例化Collect
 operator = CollectOperation(execute=execute_id, host_locust="127.0.0.1",

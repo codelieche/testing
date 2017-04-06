@@ -14,12 +14,19 @@ class Case(models.Model):
     """
     # 状态选项，如果是running，就不创建新的执行
     STATUS_CHOICES = (
-        ('created', "已经创建"),
-        ('running', "执行中"),
+        ('created', "已创建"),
         ('ready', '准备就绪'),
+        ('running', "执行中"),
         ('failure', "有错误"),
-        ('success', "成功执行")
+        ('success', "成功执行"),
+        ('delete', "已删除")
     )
+    # 当测试用例刚保存，状态为created
+    # 创建好了case_id.py文件，修改状态为`ready`状态
+    # 当开始execute的同时，也修改case的状态为：running
+    # execute执行完毕，同时也修改Case的状态为：success / failure / stoped
+    # Case还可以删除， 待优化
+
     project = models.ForeignKey(to=Project, verbose_name="项目")
     name = models.CharField(max_length=100, verbose_name="测试用例")
     desc = models.CharField(max_length=512, blank=True, verbose_name="描述")
@@ -47,18 +54,24 @@ class Execute(models.Model):
     测试用例执行Model
     """
     STATUS_CHOICES = (
+        ('created', "已创建"),
         ('ready', "已准备"),
         ('running', "运行中"),
         ('failure', "失败"),
         ('success', "成功"),
         ('stoped', "已停止")
     )
+    # Case执行，先创建Execute，这个时候状态是created
+    # 进入执行，状态变为ready
+    # 开始执行，修改状态为：running
+    # locust触发了stop事件的时候，修改状态为：success / failure / stoped
+
     # name规范：测试用例版本N第n次执行
     name = models.CharField(max_length=100, blank=True, verbose_name="执行名字")
     case = models.ForeignKey(to=Case, verbose_name="测试用例")
     # 状态
     status = models.CharField(max_length=10, verbose_name="状态",
-                              default="ready")
+                              default="created")
     port = models.IntegerField(default=8089, verbose_name="locust端口号")
     time_start = models.DateTimeField(blank=True, null=True,
                                       verbose_name="开始时间")

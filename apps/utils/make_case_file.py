@@ -15,8 +15,10 @@ file_header = '''
 # -*- coding:utf-8 -*-
 import sys
 
+
 from locust import HttpLocust, TaskSet, task, events
 from locust import runners
+import requests
 
 from db_collect import CollectOperation
 from locust_events_ext import LocustEventsExt
@@ -34,15 +36,25 @@ print(sys.argv)
 try:
     locust_port = int(sys.argv[2].split('=')[1])
     # 模版文件中的execute_id存放一个常量，每次执行，要修改这个值
-    execute_id = EXECUTE_ID_FOR_REPLACE
+    # execute_id = 'EXECUTE_ID_FOR_REPLACE'
+    # execute_id = 2
+
 except TypeError:
     print("locust port TypeError")
     sys.exit(-1)
 
-# 如果代码中execute_id 不是整数，也退出
-if not isinstance(execute_id, int):
-    print('execute id is not int')
-    sys.exit(-1)
+CASE_ID = 'CASE_ID_FOR_REPLACE'
+# 需要根据case_id，查询到最近执行的execute_id
+get_execute_id_url = 'http://127.0.0.1:8000/api/1.0/case/%s/executeid/'\
+                     % CASE_ID
+execute_id = 0
+try:
+    response = requests.post(get_execute_id_url)
+    # 如果代码中execute_id 不是整数，也退出
+    execute_id = int(response.json()['execute_id'])
+except Exception as e:
+    print(e)
+    sys.exit(1)
 
 # 先实例化Collect
 operator = CollectOperation(execute=execute_id, host_locust="127.0.0.1",
@@ -59,12 +71,12 @@ events.locust_stop_hatching += events_ext_obj.on_request_stop
 '''
 
 
-def make_case_file(code_content, file_name, execute_id):
+def make_case_file(code_content, file_name, case_id):
     """
     创建测试用例代码文件
     :param code_content: 测试代码主体内容
     :param file_name: 测试代码文件名
-    :param execute_id: 执行测试的id，储存数据都需要用到这个id的
+    :param case_id: 测试用例的id，需要通过它获取最新的execute
     :return:
     """
     case_file_name = file_name
@@ -83,9 +95,9 @@ def make_case_file(code_content, file_name, execute_id):
     if os.path.exists(file_path):
         return False
     with open(file_path, 'w', encoding="UTF-8") as f:
-        # 先对file_tail的execute_id进行替换
-        code_content = code_content.replace('EXECUTE_ID_FOR_REPLACE',
-                                            str(execute_id))
+        # 先对file_tail的case_id进行替换
+        code_content = code_content.replace('CASE_ID_FOR_REPLACE',
+                                            str(case_id))
         f.write(file_header)
         f.write(code_content)
         f.write('\n')

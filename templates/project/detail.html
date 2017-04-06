@@ -24,7 +24,7 @@
                                         <a href="" class="case">测试用例01</a>
                                         <div class="buttons fr">
                                             <a href="" class="btn btn-default">删除</a>
-                                            <a href="" class="btn btn-primary">执行测试</a>
+                                            <a href="{% url 'case:execute'  case.pk %}" class="btn btn-primary">执行测试</a>
                                         </div>
                                     </li>
                                 {% endfor %}

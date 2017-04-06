@@ -5,6 +5,9 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 
 from utils.mixins import CsrfExemptMixin
+from tcase.models import Execute
+from tresult.models import Summary
+
 from .models import Project
 # Create your views here.
 
@@ -53,10 +56,13 @@ class ProjectDetailView(View):
         project = get_object_or_404(Project, pk=pk)
 
         # 测试用例列表
-        all_case = []
+        all_case = project.case_set.all()
 
         # 测试结果列表
-        all_report = []
+        # 获取all_case的id
+        all_execute = Execute.objects.filter(case__in=all_case)
+        all_execute_id = []
+        all_report = Summary.objects.filter(execute__in=all_execute)
         return render(request, 'project/detail.html', {
             "project": project,
             'all_case': all_case,
