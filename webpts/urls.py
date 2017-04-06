@@ -30,6 +30,6 @@ urlpatterns = [
     url(r'^api/1.0/', include('webpts.urls_api', namespace="api")),
     # 测试用例
     url(r'^case/', include('tcase.urls.case', namespace="case")),
-    # 测试结果tresult app路由
+    # execute相关的路由
     url(r'^execute/', include('tcase.urls.execute', namespace='execute')),
 ]
