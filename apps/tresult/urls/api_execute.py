@@ -4,6 +4,7 @@
 """
 from django.conf.urls import url
 
+from tcase.views.api import ExecuteUpdateStatus
 from tresult.views.execute import api
 
 urlpatterns = [
@@ -20,4 +21,9 @@ urlpatterns = [
     url(r'(?P<pk>\d+)/log/$', api.execute_log, name='log'),
     # 添加日志
     url(r'^log/add/$', api.execute_add_log, name='add_log'),
+
+    # 更新execute的状态
+    # http://127.0.0.1:8000/api/1.0/execute/6/update/status/
+    url(r'(?P<pk>\d+)/update/status/', ExecuteUpdateStatus.as_view(),
+        name='update_status')
 ]

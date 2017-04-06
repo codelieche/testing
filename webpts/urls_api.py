@@ -6,6 +6,6 @@ from django.conf.urls import url, include
 
 urlpatterns = [
     url(r'^execute/', include('tresult.urls.api_execute', namespace="execute")),
-    url(r'^case/', include('tcase.urls.api', namespace='case')),
+    url(r'^case/', include('tcase.urls.api_case', namespace='case')),
 
 ]

@@ -7,7 +7,7 @@
 from datetime import datetime
 
 from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
 from django.views.generic import View
 
 from utils.mixins import CsrfExemptMixin
@@ -30,13 +30,57 @@ class CaseExecute(CsrfExemptMixin, View):
     def post(self, request, pk):
         case = get_object_or_404(Case, pk=pk)
         # 判断是否存在execute id
+        need_create_execute = False
         if case.execute_id:
-            return JsonResponse({'execute_id': case.execute_id})
+            # 根据execute状态来判断这个execute是否可用
+            execute = Execute.objects.get(pk=case.execute_id)
+            if execute.status in ['failure', 'success', 'stoped']:
+                need_create_execute = True
         else:
+            need_create_execute = True
+
+        if need_create_execute:
             # 表示还没有execute_id
             # 那就创建一个返回
             execute_name = case.name + datetime.now().strftime("%Y%m%d%H%M%S")
             execute = Execute.objects.create(case=case, name=execute_name)
             case.execute_id = execute.id
+            # 新建了execute，把Case状态改成Ready
+            case.status = 'ready'
             case.save()
-            return JsonResponse({'execute_id': case.execute_id})
+        return JsonResponse({'execute_id': case.execute_id})
+
+
+class ExecuteUpdateStatus(CsrfExemptMixin, View):
+    """
+    更新Case的状态：
+    注意：这个view是在tresult.urls.api_execute中调用的
+    # 当测试用例刚保存，状态为created
+    # 创建好了case_id.py文件，修改状态为`ready`状态
+    # 当开始execute的同时，也修改case的状态为：running
+    # execute执行完毕，同时也修改Case的状态为：success / failure / stoped
+    # Case还可以删除， 待优化
+    """
+    def post(self, request, pk):
+        execute = get_object_or_404(Execute, pk=pk)
+        # 获取执行 对应的Case
+        case = execute.case
+        status = request.POST.get('status', '')
+        status_tuple = ('created', 'ready', 'running',
+                        'failure', 'success', 'stoped')
+        if status and status in status_tuple:
+            # TODO: 这里还要加点安全方面验证，不用登陆，比如每次POST传个密匙即可
+            execute.status = status
+            if status in ('running', 'stoped', 'failure', 'success'):
+                now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                if status == 'running':
+                    execute.time_start = now
+                else:
+                    execute.time_end = now
+            execute.save()
+
+        if status in ('running', 'failure', 'success', 'stoped'):
+            # 当状态是running、failure、success的时候，也需要更新下case的状态
+            case.status = status
+            case.save(update_fields=('status',))
+        return JsonResponse({"sucess": True})

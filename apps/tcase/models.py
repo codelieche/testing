@@ -19,10 +19,11 @@ class Case(models.Model):
         ('running', "执行中"),
         ('failure', "有错误"),
         ('success', "成功执行"),
+        ('stoped', '已停止'),
         ('delete', "已删除")
     )
     # 当测试用例刚保存，状态为created
-    # 创建好了case_id.py文件，修改状态为`ready`状态
+    # 创建好了case_id.py文件，修改状态为`ready`状态, 当新创建了execute也改成ready
     # 当开始execute的同时，也修改case的状态为：running
     # execute执行完毕，同时也修改Case的状态为：success / failure / stoped
     # Case还可以删除， 待优化
