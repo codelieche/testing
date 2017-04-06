@@ -29,7 +29,7 @@ urlpatterns = [
     # 网站api
     url(r'^api/1.0/', include('webpts.urls_api', namespace="api")),
     # 测试用例
-    url(r'^case/', include('tcase.urls.urls', namespace="case")),
+    url(r'^case/', include('tcase.urls.case', namespace="case")),
     # 测试结果tresult app路由
-    url(r'^', include('tresult.urls.result', namespace='result')),
+    url(r'^execute/', include('tcase.urls.execute', namespace='execute')),
 ]

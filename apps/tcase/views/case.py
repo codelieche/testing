@@ -67,7 +67,7 @@ class CaseExecuteView(View):
             execute = Execute.objects.get(pk=case.execute_id)
             if execute.status in ['created', 'ready', 'running']:
                 # 跳转到execute的报告页面
-                return redirect(to='/execute/%d/report/' % execute.pk)
+                return redirect(to='/execute/%d/' % execute.pk)
             else:
                 # 如果不是运行中，那么就直接创建一个新的执行吧
                 need_create_execute = True
@@ -82,6 +82,6 @@ class CaseExecuteView(View):
             case.execute_id = execute.id
             case.save()
         # 跳转去execute的页面
-        return redirect(to='/execute/%d/report/' % execute.pk)
+        return redirect(to='/execute/%d/' % execute.pk)
 
 

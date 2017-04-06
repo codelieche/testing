@@ -17,4 +17,4 @@ class ReportView(View):
         content = {
 
         }
-        return render(request, 'result/report.html', content)
+        return render(request, 'execute/report.html', content)
