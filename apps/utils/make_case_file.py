@@ -96,11 +96,11 @@ def make_case_file(code_content, file_name, case_id):
         return False
     with open(file_path, 'w', encoding="UTF-8") as f:
         # 先对file_tail的case_id进行替换
-        code_content = code_content.replace('CASE_ID_FOR_REPLACE',
+        file_tail_new = file_tail.replace('CASE_ID_FOR_REPLACE',
                                             str(case_id))
         f.write(file_header)
         f.write(code_content)
         f.write('\n')
-        f.write(file_tail)
+        f.write(file_tail_new)
         f.close()
         return True
