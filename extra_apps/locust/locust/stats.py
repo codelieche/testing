@@ -48,6 +48,7 @@ class RequestStats(object):
         """
         Go through all stats entries and reset them to zero
         """
+        return
         self.start_time = time.time()
         self.num_requests = 0
         self.num_failures = 0

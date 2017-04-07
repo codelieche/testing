@@ -31,4 +31,6 @@ def get_time_sub(time_start, time_end):
 
 @register.filter()
 def strf_time(value):
+    if not isinstance(value, datetime):
+        return ''
     return value.strftime('%Y-%m-%d %H:%M:%S')

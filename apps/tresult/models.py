@@ -73,6 +73,11 @@ class Summary(models.Model):
         self.time_avg = round(self.time_avg, 2)
         self.total_rps = round(self.total_rps, 2)
         self.fail_ratio = round(self.total_rps, 2)
+        if self.num_failures == 0:
+            self.fail_ratio = 0
+        else:
+            self.fail_ratio = round(
+                float(self.num_failures * 100) / self.num_requests, 4)
         super(Summary, self).save(*args, **kwargs)
 
     def __str__(self):

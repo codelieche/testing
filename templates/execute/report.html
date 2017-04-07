@@ -9,7 +9,7 @@
         <div class="header clearfix">
             <!--标题和按钮-->
             <div class="title fl">
-                <h2>Report：{{ execute.name }}</h2>
+                <h2>Report:{{ execute.name }}</h2>
             </div>
             <div class="controls fr">
 {#                <a class="btn btn-default">删除</a>#}
@@ -50,11 +50,11 @@
                     <!--box失败率-->
                     <div class="box errors">
                         <div class="box-stats">
-                            <span class="count">{{ summary.fail_ratio }}</span>
-                            <span class="units">%</span>
+                            <span class="count">{{ summary.num_failures }}</span>
+                            <span class="units">次</span>
                         </div>
                         <div class="box-name">
-                            失败率
+                            失败率:{{ summary.fail_ratio }}
                         </div>
                     </div>
 

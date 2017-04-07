@@ -52,19 +52,25 @@ class ReportView(View):
         # 获取request数据
         request_stats = StatsCSV.objects.filter(execute=execute,
                                                 csv_type='request').last()
-        stats_content = request_stats.content
-        stats_content = stats_content.replace('"', '')
-        stats_request_lines = [line for line in stats_content.split('\n')[1:]]
-        stats_request = [line.split(',') for line in stats_request_lines]
-        stats_request[-1][0] = ''
+        if request_stats:
+            stats_content = request_stats.content
+            stats_content = stats_content.replace('"', '')
+            stats_request_lines = [line for line in stats_content.split('\n')[1:]]
+            stats_request = [line.split(',') for line in stats_request_lines]
+            stats_request[-1][0] = ''
+        else:
+            stats_request = None
 
         # 获取response数据
         response_stats = StatsCSV.objects.filter(execute=execute,
                                                  csv_type='response').last()
-        response_content = response_stats.content
-        response_content = response_content.replace('"', '')
-        response_lines = [line for line in response_content.split('\n')[1:]]
-        stats_response = [line.split(',') for line in response_lines]
+        if response_stats:
+            response_content = response_stats.content
+            response_content = response_content.replace('"', '')
+            response_lines = [line for line in response_content.split('\n')[1:]]
+            stats_response = [line.split(',') for line in response_lines]
+        else:
+            stats_response = None
 
         content = {
             'execute': execute,

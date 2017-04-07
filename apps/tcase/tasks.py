@@ -9,6 +9,7 @@ from datetime import datetime
 
 import requests
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from celery import shared_task
 
 from .models import Execute
@@ -74,4 +75,61 @@ def run_execute(execute_id, host,
             pass
 
 
+@shared_task
+def post_locust_start(host, execute_id, locust_count=10, hatch_rate=1):
+    """
+    触发启动locust的api
+    :param host: Django服务的host, request.META['HTTP_HOST']
+    :param execute_id: execute的id
+    :return:
+    """
+    sleep(3)
+    post_url = 'http://{}{}'.format(host, reverse('api:execute:locust_start'))
+    post_data = {
+        'execute_id': execute_id,
+        'locust_count': locust_count,
+        'hatch_rate': hatch_rate
+    }
+    r = requests.post(post_url, post_data)
+    if not r.ok:
+        print(r)
 
+
+@shared_task
+def post_locust_stop(host, execute_id):
+    """
+    触发停止locust的api
+    :param host: Django服务的host, request.META['HTTP_HOST']
+    :param execute_id: execute的id
+    :return:
+    """
+    post_url = 'http://{}{}'.format(host, reverse('api:execute:locust_stop'))
+    post_data = {
+        'execute_id': execute_id,
+    }
+    r = requests.post(post_url, post_data)
+    if not r.ok:
+        print(r)
+
+
+@shared_task
+def post_locust_user_add(host, execute_id, locust_count=5, hatch_rate=1):
+    """
+    触发添加并发用户数locust的api
+    :param host: Django服务的host, request.META['HTTP_HOST']
+    :param execute_id: execute的id
+    :param locust_count: 增加的用户数
+    :return:
+    """
+    ok = True
+    while ok:
+        sleep(10)
+        user_add_url = reverse('api:execute:locust_user_add')
+        post_url = 'http://{}{}'.format(host, user_add_url)
+        post_data = {
+            'execute_id': execute_id,
+            'locust_count': locust_count,
+            'hatch_rate': hatch_rate
+        }
+        r = requests.post(post_url, post_data)
+        ok = r.ok

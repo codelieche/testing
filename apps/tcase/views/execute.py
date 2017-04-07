@@ -8,7 +8,8 @@ from django.core.urlresolvers import reverse
 
 from tresult.views.execute.views import ReportView
 from ..models import Execute
-from ..tasks import run_execute
+from ..tasks import run_execute, post_locust_start, post_locust_user_add, \
+    post_locust_stop
 
 
 class ExecuteView(View):
@@ -41,19 +42,25 @@ class ExecuteRunningView(View):
     def get(self, request, pk):
         execute = get_object_or_404(Execute, pk=pk)
         # 如果execute的状态不是running那么就跳转去report页面
-        print(execute.status)
+        # print(execute.status)
         if execute.status in ['stoped', 'failure', 'success']:
             return redirect(reverse('execute:report', args=[pk]))
         elif execute.status in ['created', 'ready']:
             # 如果状态是created、ready。需要启动下后台的locust服务
             run_execute.delay(execute_id=execute.id,
-                              host='http://www.wodehappy.com')
+                              host='http://{}'.format(
+                                  execute.case.project.address))
             # 在这个异步的run_execute函数中，做了4件事情
             # 1、寻找可以用的端口号，启动脚本
             # 2、点击开始执行
             # 3、逐步的添加并发用户数，直到失败，或者直到指定时间
             # 4、try catch finaly  最后判断execute 如果还是running就停止locust脚本
             # TODO：等待编码
+            post_locust_start.delay(host=request.META['HTTP_HOST'],
+                                    execute_id=pk)
+            # 不断的增加并发用户数
+            post_locust_user_add.delay(host=request.META['HTTP_HOST'],
+                                       execute_id=pk)
         content = {
             'execute': execute,
         }
