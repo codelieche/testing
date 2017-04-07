@@ -5,6 +5,7 @@ Celery异步任务
 import os
 import subprocess
 from time import sleep
+from datetime import datetime
 
 import requests
 from django.conf import settings
@@ -61,6 +62,7 @@ def run_execute(execute_id, host,
                                                               case_file_path,
                                                               port, host)
         execute.status = 'running'
+        execute.time_start = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         execute.save()
         try:
             result = subprocess.getstatusoutput(cmd)

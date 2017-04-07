@@ -60,7 +60,8 @@ class ProjectDetailView(View):
 
         # 测试结果列表
         # 获取all_case的id
-        all_execute = Execute.objects.filter(case__in=all_case)
+        all_execute = Execute.objects.filter(case__in=all_case,
+                                             status__in=['stoped', 'sucess'])
         all_execute_id = []
         all_report = Summary.objects.filter(execute__in=all_execute)
         return render(request, 'project/detail.html', {

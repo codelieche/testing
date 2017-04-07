@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+from datetime import datetime
 
 from django.shortcuts import get_object_or_404
 
@@ -149,6 +150,14 @@ def execute_add_log(request):
     """
     if request.method == 'POST':
         serializer = LogSerializer(data=request.data)
+        log_type = request.POST.get('log_type', '')
+        if log_type == 'stop':
+            execute_id = request.POST.get('execute', '')
+            if execute_id:
+                execute = Execute.objects.get(pk=execute_id)
+                execute.status = 'stoped'
+                execute.time_end = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                execute.save()
         if serializer.is_valid():
             serializer.save()
             return Response({"status": "success"})

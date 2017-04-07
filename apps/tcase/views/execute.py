@@ -54,4 +54,7 @@ class ExecuteRunningView(View):
             # 3、逐步的添加并发用户数，直到失败，或者直到指定时间
             # 4、try catch finaly  最后判断execute 如果还是running就停止locust脚本
             # TODO：等待编码
-        return render(request, 'execute/running.html')
+        content = {
+            'execute': execute,
+        }
+        return render(request, 'execute/running.html', content)

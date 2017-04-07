@@ -15,23 +15,23 @@
             </form>
         </div>
 
-        {% for project in all_case %}
+        {% for case in all_case %}
             <!--item开始-->
             <div class="item clearfix">
                 <div class="item-info fl">
-                    <a href="{% url 'project:detail' project.pk %}">
-                        <h2 class="title">{{ project.name }}</h2>
+                    <a href="{% url 'project:detail' case.project_id %}">
+                        <h2 class="title">{{ case.name }}</h2>
                     </a>
                     <div class="meta">
                         <div class="meta-item">
                             <span class="name">简称:</span>
-                            <span class="meta-content">{{ project.name_en }}</span>
+                            <span class="meta-content">{{ case.project.name_en }}</span>
                         </div>
                         {% if project.address and project.address != ':' and project.address != 'null' %}
                         <div class="meta-item">
                             <span class="name">测试地址:</span>
                             <span class="meta-content">
-                                <a href="http://{{ project.address }}" target="_blank">
+                                <a href="http://{{ case.project.address }}" target="_blank">
                                     {{ project.address }}
                                 </a>
                             </span>
