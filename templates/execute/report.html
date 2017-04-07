@@ -190,26 +190,30 @@
     <!--右边面板：结果预览 end-->
 
     <!--右边出错日志开始-->
+    {% if all_error %}
     <div class="panel">
         <div class="header">
             出错日志
         </div>
         <div class="inner">
+            {% for error in all_error %}
             <div class="row errors">
                 <div class="time">
-                    第<span class="count">1</span>次出错:
-                    <span class="time">: 2017-3-20 08:40:30</span>
+                    第<span class="count">{{ forloop.counter }}</span>次出错:
+                    <span class="time">: {{ error.add_time | strf_time }}</span>
                 </div>
                 <div class="stats">
                     并发用户数
-                    <span class="number">59</span>
+                    <span class="number">{{ error.user_count }}</span>
                     ,RPS为
-                    <span class="number">45.6</span>
+                    <span class="number">{{ error.total_rps }}</span>
                 </div>
 
             </div>
+            {% endfor %}
         </div>
     </div>
+    {% endif %}
     <!--右边出错日志 end-->
 {% endblock %}
 

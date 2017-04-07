@@ -2,12 +2,14 @@
 """
 这个是显示execute相关的View
 """
+import json
+
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from django.db import connection
 
 from tcase.models import Execute
-from tresult.models import Summary, StatsCSV
+from tresult.models import Summary, StatsCSV, Log
 
 
 class ReportView(View):
@@ -72,6 +74,22 @@ class ReportView(View):
         else:
             stats_response = None
 
+        # 获取错误日志
+        error_logs = Log.objects.filter(execute_id=pk, log_type='error')
+        all_error = []
+        time_pre = None
+        for log_i in error_logs:
+            if time_pre == log_i.add_time:
+                continue
+            else:
+                time_pre = log_i.add_time
+            log_dic = {}
+            j = json.loads(log_i.content)
+            log_dic['total_rps'] = round(float(j['total_rps']), 2)
+            log_dic['add_time'] = log_i.add_time
+            log_dic['user_count'] = j['user_count']
+            all_error.append(log_dic)
+
         content = {
             'execute': execute,
             'summary': summary,
@@ -79,5 +97,6 @@ class ReportView(View):
             'stats_request': stats_request,
             # 'stats_response': stats_response,
             'stats_response': [],
+            'all_error': all_error,
         }
         return render(request, 'execute/report.html', content)
