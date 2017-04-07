@@ -29,13 +29,13 @@ def port_can_use(port):
 
 
 @shared_task
-def run_execute(locust_path, execute_id, host):
+def run_execute(execute_id, host,
+                locust_path='~/.pyenv/versions/env_locust_3.5.3/bin/locust'):
     """
     运行Case，并记录下信息
-    ~/.pyenv/versions/env_locust_3.5.3/bin/locust
-    :param locust_path: locust命令的位置
     :param execute_id: 测试用例的id，根据id来找到文件
     :param host: case的测试域名
+    :param locust_path: locust命令的位置
     :return:
     """
     # 第一步：获取启动locust的端口号
@@ -47,7 +47,7 @@ def run_execute(locust_path, execute_id, host):
         port_can_use_flag = port_can_use(port)
     # 把port写入execute中
     execute = Execute.objects.get(pk=execute_id)
-    if execute.status  in ['created', 'ready']:
+    if execute.status in ['created', 'ready']:
         # 保存status和port信息
         execute.port = port
         # 开始执行execute
@@ -62,8 +62,14 @@ def run_execute(locust_path, execute_id, host):
                                                               port, host)
         execute.status = 'running'
         execute.save()
-        result = subprocess.getstatusoutput(cmd)
-        # 这里会只等待命令的执行
+        try:
+            result = subprocess.getstatusoutput(cmd)
+            # 这里会只等待命令的执行
+        except Exception as e:
+            pass
+        finally:
+            # 判断execute是否还在运行。停止服务
+            pass
 
 
 
