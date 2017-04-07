@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}测试结果 | 性能测试{% endblock %}
 {% load staticfiles %}
-
+{% load self_tags %}
 {% block content %}
     <!--报告内容开始-->
     <div class="wrap report">
@@ -28,7 +28,7 @@
                     <!--box并发用户数-->
                     <div class="box users">
                         <div class="box-stats">
-                            <span class="count">38</span>
+                            <span class="count">{{ summary.user_count }}</span>
                             <span class="units">个</span>
                         </div>
                         <div class="box-name">
@@ -39,7 +39,7 @@
                     <!--box每秒吞吐量-->
                     <div class="box rps">
                         <div class="box-stats">
-                            <span class="count">70.8</span>
+                            <span class="count">{{ summary.total_rps }}</span>
                             <span class="units"></span>
                         </div>
                         <div class="box-name">
@@ -50,7 +50,7 @@
                     <!--box失败率-->
                     <div class="box errors">
                         <div class="box-stats">
-                            <span class="count">0</span>
+                            <span class="count">{{ summary.fail_ratio }}</span>
                             <span class="units">%</span>
                         </div>
                         <div class="box-name">
@@ -61,7 +61,7 @@
                     <!--box响应时间-->
                     <div class="box response">
                         <div class="box-stats">
-                            <span class="count">567</span>
+                            <span class="count">{{ summary.time_avg }}</span>
                             <span class="units">ms</span>
                         </div>
                         <div class="box-name">
@@ -95,60 +95,55 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                              <td>GET</td>
-                              <td>/</td>
-                              <td>972</td>
-                              <td>0</td>
-                              <td>43</td>
-                              <td>44.88</td>
-                              <td>37</td>
-                              <td>142</td>
-                              <td>6140</td>
-                              <td>18.8</td>
-                          </tr>
-                          <tr>
-                              <td>GET</td>
-                              <td>/about.html</td>
-                              <td>496</td>
-                              <td class="error">10</td>
-                              <td>40</td>
-                              <td>42.28</td>
-                              <td>35</td>
-                              <td>285</td>
-                              <td>5304</td>
-                              <td>9.5</td>
-                          </tr>
-                          <tr>
-                              <td>GET</td>
-                              <td>/book</td>
-                              <td>497</td>
-                              <td>0</td>
-                              <td>41</td>
-                              <td>43.54</td>
-                              <td>36</td>
-                              <td>137</td>
-                              <td>1073</td>
-                              <td>9.6</td>
-                          </tr>
-                          <tr>
-                              <td> </td>
-                              <td>Total</td>
-                              <td>1965</td>
-                              <td>0</td>
-                              <td>41</td>
-                              <td>43.89</td>
-                              <td>35</td>
-                              <td>285</td>
-                              <td>4647</td>
-                              <td>37.9</td>
-                          </tr>
+                        {% for request in stats_request %}
+                            <tr>
+                                {% for i in request %}<td>{{ i }}</td>{% endfor %}
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
             <!--section:请求统计 end-->
-
+            {% if stats_response %}
+                <div class="section">
+                <div class="title">
+                    <span class="pts-icon circle"></span>
+                    响应统计
+                </div>
+                <div class="stats-table inner stats-response">
+                    <table>
+                        <thead>
+                          <tr>
+                              <th>Name</th>
+                              <th>Request</th>
+                              <th>50%</th>
+                              <th>66%</th>
+                              <th>75%</th>
+                              <th>80%</th>
+                              <th>90%</th>
+{#                              <th>95%</th>#}
+{#                              <th>98%</th>#}
+{#                              <th>99%</th>#}
+                              <th>100%</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for response in stats_response %}
+                            <tr>
+                                {% for i in response %}
+                                    {% if forloop.counter == 8  or forloop.counter == 9 or forloop.counter == 10 %}
+                                    {% else %}
+                                        <td>{{ i }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
             <!--section: 图表展示开始-->
             <div class="section">
                 <div class="title">
@@ -176,15 +171,15 @@
         <div class="inner">
             <div class="row">
                 <span class="config">持续时长:</span>
-                <span class="config-value">10分46秒</span>
+                <span class="config-value">{{ execute.time_start | get_time_sub:execute.time_end }}</span>
             </div>
             <div class="row">
                 <span class="config">开始时间:</span>
-                <span class="config-value">{{ execute.time_start }}</span>
+                <span class="config-value">{{ execute.time_start | strf_time }}</span>
             </div>
             <div class="row">
                 <span class="config">结束时间:</span>
-                <span class="config-value">{{ execute.time_end }}</span>
+                <span class="config-value">{{ execute.time_end | strf_time }}</span>
             </div>
             <div class="row">
                 <span class="config">http响应码:</span>
@@ -307,7 +302,7 @@
 				data: ['并发用户数', "响应时间", "每秒响应数"]
 			},
 			xAxis: {
-				data: ["9:20:20", "9:21:20", "9:22:20", "9:23:20", "9:24:20", "9:25:20", "9:26:20"],
+				data: {{ echarts_data.add_time }},
 				type: 'category',
 				name: '时间',
 				nameGap:20,
@@ -342,7 +337,7 @@
 						fontSize: 13,
 					},
 //					nameRotate:45,
-					data: [0, 10, 20, 30, 40, 50, 60, 70, 80],
+					// data: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
 					// 不显示网格线
 					splitLine: {
 						show: false,
@@ -367,7 +362,7 @@
 						}
 					},
 					name: "响应时间(ms)",
-					data: [0, 100, 200, 300, 400, 500, 600, 700, 800],
+					data: {{ echarts_data.time_avg }},
 					// 不显示网格线
                   // splitLine: {
                   //    show: false,
@@ -377,24 +372,24 @@
 			series: [{
 				name: "并发用户数",
 				type: 'line',
-				data: [5, 20, 36, 10, 10, 20, 70],
+				data: {{ echarts_data.user_count }},
 				yAxisIndex:0
 			},
 				{
 					name: "响应时间",
 					type: "line",
-					data: [50,100,1500,200,190,400,950],
+					data: {{ echarts_data.time_avg }},
 					// 使用第二个y轴坐标
 					yAxisIndex:1
 				},
 				{
 					name: "每秒响应数",
 					type: "line",
-					data: [5,10,15,20,19,40,35],
+					data: {{ echarts_data.total_rps }},
 					yAxisIndex:0,
 					smooth:true,
-					symbol: 'none',
-					sampling: 'average',
+{#					symbol: 'none',#}
+{#					sampling: 'average',#}
 					// 画个区域
 					areaStyle: {
 						normal: {

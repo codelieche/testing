@@ -53,7 +53,9 @@
                             {% for report in all_report %}
                                 <div class="item">
                             <div class="title">
-                                {{ report.execute.name }}
+                                <a href="{% url 'execute:report' report.execute_id %}" target="_blank">
+                                    {{ report.execute.name }}
+                                </a>
                             </div>
                             <div class="stats">
                                 <!--box并发用户数-->

@@ -71,6 +71,8 @@ class Summary(models.Model):
         """
         # print(self.time_avg, 'time_avg', type(self.time_avg))
         self.time_avg = round(self.time_avg, 2)
+        self.total_rps = round(self.total_rps, 2)
+        self.fail_ratio = round(self.total_rps, 2)
         super(Summary, self).save(*args, **kwargs)
 
     def __str__(self):
