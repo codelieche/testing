@@ -86,8 +86,8 @@ class LocustStop(CsrfExemptMixin, View):
                 stop_url = 'http://127.0.0.1:%s/stop' % port
                 try:
                     r = requests.get(stop_url)
-                    print(r.ok, r.content)
                     return JsonResponse({'status': 'success'})
                 except Exception as e:
                     print(e)
+                    return JsonResponse({'status': 'failure'})
         return JsonResponse({'status': 'failure'}, status=400)

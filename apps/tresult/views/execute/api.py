@@ -2,13 +2,15 @@
 from datetime import datetime
 
 from django.shortcuts import get_object_or_404
+from django.views.generic import View
+from django.http import JsonResponse
 
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from utils.mixins import CsrfExemptMixin
 from tcase.models import Execute
-
 from tresult.models import Detail, Summary, StatsCSV, Log
 from tresult.serializers import DetailSerializer, StatsCSVSerializer,\
     LogSerializer
@@ -166,3 +168,26 @@ def execute_add_log(request):
                             status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class ExecuteGetSummary(CsrfExemptMixin, View):
+    """
+    Execute运行中，post获取最新的summary
+    """
+    def post(self, request):
+        execute_id = request.POST.get('execute_id', '')
+        if execute_id:
+            detail = Detail.objects.order_by('-id').filter(
+                execute_id=execute_id).first()
+            if detail:
+                summary_dic = {
+                    'user_count': detail.user_count,
+                    'num_failures': detail.num_failures,
+                    'time_avg': detail.time_avg,
+                    'total_rps': detail.total_rps
+                }
+                return JsonResponse(summary_dic)
+            else:
+                return JsonResponse({'status': 'failure'}, status=400)
+        else:
+            return JsonResponse({'status': 'failure'}, status=400)

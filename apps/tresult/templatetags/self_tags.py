@@ -12,7 +12,9 @@ register = template.Library()
 
 
 @register.filter()
-def get_time_sub(time_start, time_end):
+def get_time_sub(time_start, time_end=None):
+    if not time_end:
+        time_end = datetime.now()
     if not isinstance(time_start, datetime) or \
             not isinstance(time_end, datetime):
         return ''

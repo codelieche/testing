@@ -36,4 +36,7 @@ urlpatterns = [
     url('^locust/user/add/$', LocustAddUser.as_view(), name='locust_user_add'),
     # 停止locust
     url('^locust/stop/$', LocustStop.as_view(), name='locust_stop'),
+    # 运行中获取summary
+    url(r'^running/summary/', api.ExecuteGetSummary.as_view(),
+        name='get_summary')
 ]

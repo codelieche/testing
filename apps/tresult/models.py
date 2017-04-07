@@ -38,6 +38,22 @@ class Detail(models.Model):
         verbose_name = "执行结果"
         verbose_name_plural = verbose_name
 
+    def save(self, *args, **kwargs):
+        """
+        对象保存前对float字段取2位数
+        :return:
+        """
+        # print(self.time_avg, 'time_avg', type(self.time_avg))
+        self.time_avg = round(self.time_avg, 2)
+        self.total_rps = round(self.total_rps, 2)
+        self.fail_ratio = round(self.total_rps, 2)
+        if self.num_failures == 0:
+            self.fail_ratio = 0
+        else:
+            self.fail_ratio = round(
+                float(self.num_failures * 100) / self.num_requests, 4)
+        super(Detail, self).save(*args, **kwargs)
+
 
 @python_2_unicode_compatible
 class Summary(models.Model):
