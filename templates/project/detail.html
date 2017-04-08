@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}项目详情 | 性能测试{% endblock %}
-
+{% load self_tags %}
 
 {% block content %}
     <div class="wrap project-detail">
@@ -57,51 +57,8 @@
                                     {{ report.execute.name }}
                                 </a>
                             </div>
-                            <div class="stats">
-                                <!--box并发用户数-->
-                                <div class="box users">
-                                    <div class="box-stats">
-                                        <span class="count">38</span>
-                                        <span class="units">个</span>
-                                    </div>
-                                    <div class="box-name">
-                                        并发用户数
-                                    </div>
-                                </div>
-
-                                <!--box每秒吞吐量-->
-                                <div class="box rps">
-                                    <div class="box-stats">
-                                        <span class="count">70.8</span>
-                                        <span class="units"></span>
-                                    </div>
-                                    <div class="box-name">
-                                        rps
-                                    </div>
-                                </div>
-
-                                <!--box失败率-->
-                                <div class="box errors">
-                                    <div class="box-stats">
-                                        <span class="count">0</span>
-                                        <span class="units">%</span>
-                                    </div>
-                                    <div class="box-name">
-                                        失败率
-                                    </div>
-                                </div>
-
-                                <!--box响应时间-->
-                                <div class="box response">
-                                    <div class="box-stats">
-                                        <span class="count">567</span>
-                                        <span class="units">ms</span>
-                                    </div>
-                                    <div class="box-name">
-                                        响应时间
-                                    </div>
-                                </div>
-                            </div>
+{#                                    这里用标签来生成对应的统计信息 #}
+                            {% execute_get_stats report.execute_id %}
                         </div>
                             {% endfor %}
                         {% else %}

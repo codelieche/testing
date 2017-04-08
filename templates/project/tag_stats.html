@@ -1,0 +1,45 @@
+<div class="stats">
+<!--box并发用户数-->
+<div class="box users">
+    <div class="box-stats">
+        <span class="count">{{ summary.user_count }}</span>
+        <span class="units">个</span>
+    </div>
+    <div class="box-name">
+        并发用户数
+    </div>
+</div>
+
+<!--box每秒吞吐量-->
+<div class="box rps">
+    <div class="box-stats">
+        <span class="count">{{ summary.total_rps }}</span>
+        <span class="units"></span>
+    </div>
+    <div class="box-name">
+        rps
+    </div>
+</div>
+
+<!--box失败率-->
+<div class="box errors">
+    <div class="box-stats">
+        <span class="count">{{ summary.num_failures }}</span>
+        <span class="units">次</span>
+    </div>
+    <div class="box-name">
+        失败次数
+    </div>
+</div>
+
+<!--box响应时间-->
+<div class="box response">
+    <div class="box-stats">
+        <span class="count">{{ summary.time_avg }}</span>
+        <span class="units">ms</span>
+    </div>
+    <div class="box-name">
+        响应时间
+    </div>
+</div>
+</div>

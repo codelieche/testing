@@ -8,6 +8,8 @@ from django import template
 from django.db.models import Count
 from django.utils.safestring import mark_safe
 
+from tresult.models import Summary
+
 register = template.Library()
 
 
@@ -36,3 +38,9 @@ def strf_time(value):
     if not isinstance(value, datetime):
         return ''
     return value.strftime('%Y-%m-%d %H:%M:%S')
+
+
+@register.inclusion_tag('project/tag_stats.html')
+def execute_get_stats(pk):
+    summary = Summary.objects.filter(execute_id=pk).last()
+    return {'summary': summary}
