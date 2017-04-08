@@ -8,6 +8,7 @@ from django import template
 from django.db.models import Count
 from django.utils.safestring import mark_safe
 
+from tcase.models import Case, Execute
 from tresult.models import Summary
 
 register = template.Library()
@@ -15,6 +16,12 @@ register = template.Library()
 
 @register.filter()
 def get_time_sub(time_start, time_end=None):
+    """
+    获取两个时间的时间差:
+    :param time_start: 开始时间
+    :param time_end: 结束时间
+    :return: 16分3秒
+    """
     if not time_end:
         time_end = datetime.now()
     if not isinstance(time_start, datetime) or \
@@ -35,6 +42,11 @@ def get_time_sub(time_start, time_end=None):
 
 @register.filter()
 def strf_time(value):
+    """
+    格式化时间：2017-04-07 10:30:13
+    :param value:
+    :return:
+    """
     if not isinstance(value, datetime):
         return ''
     return value.strftime('%Y-%m-%d %H:%M:%S')
@@ -42,5 +54,26 @@ def strf_time(value):
 
 @register.inclusion_tag('project/tag_stats.html')
 def execute_get_stats(pk):
+    """
+    execute的统计信息，Html
+    :param pk: execute id
+    :return: 是html内容，在Project detail中用到
+    """
     summary = Summary.objects.filter(execute_id=pk).last()
     return {'summary': summary}
+
+
+@register.filter()
+def get_project_report_num(project_id):
+    """
+    获取项目的报告数:
+    在Project list中用到
+    :param project_id:
+    :return:
+    """
+    # 先获取到测试用例
+    all_case = Case.objects.filter(project_id=project_id)
+    # 获取出execute
+    all_execute_count = Execute.objects.filter(
+        case__in=all_case, status='stoped').count()
+    return all_execute_count

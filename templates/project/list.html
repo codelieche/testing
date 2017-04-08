@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load self_tags %}
 
 {% block content %}
     <div class="wrap list">
@@ -39,10 +40,12 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="report-num fr">
-                    <span class="num">5</span>
-                    <span class="name">Report</span>
-                </div>
+                <a href="{% url 'project:detail' project.pk %}" target="_blank">
+                   <div class="report-num fr">
+                        <span class="num">{{ project.pk | get_project_report_num }}</span>
+                        <span class="name">Report</span>
+                    </div>
+                </a>
             </div>
             <!--item end-->
         {% endfor %}
