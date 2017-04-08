@@ -46,3 +46,18 @@ def add_hatching(self, locust_count=None, hatch_rate=None, wait=False):
 ```
 
 ## 对reset数据进行修改
+> 当对Locust增加并发用户数的时候，会对当前数据进行清零。
+解决方式，对`locust/stats.py`中的`reset_all`方法直接返回空，即可。
+
+```python
+def reset_all(self):
+    """
+    Go through all stats entries and reset them to zero
+    """
+    return
+    self.start_time = time.time()
+    self.num_requests = 0
+    self.num_failures = 0
+    for r in six.itervalues(self.entries):
+        r.reset()
+```
