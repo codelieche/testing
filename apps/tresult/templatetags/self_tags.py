@@ -89,3 +89,14 @@ def get_latest_report(count=5):
     latest_report = Execute.objects.filter(
         status='stoped').order_by('-time_end')[:count]
     return latest_report
+
+
+@register.assignment_tag(name="get_latest_cases")
+def get_latest_cases(count=5):
+    """
+    获取最新的测试用例
+    :param count: 获取数量默认5
+    :return:
+    """
+    latest_cases = Case.objects.order_by('-add_time')[:count]
+    return latest_cases

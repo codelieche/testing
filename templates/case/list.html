@@ -87,22 +87,41 @@
 
 {% block sidebar_right %}
     <div class="panel">
-                <div class="header">
-                    最新报告
-                </div>
-                <div class="inner">
-                    <div class="right-list">
-                        {% get_latest_report as latest_reports %}
-                        <ur>
-                            {% for execute in latest_reports %}
-                                <li>
-                                    <a href="{% url 'execute:report' execute.pk %}" target="_blank">
-                                        {{ execute.name }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ur>
-                    </div>
-                </div>
+        <div class="header">
+            最新测试用例
+        </div>
+        <div class="inner">
+            <div class="right-list">
+                {% get_latest_cases as latest_cases %}
+                <ur>
+                    {% for case in latest_cases %}
+                        <li>
+                            <a href="{% url 'project:detail' case.project_id %}" target="_blank">
+                                {{ case.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ur>
             </div>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="header">
+            最新报告
+        </div>
+        <div class="inner">
+            <div class="right-list">
+                {% get_latest_report as latest_reports %}
+                <ur>
+                    {% for execute in latest_reports %}
+                        <li>
+                            <a href="{% url 'execute:report' execute.pk %}" target="_blank">
+                                {{ execute.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ur>
+            </div>
+        </div>
+    </div>
 {% endblock %}
