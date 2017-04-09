@@ -93,12 +93,16 @@
                     最新报告
                 </div>
                 <div class="inner">
+                    {% get_latest_report as latest_reports %}
                     <div class="right-list">
                         <ur>
-                            <li><a href="">报告1</a></li>
-                            <li><a href="">报告1</a></li>
-                            <li><a href="">报告1</a></li>
-                            <li><a href="">报告1</a></li>
+                            {% for execute in latest_reports %}
+                                <li>
+                                    <a href="{% url 'execute:report' execute.pk %}" target="_blank">
+                                        {{ execute.name }}
+                                    </a>
+                                </li>
+                            {% endfor %}
                         </ur>
                     </div>
                 </div>

@@ -77,3 +77,15 @@ def get_project_report_num(project_id):
     all_execute_count = Execute.objects.filter(
         case__in=all_case, status='stoped').count()
     return all_execute_count
+
+
+@register.assignment_tag(name="get_latest_report")
+def get_latest_report(count=5):
+    """
+    返回最近的报告
+    :param count: 返回的数量
+    :return: 返回的是一个数组，可以在模版中用for标签使用
+    """
+    latest_report = Execute.objects.filter(
+        status='stoped').order_by('-time_end')[:count]
+    return latest_report
