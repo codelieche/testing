@@ -131,5 +131,8 @@ def post_locust_user_add(host, execute_id, locust_count=5, hatch_rate=1):
             'locust_count': locust_count,
             'hatch_rate': hatch_rate
         }
-        r = requests.post(post_url, post_data)
-        ok = r.ok
+        try:
+            r = requests.post(post_url, post_data)
+            ok = r.ok
+        except Exception:
+            ok = False

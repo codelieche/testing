@@ -94,6 +94,13 @@ class Summary(models.Model):
         else:
             self.fail_ratio = round(
                 float(self.num_failures * 100) / self.num_requests, 4)
+        # 还需要对Summary的user_count做处理
+        # 当locust执行停止，这个时候requests请求到的user_count可能是0
+        # print(self.execute, 'user_count', self.user_count)
+        if self.user_count == 0:
+            detail = Detail.objects.filter(execute=self.execute).last()
+            if detail:
+                self.user_count = detail.user_count
         super(Summary, self).save(*args, **kwargs)
 
     def __str__(self):
