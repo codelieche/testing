@@ -116,7 +116,7 @@ class CollectOperation(object):
                                                               self.execute)
             # 用requests发送数据到服务器
             response = requests.post(post_url, data=data)
-            print("添加summary数据：", response.ok)
+            # print("添加summary数据：", response.ok)
         else:
             print("请求失败")
 
@@ -142,7 +142,7 @@ class CollectOperation(object):
             # 发送数据到后台
             post_url = '{}api/1.0/execute/stats/add/'.format(self.host_target)
             response = requests.post(post_url, data)
-            print("添加stats数据:{}:{}".format(csv_type, response.ok))
+            # print("添加stats数据:{}:{}".format(csv_type, response.ok))
 
     def add_log(self, log_type='info'):
         """
@@ -164,18 +164,21 @@ class CollectOperation(object):
             # 把数据post到服务器
             post_url = '{}api/1.0/execute/log/add/'.format(self.host_target)
             response = requests.post(post_url, data)
-            print('execute {} add log: {}'.format(self.execute, response.ok))
+            # print('execute {} add log: {}'.format(self.execute, response.ok))
         else:
             print('execute {} add log: False'.format(self.execute))
 
-    def trigger_start(self, locust_count=100, hatch_rate=1):
+    def trigger_start(self, locust_count=100, hatch_rate=1, user_add=False):
         """
         触发开始测试
         :param locust_count: 并发用户数
         :param hatch_rate: 用户每秒访问频率
+        :param user_add: 是增加用户吗
         :return:
         """
         url = '{}swarm'.format(self.host_locust)
+        if user_add:
+            url = '{}swarm/add'.format(self.host_locust)
         # 通过post传递数据触发
         data = {
             'locust_count': locust_count,
@@ -194,11 +197,12 @@ class CollectOperation(object):
         response = requests.get(stop_url)
         print('停止测试:{}'.format(response.ok))
 
-    def change_user(self, locust_count=100, hatch_rate=1):
+    def change_user(self, locust_count=100, hatch_rate=1, user_add=True):
         """
         改变并发用户数
         :param locust_count: 并发用户数
         :param hatch_rate: 用户访问频率
+        :param user_add: 改变用户数，默认是增加数
         :return:
         """
-        self.trigger_start(locust_count, hatch_rate)
+        self.trigger_start(locust_count, hatch_rate, user_add=user_add)
