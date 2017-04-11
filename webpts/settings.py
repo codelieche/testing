@@ -147,3 +147,7 @@ AUTHENTICATION_BACKENDS = (
 # 配置Broker
 BROKER_URL = 'redis://127.0.0.1:6379/0'
 BROKER_TRANSPORT = 'redis'
+
+# locust的路径
+# 在tcase/tasks.py的run_execute方法需要传入locust_path,默认的path自己配置
+LOCUST_PATH = '~/.pyenv/versions/env_locust_3.5.3/bin/locust'

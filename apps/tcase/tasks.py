@@ -10,6 +10,7 @@ from datetime import datetime
 import requests
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.conf import settings
 from celery import shared_task
 
 from .models import Execute
@@ -32,7 +33,7 @@ def port_can_use(port):
 
 @shared_task
 def run_execute(execute_id, host,
-                locust_path='~/.pyenv/versions/env_locust_3.5.3/bin/locust'):
+                locust_path=settings.LOCUST_PATH):
     """
     运行Case，并记录下信息
     :param execute_id: 测试用例的id，根据id来找到文件
