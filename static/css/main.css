@@ -105,6 +105,18 @@ ul {
       .container .sidebar-left .nav li a:hover {
         background-color: #eee;
         border-left: solid 3px #4A90E2; }
+  .container .sidebar-left .user-info {
+    border-top: 1px solid #d4d4d4;
+    width: 100%;
+    text-align: center; }
+    .container .sidebar-left .user-info a {
+      display: block;
+      padding: 10px 5px; }
+      .container .sidebar-left .user-info a:hover {
+        background-color: #d4d4d4; }
+    .container .sidebar-left .user-info span {
+      display: inline-block;
+      padding: 10px 5px 0px 5px; }
 
 /*
   这里只控制 .main区域内，content 和sidebar的比例，布局

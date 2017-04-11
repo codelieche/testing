@@ -29,6 +29,18 @@
 					<li><a href="{% url 'case:list' %}">测试用例</a></li>
 				</ul>
 				<!--左边导航列表end-->
+                <div class="user-info">
+                    {% if request.user.is_authenticated %}
+                        <div class="user-logout">
+                            <span>Hello {{ request.user.username }}</span>
+                            <a href="{% url 'user:logout' %}">退出</a>
+                        </div>
+                    {% else %}
+                        <div class="user-login">
+                            <a href="{% url 'user:login' %}">登陆</a>
+                        </div>
+                    {% endif %}
+                </div>
                 {% endblock %}
 			</div>
 			<!--左边栏结束-->
