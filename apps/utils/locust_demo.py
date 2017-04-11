@@ -78,10 +78,12 @@ except Exception as e:
     print(e)
     sys.exit(1)
 
+# host_target是保存数据库的服务器地址，注意替换！！！！！
+host_target = 'http://127.0.0.1:8000'
 # 先实例化Collect
 operator = CollectOperation(execute=execute_id, host_locust="127.0.0.1",
                             port=locust_port,
-                            host_target='http://127.0.0.1:8000')
+                            host_target=host_target)
 # 实例化LocustEventsExt
 events_ext_obj = LocustEventsExt(operator=operator, error_num_max=5)
 

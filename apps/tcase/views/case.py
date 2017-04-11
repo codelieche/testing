@@ -51,10 +51,12 @@ class CaseExecuteView(View):
         # 判断文件是否存在
         if not os.path.exists(case_file_path):
             # 如果不存在，就写入文件
+            host_target = request.META['HTTP_HOST']
             result = make_case_file(
                 code_content=case.code,
                 file_name=case_file_name,
-                case_id=pk
+                case_id=pk,
+                host_target=host_target
             )
             # 如果result是False就需要抛出500错误
 
@@ -64,8 +66,8 @@ class CaseExecuteView(View):
         # 判断是否存在execute id
         if case.execute_id:
             # 有execute_id字段 还需要判断这个execute是否在运行中
-            execute = Execute.objects.get(pk=case.execute_id)
-            if execute.status in ['created', 'ready', 'running']:
+            execute = Execute.objects.filter(pk=case.execute_id).last()
+            if execute and execute.status in ['created', 'ready', 'running']:
                 # 跳转到execute的报告页面
                 return redirect(to='/execute/%d/' % execute.pk)
             else:

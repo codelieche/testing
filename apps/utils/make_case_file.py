@@ -55,11 +55,12 @@ try:
 except Exception as e:
     print(e)
     sys.exit(1)
-
+# host_target是保存数据库的服务器地址，注意替换！！！！！
+host_target = 'http://HOST_TARGET_FOR_REPLACE'
 # 先实例化Collect
 operator = CollectOperation(execute=execute_id, host_locust="127.0.0.1",
                             port=locust_port,
-                            host_target='http://127.0.0.1:8000')
+                            host_target=host_target)
 # 实例化LocustEventsExt
 events_ext_obj = LocustEventsExt(operator=operator, error_num_max=5)
 
@@ -71,12 +72,14 @@ events.locust_stop_hatching += events_ext_obj.on_request_stop
 '''
 
 
-def make_case_file(code_content, file_name, case_id):
+def make_case_file(code_content, file_name, case_id,
+                   host_target='http://127.0.0.1:8000'):
     """
     创建测试用例代码文件
     :param code_content: 测试代码主体内容
     :param file_name: 测试代码文件名
     :param case_id: 测试用例的id，需要通过它获取最新的execute
+    :param host_target: 保存数据库的服务器地址
     :return:
     """
     case_file_name = file_name
@@ -96,11 +99,12 @@ def make_case_file(code_content, file_name, case_id):
         return False
     with open(file_path, 'w', encoding="UTF-8") as f:
         # 先对file_tail的case_id进行替换
-        file_tail_new = file_tail.replace('CASE_ID_FOR_REPLACE',
-                                            str(case_id))
+        file_tail_new = file_tail.replace('CASE_ID_FOR_REPLACE', str(case_id))
+        file_tail_new2 = file_tail_new.replace('HOST_TARGET_FOR_REPLACE',
+                                              str(host_target))
         f.write(file_header)
         f.write(code_content)
         f.write('\n')
-        f.write(file_tail_new)
+        f.write(file_tail_new2)
         f.close()
         return True
