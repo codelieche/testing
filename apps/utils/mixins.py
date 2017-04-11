@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 class LoginRequiredMixin(object):
     """View类提供需要登陆才能访问的控制"""
 
-    @method_decorator(login_required(login_url='/login/'))
+    @method_decorator(login_required(login_url='/user/login/'))
     def dispatch(self, request, *args, **kwargs):
         return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
 

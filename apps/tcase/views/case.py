@@ -4,11 +4,10 @@ from datetime import datetime
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
-from django.http import JsonResponse
 from django.conf import settings
-from django.core.exceptions import PermissionDenied
+# from django.core.exceptions import PermissionDenied
 
-from utils.mixins import CsrfExemptMixin
+from utils.mixins import LoginRequiredMixin
 from utils.make_case_file import make_case_file
 from ..models import Case, Execute
 # Create your views here.
@@ -25,7 +24,7 @@ class CaseListView(View):
         })
 
 
-class CaseExecuteView(View):
+class CaseExecuteView(LoginRequiredMixin, View):
     """
     执行测试用例View
     执行测试用例需要做的事情：

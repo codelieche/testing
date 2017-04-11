@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
 from django.core.urlresolvers import reverse
 
-from tresult.views.execute.views import ReportView
+from utils.mixins import LoginRequiredMixin
 from ..models import Execute
 from ..tasks import run_execute, post_locust_start, post_locust_user_add, \
     post_locust_stop
@@ -26,7 +26,7 @@ class ExecuteView(View):
         return redirect(reverse('execute:report', args=[pk]))
 
 
-class ExecuteRunningView(View):
+class ExecuteRunningView(LoginRequiredMixin, View):
     """
     执行execute的View
     # 需要做的事情：
