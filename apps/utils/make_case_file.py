@@ -45,7 +45,7 @@ except TypeError:
 
 CASE_ID = 'CASE_ID_FOR_REPLACE'
 # 需要根据case_id，查询到最近执行的execute_id
-get_execute_id_url = 'http://127.0.0.1:8000/api/1.0/case/%s/executeid/'\
+get_execute_id_url = 'http://HOST_TARGET_FOR_REPLACE/api/1.0/case/%s/executeid/'\
                      % CASE_ID
 execute_id = 0
 try:
