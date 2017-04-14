@@ -78,6 +78,21 @@ def get_project_report_num(project_id):
         case__in=all_case, status='stoped').count()
     return all_execute_count
 
+@register.filter()
+def get_case_report_num(case_id):
+    """
+    获取项目的报告数:
+    在Case list中用到
+    :param case_id:
+    :return:
+    """
+    # 先获取到测试用例
+    all_case = Case.objects.filter(pk=case_id)
+    # 获取出execute
+    all_execute_count = Execute.objects.filter(
+        case__in=all_case, status='stoped').count()
+    return all_execute_count
+
 
 @register.assignment_tag(name="get_latest_report")
 def get_latest_report(count=5):

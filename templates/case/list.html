@@ -42,7 +42,7 @@
                 </div>
                 <a href="{% url 'project:detail' case.project_id %}">
                     <div class="report-num fr">
-                        <span class="num">{{ case.id }}</span>
+                        <span class="num">{{ case.id | get_case_report_num }}</span>
                         <span class="name">Report</span>
                     </div>
                 </a>
