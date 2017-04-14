@@ -5,8 +5,11 @@ from datetime import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
 from django.conf import settings
+from django.core.paginator import Paginator
+from django.db.models import Q
 # from django.core.exceptions import PermissionDenied
 
+from tproject.models import Project
 from utils.mixins import LoginRequiredMixin
 from utils.make_case_file import make_case_file
 from ..models import Case, Execute
@@ -17,10 +20,27 @@ class CaseListView(View):
     """
     网站首页View
     """
-    def get(self, request):
+    def get(self, request, page=1):
         all_case = Case.objects.all()
+        # 关键词过滤
+        keyword = request.GET.get('keyword', '')
+        if keyword :
+            projects = Project.objects.filter(Q(name__icontains=keyword) |
+                                              Q(address__icontains=keyword) |
+                                              Q(name_en__icontains=keyword))
+            all_case = all_case.filter(Q(project__in=projects) |
+                                       Q(name__icontains=keyword))
+
+        # 分页处理
+        page_num = page
+        p = Paginator(all_case, 10)
+        cases = p.page(page_num)
+
         return render(request, 'case/list.html', {
-            'all_case': all_case,
+            'all_case': cases,
+            'page_num_list': range(1, p.num_pages + 1),
+            'last_page': p.num_pages,
+            'keyword': keyword,
         })
 
 
