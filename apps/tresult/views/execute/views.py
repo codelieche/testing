@@ -100,3 +100,22 @@ class ReportView(View):
             'all_error': all_error,
         }
         return render(request, 'execute/report.html', content)
+
+
+class ReportListView(View):
+    """
+    报告列表页
+    """
+    def get(self, request):
+        """
+        execute的列表页
+        :param request:
+        :return:
+        """
+        # 获取所有停止了的execute
+        all_execute_stoped = Execute.objects.filter(status='stoped')
+        # 获取到对应的summary
+        all_reports = Summary.objects.filter(execute__in=all_execute_stoped)
+        return render(request, 'execute/list.html', {
+            'all_reports': all_reports
+        })

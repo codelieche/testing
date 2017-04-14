@@ -63,7 +63,8 @@ class ProjectDetailView(View):
         all_execute = Execute.objects.filter(case__in=all_case,
                                              status__in=['stoped', 'sucess'])
         all_execute_id = []
-        all_report = Summary.objects.filter(execute__in=all_execute)
+        all_report = Summary.objects.filter(
+            execute__in=all_execute).order_by('-add_time')
         return render(request, 'project/detail.html', {
             "project": project,
             'all_case': all_case,

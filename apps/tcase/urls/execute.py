@@ -4,7 +4,7 @@
 """
 from django.conf.urls import url
 
-from tresult.views.execute.views import ReportView
+from tresult.views.execute.views import ReportView, ReportListView
 from ..views.execute import ExecuteView, ExecuteRunningView
 
 urlpatterns = [
@@ -15,4 +15,6 @@ urlpatterns = [
         name='running'),
     # 报告页
     url(r'^(?P<pk>\d+)/report/$', ReportView.as_view(), name='report'),
+    # 报告列表页
+    url(r'^reports/$', ReportListView.as_view(), name='report_list'),
 ]

@@ -37,6 +37,7 @@ $(document).ready(function(){
                 dataType: 'json',
                 success: function(data){
                     console.log(data);
+                    window.location.reload();
                 },
                 error: function(xhr, type){
                     console.log(xhr, type);
