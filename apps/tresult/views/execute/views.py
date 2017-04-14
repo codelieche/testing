@@ -7,8 +7,11 @@ import json
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from django.db import connection
+from django.db.models import Q
+from django.core.paginator import Paginator
 
-from tcase.models import Execute
+from tproject.models import Project
+from tcase.models import Case, Execute
 from tresult.models import Summary, StatsCSV, Log
 
 
@@ -114,8 +117,28 @@ class ReportListView(View):
         """
         # 获取所有停止了的execute
         all_execute_stoped = Execute.objects.filter(status='stoped')
+        # 关键字过滤
+        keyword = request.GET.get('keyword', '')
+        # 先过滤项目
+        if keyword:
+            projects = Project.objects.filter(Q(name__icontains=keyword) |
+                                              Q(address__icontains=keyword) |
+                                              Q(name_en__icontains=keyword))
+            all_cases = Case.objects.filter(Q(project__in=projects) |
+                                            Q(name__icontains=keyword))
+            all_execute_stoped = all_execute_stoped.filter(
+                case__in=all_cases)
+
         # 获取到对应的summary
         all_reports = Summary.objects.filter(execute__in=all_execute_stoped)
+        # 分页处理
+        page_num = page
+        p = Paginator(all_reports, 10)
+        reports = p.page(page_num)
+
         return render(request, 'execute/list.html', {
-            'all_reports': all_reports
+            'all_reports': reports,
+            'page_num_list': range(1, p.num_pages + 1),
+            'last_page': p.num_pages,
+            'keyword': keyword,
         })

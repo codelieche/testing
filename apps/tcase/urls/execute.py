@@ -17,6 +17,6 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/report/$', ReportView.as_view(), name='report'),
     # 报告列表页
     # 可以匹配/reports/ 也可以匹配/exports/123/
-    url(r'^reports/(?P<page>\d*?)/?$', ReportListView.as_view(),
+    url(r'^reports/(?P<page>\d+?)/?$', ReportListView.as_view(),
         name='report_list'),
 ]

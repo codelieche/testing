@@ -6,9 +6,9 @@
         <div class="header clearfix">
             <!--标题和按钮-->
             <div class="title fl">
-                <h2>测试用例列表</h2>
+                <h2>测试报告列表</h2>
             </div>
-            <form action="{% url 'project:list' 1 %}" class="search fr" method="GET">
+            <form action="{% url 'execute:report_list' 1 %}" class="search fr" method="GET">
                 <input type="text"  name="keyword"  class="input-search"
                        placeholder="搜索项目:name address" value="{{ keyword }}">
                 <button type="submit" class="btn-search btn btn-primary">提交</button>
@@ -67,33 +67,33 @@
         {% endfor %}
                 <!--Page列表开始-->
                 <div class="page">
-                    {% if projects.has_previous %}
-                        <a href="{% url 'project:list' 1 %}{% if keyword %}?keyword={{ keyword }} {% endif %}" >首页</a>
-                        <a href="{% url 'project:list' projects.previous_page_number %}{% if keyword %}?keyword={{ keyword }} {% endif %}">上一页</a>
+                    {% if all_reports.has_previous %}
+                        <a href="{% url 'execute:report_list' 1 %}{% if keyword %}?keyword={{ keyword }} {% endif %}" >首页</a>
+                        <a href="{% url 'execute:report_list' all_reports.previous_page_number %}{% if keyword %}?keyword={{ keyword }} {% endif %}">上一页</a>
                     {% else %}
                          <a class="page-disabled">首页</a>
                          <a class="page-disabled">下一页</a>
                     {% endif %}
 
                     {% for page in page_num_list %}
-                        {% ifequal page projects.number %}
-                            <a class="page-tag active" href="{% url 'project:list' page %}{% if keyword %}?keyword={{ keyword }} {% endif %}">
+                        {% ifequal page all_reports.number %}
+                            <a class="page-tag active" href="{% url 'execute:report_list' page %}{% if keyword %}?keyword={{ keyword }} {% endif %}">
                                 {{ page }}
                             </a>
                         {% else %}
-                            <a class="page-tag" href="{% url 'project:list' page %}{% if keyword %}?keyword={{ keyword }} {% endif %}">
+                            <a class="page-tag" href="{% url 'execute:report_list' page %}{% if keyword %}?keyword={{ keyword }} {% endif %}">
                                 {{ page }}
                             </a>
                         {% endifequal %}
                     {% endfor %}
 
-                    {% if projects.has_next %}
+                    {% if all_reports.has_next %}
                         {% if keyword %}
-                            <a href="{% url 'project:list' projects.next_page_number %}?keyword={{ keyword }}" >下一页</a>
+                            <a href="{% url 'execute:report_list' all_reports.next_page_number %}?keyword={{ keyword }}" >下一页</a>
                         {% else %}
-                             <a href="{% url 'project:list' projects.next_page_number %}" >下一页</a>
+                             <a href="{% url 'execute:report_list' all_reports.next_page_number %}" >下一页</a>
                         {% endif %}
-                        <a href="{% url 'project:list' last_page %}" >尾页</a>
+                        <a href="{% url 'execute:report_list' last_page %}" >尾页</a>
                     {% else %}
                          <a class="page-disabled">下一页</a>
                          <a class="page-disabled">尾页</a>
