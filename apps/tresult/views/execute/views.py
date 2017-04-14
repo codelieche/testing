@@ -130,7 +130,8 @@ class ReportListView(View):
                 case__in=all_cases)
 
         # 获取到对应的summary
-        all_reports = Summary.objects.filter(execute__in=all_execute_stoped)
+        all_reports = Summary.objects.order_by('-add_time')\
+            .filter(execute__in=all_execute_stoped)
         # 分页处理
         page_num = page
         p = Paginator(all_reports, 10)
