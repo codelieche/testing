@@ -106,7 +106,7 @@ class ReportListView(View):
     """
     报告列表页
     """
-    def get(self, request):
+    def get(self, request, page=1):
         """
         execute的列表页
         :param request:
