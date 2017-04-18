@@ -2,6 +2,7 @@
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
+from account.models import UserProfile
 from tproject.models import Project
 from utils.storage import ImageStorage
 # Create your models here.
@@ -31,6 +32,7 @@ class Case(models.Model):
     project = models.ForeignKey(to=Project, verbose_name="项目")
     name = models.CharField(max_length=100, verbose_name="测试用例")
     desc = models.CharField(max_length=512, blank=True, verbose_name="描述")
+    user = models.ForeignKey(to=UserProfile, blank=True, verbose_name="添加者")
 
     # code主要是：get、post访问页面的函数
     code = models.TextField(blank=True, null=True, verbose_name="测试代码")
@@ -70,6 +72,8 @@ class Execute(models.Model):
     # name规范：测试用例版本N第n次执行
     name = models.CharField(max_length=100, blank=True, verbose_name="执行名字")
     case = models.ForeignKey(to=Case, verbose_name="测试用例")
+    user = models.ForeignKey(to=UserProfile, blank=True, null=True,
+                             verbose_name="执行者")
     # 状态
     status = models.CharField(max_length=10, verbose_name="状态",
                               default="created")
