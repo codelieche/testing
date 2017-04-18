@@ -64,6 +64,9 @@ class CaseExecuteView(LoginRequiredMixin, View):
     def get(self, request, pk):
         # 根据pk获取到对应的case
         case = get_object_or_404(Case, pk=pk)
+        # 这里还需要对user进行权限判断，是否有执行的权限：
+        user = request.user
+        # TODO：权限判断
 
         # 第一步：先判断case_id.py的文件是否存在
         base_dir_parent = os.path.dirname(settings.BASE_DIR)
@@ -102,7 +105,9 @@ class CaseExecuteView(LoginRequiredMixin, View):
             # 创建新的execute
             execute_name = case.name + datetime.now().strftime(
                 "%Y%m%d%H%M%S")
-            execute = Execute.objects.create(case=case, name=execute_name)
+            # 同时要记录是谁执行的
+            execute = Execute.objects.create(case=case, name=execute_name,
+                                             user=user)
             case.execute_id = execute.id
             case.save()
         # 跳转去execute的页面

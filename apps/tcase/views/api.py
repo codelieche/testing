@@ -44,6 +44,7 @@ class CaseExecute(CsrfExemptMixin, View):
             # 表示还没有execute_id
             # 那就创建一个返回
             execute_name = case.name + datetime.now().strftime("%Y%m%d%H%M%S")
+            # 这里由于是post过来的，没做user认证，所以执行者，暂时不设置
             execute = Execute.objects.create(case=case, name=execute_name)
             case.execute_id = execute.id
             # 新建了execute，把Case状态改成Ready
