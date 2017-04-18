@@ -16,7 +16,7 @@ class ProjectListView(CsrfExemptMixin, View):
     """
     项目列表View
     """
-    def get(self, request, page=1):
+    def get(self, request, page=None):
         """
         :param request:
         :param page: 页码
@@ -33,8 +33,11 @@ class ProjectListView(CsrfExemptMixin, View):
                 Q(name_en__icontains=keyword)
             )
 
-        # 对课程列表进行分页
-        page_num = page
+        # 对项目列表进行分页
+        if page:
+            page_num = page
+        else:
+            page_num = 1
         p = Paginator(all_projects, 10)
         projects = p.page(page_num)
 

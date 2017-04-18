@@ -20,7 +20,7 @@ class CaseListView(View):
     """
     网站首页View
     """
-    def get(self, request, page=1):
+    def get(self, request, page=None):
         all_case = Case.objects.all()
         # 关键词过滤
         keyword = request.GET.get('keyword', '')
@@ -32,7 +32,10 @@ class CaseListView(View):
                                        Q(name__icontains=keyword))
 
         # 分页处理
-        page_num = page
+        if page:
+            page_num = page
+        else:
+            page_num = 1
         p = Paginator(all_case, 10)
         cases = p.page(page_num)
 
