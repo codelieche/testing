@@ -10,11 +10,11 @@ locustfile、固定的文件头部和文件底部
 import os
 from django.conf import settings
 
-
 file_header = '''
 # -*- coding:utf-8 -*-
 import sys
-
+import re
+import random
 
 from locust import HttpLocust, TaskSet, task, events
 from locust import runners

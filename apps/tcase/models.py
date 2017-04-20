@@ -42,7 +42,12 @@ class Case(models.Model):
     # 保存下最新的execute_id
     execute_id = models.IntegerField(blank=True, null=True,
                                      verbose_name="最近执行")
+    # 有些脚本需要cookie信息
+    cookies = models.CharField(max_length=512, blank=True, default="")
     add_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+    # 由于测试用例后续会修改，需要记录下修改的时间
+    updated_time = models.DateTimeField(auto_now=True, verbose_name="更新时间",
+                                        blank=True, null=True)
 
     def __str__(self):
         return self.name

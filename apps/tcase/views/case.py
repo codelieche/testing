@@ -7,7 +7,7 @@ from django.views.generic import View
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.db.models import Q
-# from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied
 
 from tproject.models import Project
 from utils.mixins import LoginRequiredMixin
@@ -74,16 +74,25 @@ class CaseExecuteView(LoginRequiredMixin, View):
         case_file_name = 'case_%s.py' % pk
         case_file_path = os.path.join(scripts_dir, case_file_name)
         # 判断文件是否存在
-        if not os.path.exists(case_file_path):
-            # 如果不存在，就写入文件
-            host_target = request.META['HTTP_HOST']
-            result = make_case_file(
-                code_content=case.code,
-                file_name=case_file_name,
-                case_id=pk,
-                host_target=host_target
-            )
-            # 如果result是False就需要抛出500错误
+        if os.path.exists(case_file_path):
+            # 如果存在，删除文件
+            os.remove(case_file_path)
+        # 每次都写入新的文件，以为脚本中可能会有cookies
+        host_target = request.META['HTTP_HOST']
+        case_code = case.code
+        # 如果代码中有COOKIES_FOR_REPLACE 且 cookies不为空，就替换
+        # 注意："COOKIES_FOR_REPLACE" 以后在脚本中的set_up中的cookie就写成这个
+        if case_code.find("COOKIES_FOR_REPLACE") > 0 and case.cookies:
+            case_code = case_code.replace("COOKIES_FOR_REPLACE", case.cookies)
+        result = make_case_file(
+            code_content=case_code,
+            file_name=case_file_name,
+            case_id=pk,
+            host_target=host_target
+        )
+        # 如果result是False就需要抛出500错误:报个403吧
+        if not result:
+            raise PermissionDenied
 
         # 第二步：判断execute_id是否存在, 判断是否要创建新的execute
         need_create_execute = False
@@ -112,5 +121,3 @@ class CaseExecuteView(LoginRequiredMixin, View):
             case.save()
         # 跳转去execute的页面
         return redirect(to='/execute/%d/' % execute.pk)
-
-
