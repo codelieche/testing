@@ -26,7 +26,23 @@
       border-radius: 5px;
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
+      // wrap 里面头部样式
+      .header {
+        border-bottom: 1px solid #979797;
+        .title {
+          h2 {
+            display: inline-block;
+            font-size: 20px;
+            line-height: 38px;
+            font-weight: 500;
+            margin: 5px;
+            color: #555;
+          }
+        }
+      }
+      // wrap header样式 end
     }
+    // wrap样式end
   }
   /* 中间内容区域 end*/
 

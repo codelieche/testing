@@ -144,6 +144,15 @@ ul {
       border-radius: 5px;
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px; }
+      .container .main .content .wrap .header {
+        border-bottom: 1px solid #979797; }
+        .container .main .content .wrap .header .title h2 {
+          display: inline-block;
+          font-size: 20px;
+          line-height: 38px;
+          font-weight: 500;
+          margin: 5px;
+          color: #555; }
   .container .main .sidebar {
     width: 300px;
     padding-top: 20px;
@@ -382,15 +391,7 @@ ul {
 .content .list .header {
   padding: 5px 10px;
   margin: 0 10px;
-  /*list 没设置padding，这样header下边线左右空10px就设置个margin*/
-  border-bottom: 1px solid #979797; }
-  .content .list .header .title h2 {
-    display: inline-block;
-    font-size: 20px;
-    line-height: 38px;
-    font-weight: 500;
-    margin: 5px;
-    color: #555; }
+  /*list 没设置padding，这样header下边线左右空10px就设置个margin*/ }
   .content .list .header .search {
     display: inline-block;
     width: 300px;
@@ -526,7 +527,7 @@ ul {
       /* 头部右边按钮样式开始*/
       /* 头部右边按钮样式end*/ }
       .container .main .content .report .header .controls {
-        margin-top: 15px; }
+        margin-top: 5px; }
         .container .main .content .report .header .controls a {
           display: inline-block;
           width: 80px; }
@@ -595,6 +596,7 @@ ul {
   margin-top: 20px;
   margin-bottom: 15px;
   width: 100%;
+  overflow: hidden;
   /* title样式 */
   /* 统计表单样式开始 */
   /* 统计表单样式end */
@@ -658,6 +660,48 @@ ul {
       text-align: left; }
 
 /* 统计结果表单样式end */
+/* case header样式 */
+.container .main .content .case {
+  padding: 10px 15px; }
+  .container .main .content .case form p {
+    padding: 2px 10px; }
+  .container .main .content .case form label {
+    width: 80px;
+    display: inline-block;
+    text-align: left; }
+    .container .main .content .case form label.label-block {
+      display: block; }
+  .container .main .content .case form select {
+    padding: 4px 6px;
+    font-size: 14px;
+    line-height: 30px;
+    height: 30px;
+    outline: none;
+    border: 1px solid #ccc; }
+  .container .main .content .case form input {
+    padding: 4px 6px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none; }
+  .container .main .content .case form textarea {
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    outline: none;
+    width: 100%;
+    line-height: 24px;
+    overflow-y: visible; }
+  .container .main .content .case form label + textarea {
+    margin-top: 5px; }
+  .container .main .content .case form .buttons {
+    padding: 5px;
+    text-align: center; }
+    .container .main .content .case form .buttons .btn {
+      width: 80px;
+      padding: 8px; }
+    .container .main .content .case form .buttons .btn + .btn {
+      margin-left: 20px; }
+
 /*
   网站底部样式
 */
