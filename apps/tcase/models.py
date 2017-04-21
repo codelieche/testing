@@ -15,6 +15,7 @@ class Case(models.Model):
     """
     # 状态选项，如果是running，就不创建新的执行
     STATUS_CHOICES = (
+        ('draft', "草稿"),
         ('created', "已创建"),
         ('ready', '准备就绪'),
         ('running', "执行中"),
