@@ -31,42 +31,38 @@
                 <p>
                     <label for="id_name">用例名称:</label>
                     <input id="id_name" maxlength="100" name="name" type="text" value="" required="">
+                    {% csrf_token %}
                 </p>
 
                 <!--测试用例描述-->
                 <p>
                     <label for="id_desc" class="label-block">描&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述:</label>
                     <!--<input id="id_desc" maxlength="512" name="desc" type="text" value="">-->
-                    <textarea cols="60" id="id_desc" maxlength="512" name="desc" rows="4"
+                    <textarea cols="60" id="id_desc" maxlength="512" name="desc" rows="3"
                         placeholder="测试用例描述信息"></textarea>
                 </p>
 
                 <!--测试代码-->
                 <p>
                     <label for="id_code" class="label-block">测试代码:</label>
-                    <textarea cols="60" id="id_code" name="code" rows="16"
-                        placeholder="请输入测试的代码"></textarea>
+                    <textarea cols="60" id="id_code" name="code" rows="12"
+                        placeholder="请输入测试的代码" required></textarea>
                 </p>
 
                 <!--用例状态：edit可见-->
                 <p>
                     <label class="required" for="id_status">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态:</label>
                     <select id="id_status" name="status" required="">
-                        <option value="created" selected="selected">已创建</option>
-                        <option value="ready">准备就绪</option>
-                        <option value="running">执行中</option>
-                        <option value="failure">有错误</option>
-                        <option value="success">成功执行</option>
-                        <option value="stoped">已停止</option>
-                        <option value="delete">已删除</option>
+                        <option value="created" selected="draft">草稿</option>
+                        <option value="created" >创建</option>
                     </select>
                 </p>
 
                 <!--用例最近执行：edit可见-->
-                <p>
-                    <label for="id_execute_id">最近执行:</label>
-                    <input id="id_execute_id" name="execute_id" type="text" value="20" disabled="true">
-                </p>
+{#                <p>#}
+{#                    <label for="id_execute_id">最近执行:</label>#}
+{#                    <input id="id_execute_id" name="execute_id" type="text" value="20" disabled="true">#}
+{#                </p>#}
 
                 <!--用例Cookie-->
                 <p>

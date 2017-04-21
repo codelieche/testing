@@ -8,11 +8,14 @@ from django.conf import settings
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.core.exceptions import PermissionDenied
+from django.core.urlresolvers import reverse
 
 from tproject.models import Project
 from utils.mixins import LoginRequiredMixin
 from utils.make_case_file import make_case_file
 from ..models import Case, Execute
+from ..forms import CaseForm
+
 # Create your views here.
 
 
@@ -123,9 +126,10 @@ class CaseExecuteView(LoginRequiredMixin, View):
         return redirect(to='/execute/%d/' % execute.pk)
 
 
-class CaseAddView(View):
+class CaseAddView(LoginRequiredMixin, View):
     """
     添加测试用例View
+    需要登陆
     """
     def get(self, request):
         # 先获取到所有项目
@@ -151,3 +155,18 @@ class CaseAddView(View):
             'all_projects': all_projects,
             'target_project': target_project_id
         })
+
+    def post(self, request):
+        # post添加case
+        # 因为case需要user字段，但是user_id不从前端传入，直接去request.user.pk
+        # 这样在实例化CaseForm的时候，传入个instance对象
+        case = CaseForm(request.POST, instance=Case(user_id=request.user.pk))
+        # print(case)
+        if case.is_valid():
+            # 传入的数据ok
+            # print(case.data, case.data['project'])
+            case.save()
+        else:
+            # 传入的数据不正确
+            print(case.errors)
+        return redirect(reverse('project:detail', args=[case.data['project']]))
