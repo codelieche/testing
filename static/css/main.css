@@ -332,7 +332,8 @@ ul {
       border: 1px solid #d4d4d4;
       text-align: center;
       color: #666;
-      padding: 2px; }
+      padding: 2px;
+      margin-right: 5px; }
       .main .content .list .item .report-num:hover {
         border-color: #9B9B9B;
         box-shadow: 0 0 18px rgba(0, 0, 0, 0.08) inset;
@@ -677,7 +678,8 @@ ul {
     line-height: 30px;
     height: 30px;
     outline: none;
-    border: 1px solid #ccc; }
+    border: 1px solid #ccc;
+    max-width: 100%; }
   .container .main .content .case form input {
     padding: 4px 6px;
     font-size: 14px;

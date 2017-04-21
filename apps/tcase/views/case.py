@@ -121,3 +121,33 @@ class CaseExecuteView(LoginRequiredMixin, View):
             case.save()
         # 跳转去execute的页面
         return redirect(to='/execute/%d/' % execute.pk)
+
+
+class CaseAddView(View):
+    """
+    添加测试用例View
+    """
+    def get(self, request):
+        # 先获取到所有项目
+        all_projects = Project.objects.all()
+        # 获取get project 的id, 前台根据这个选中默认的project
+        project = request.GET.get('project', '')
+        # 也可以根据id或者英文名字匹配出第一个项目
+        target_project = None
+        if project:
+            if project.isdigit():
+                target_project = Project.objects.filter(pk=project).first()
+            else:
+                target_project = Project.objects.filter(
+                    name_en__icontains=project).first()
+                # 如果传入了project字符，也对项目进行过滤一下
+                all_projects = all_projects.filter(name_en__icontains=project)
+
+        target_project_id = 0
+        if target_project:
+            target_project_id = target_project.pk
+
+        return render(request, 'case/add.html', {
+            'all_projects': all_projects,
+            'target_project': target_project_id
+        })

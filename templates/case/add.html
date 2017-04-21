@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}添加测试用例 | 性能测试{% endblock %}
+
+{% block content %}
+    <div class="wrap case">
+        <div class="header clearfix">
+            <div class="title fl">
+                <h2>添加测试用例</h2>
+            </div>
+        </div>
+        <!--添加case内容开始-->
+        <div class="section case-add">
+            <div class="title">
+                <span class="pts-icon circle"></span>
+                添加测试用例
+            </div>
+            <form method="post" id="case_add_form">
+                <!--项目列表选项-->
+                <p>
+                    <label class="required" for="id_project">项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目:</label>
+                    <select id="id_project" name="project" required="">
+                        <option value="">---------</option>
+                        {% for project in all_projects %}
+                            <option value="{{ project.id }}"
+                                {% ifequal project.id target_project %} selected{% endifequal %}>{{ project.name }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+
+                <!--测试用例名称-->
+                <p>
+                    <label for="id_name">用例名称:</label>
+                    <input id="id_name" maxlength="100" name="name" type="text" value="" required="">
+                </p>
+
+                <!--测试用例描述-->
+                <p>
+                    <label for="id_desc" class="label-block">描&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述:</label>
+                    <!--<input id="id_desc" maxlength="512" name="desc" type="text" value="">-->
+                    <textarea cols="60" id="id_desc" maxlength="512" name="desc" rows="4"
+                        placeholder="测试用例描述信息"></textarea>
+                </p>
+
+                <!--测试代码-->
+                <p>
+                    <label for="id_code" class="label-block">测试代码:</label>
+                    <textarea cols="60" id="id_code" name="code" rows="16"
+                        placeholder="请输入测试的代码"></textarea>
+                </p>
+
+                <!--用例状态：edit可见-->
+                <p>
+                    <label class="required" for="id_status">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态:</label>
+                    <select id="id_status" name="status" required="">
+                        <option value="created" selected="selected">已创建</option>
+                        <option value="ready">准备就绪</option>
+                        <option value="running">执行中</option>
+                        <option value="failure">有错误</option>
+                        <option value="success">成功执行</option>
+                        <option value="stoped">已停止</option>
+                        <option value="delete">已删除</option>
+                    </select>
+                </p>
+
+                <!--用例最近执行：edit可见-->
+                <p>
+                    <label for="id_execute_id">最近执行:</label>
+                    <input id="id_execute_id" name="execute_id" type="text" value="20" disabled="true">
+                </p>
+
+                <!--用例Cookie-->
+                <p>
+                    <label for="id_cookies" class="label-block">Cookies:</label>
+                    <!--<input id="id_cookies" maxlength="512" name="cookies" type="text" value="">-->
+                    <textarea cols="60" id="id_cookies" name="cookies" rows="1"
+                        placeholder="请输入cookies:PHPSESSID=xxxx;route=xxxxx"></textarea>
+                </p>
+
+                <!--提交按钮组-->
+                <div class="buttons">
+                    <input type="reset" class="btn btn-default" value="重置">
+                    <input type="submit" class="btn btn-primary" value="提交">
+                </div>
+            </form>
+        </div>
+        <!--添加case内容end-->
+    </div>
+{% endblock %}
