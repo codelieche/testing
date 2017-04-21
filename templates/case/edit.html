@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}添加测试用例 | 性能测试{% endblock %}
+{% block title %}编辑测试用例-{{ case.name }} | 性能测试{% endblock %}
 
 {% block content %}
     <div class="wrap case">
@@ -18,19 +18,15 @@
                 <!--项目列表选项-->
                 <p>
                     <label class="required" for="id_project">项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目:</label>
-                    <select id="id_project" name="project" required="">
-                        <option value="">---------</option>
-                        {% for project in all_projects %}
-                            <option value="{{ project.id }}"
-                                {% ifequal project.id target_project %} selected{% endifequal %}>{{ project.name }}</option>
-                        {% endfor %}
+                    <select id="id_project" name="project" required="" disabled>
+                        <option value="{{ case.project_id }}" selected>{{ case.project.name }}</option>
                     </select>
                 </p>
 
                 <!--测试用例名称-->
                 <p>
                     <label for="id_name">用例名称:</label>
-                    <input id="id_name" maxlength="100" name="name" type="text" value="" required="">
+                    <input id="id_name" maxlength="100" name="name" type="text" value="{{ case.name }}" required="">
                     {% csrf_token %}
                 </p>
 
@@ -40,7 +36,7 @@
                     <!--<input id="id_desc" maxlength="512" name="desc" type="text" value="">-->
                     <textarea cols="60" id="id_desc" maxlength="512" name="desc" rows="3"
                         ondblclick="this.focus();this.select();"
-                        placeholder="测试用例描述信息"></textarea>
+                        placeholder="测试用例描述信息">{{ case.desc }}</textarea>
                 </p>
 
                 <!--测试代码-->
@@ -48,16 +44,24 @@
                     <label for="id_code" class="label-block">测试代码:</label>
                     <textarea cols="60" id="id_code" name="code" rows="12"
                         ondblclick="this.focus();this.select();"
-                        placeholder="请输入测试的代码" required></textarea>
+                        placeholder="请输入测试的代码" required>{{ case.code }}</textarea>
                 </p>
 
                 <!--用例状态：edit可见-->
                 <p>
                     <label class="required" for="id_status">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态:</label>
                     <select id="id_status" name="status" required="">
-                        <option value="draft" selected="selected">草稿</option>
-                        <option value="created" >创建</option>
+                        {% for status in status_choices %}
+                            <option value="{{ status.0 }}" {% ifequal status.0 case.status %}selected="selected" {% endifequal %}>{{ status.1 }}</option>
+                        {% endfor %}
+
                     </select>
+                </p>
+
+                <!--用例最近执行：edit可见-->
+                <p>
+                    <label for="id_execute_id">最近执行:</label>
+                    <input id="id_execute_id" name="execute_id" type="text" value="20" disabled="true" value="{{ case.execute_id }}">
                 </p>
 
                 <!--用例Cookie-->
@@ -65,8 +69,8 @@
                     <label for="id_cookies" class="label-block">Cookies:</label>
                     <!--<input id="id_cookies" maxlength="512" name="cookies" type="text" value="">-->
                     <textarea cols="60" id="id_cookies" name="cookies" rows="1"
-                        ondblclick="this.focus();this.select();"
-                        placeholder="请输入cookies:PHPSESSID=xxxx;route=xxxxx"></textarea>
+                        ondblclick="this.focus();this.select()"
+                        placeholder="请输入cookies:PHPSESSID=xxxx;route=xxxxx">{{ case.cookies }}</textarea>
                 </p>
 
                 <!--提交按钮组-->

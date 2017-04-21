@@ -170,3 +170,16 @@ class CaseAddView(LoginRequiredMixin, View):
             # 传入的数据不正确
             print(case.errors)
         return redirect(reverse('project:detail', args=[case.data['project']]))
+
+
+class CaseEditView(View):
+    """
+    测试用例编辑View
+    """
+    def get(self, request, pk):
+        # 先获取到case实例对象
+        case = get_object_or_404(Case, pk=pk)
+        return render(request, 'case/edit.html', {
+            'case': case,
+            'status_choices': Case.STATUS_CHOICES,
+        })

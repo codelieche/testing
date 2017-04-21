@@ -23,7 +23,7 @@
                                     <li class="clearfix">
                                         <a href="" class="case">{{ case.name }}</a>
                                         <div class="buttons fr">
-                                            <a href="" class="btn btn-default">删除</a>
+                                            <a href="{% url 'case:edit' case.pk %}" class="btn btn-default">编辑</a>
                                             <a href="{% url 'case:execute'  case.pk %}" class="btn btn-primary">执行测试</a>
                                         </div>
                                     </li>
