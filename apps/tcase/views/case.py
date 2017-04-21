@@ -183,3 +183,18 @@ class CaseEditView(View):
             'case': case,
             'status_choices': Case.STATUS_CHOICES,
         })
+
+    def post(self, request, pk):
+        # 先获取到case实例对象
+        case = get_object_or_404(Case, pk=pk)
+        # 实例化CaseForm
+        case_form = CaseForm(request.POST, instance=case)
+
+        if case_form.is_valid():
+            # 保存新的case
+            case_new = case_form.save()
+            return redirect(to=reverse('project:detail',
+                                       args=(case_new.project_id,)))
+        else:
+            # 验证失败
+            return redirect(to=reverse('case:edit', args=(pk,)))

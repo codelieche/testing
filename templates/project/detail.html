@@ -14,7 +14,7 @@
                 <div class="section">
                     <div class="title">
                         <span class="pts-icon circle"></span>
-                        测试列表
+                        测试用例
                     </div>
                     <div class="case-list">
                         {% if all_case %}
@@ -29,14 +29,21 @@
                                     </li>
                                 {% endfor %}
                             </ol>
+                            <div class="add-case" style="margin-top:0px;padding-top:0px;padding-bottom:0px;">
+                                <span>测试用例</span>
+                                <span style="padding-top:0px;">
+                                    <a href="{% url 'case:add' %}?project={{ project.pk }}" class="plus" style="padding-top:5px;line-height:30px;">+</a>
+                                    一个
+                                </span>
+                            </div>
                         {% else %}
                             <div class="add-case">
-                            <span>还没有任何测试用例</span>
-                            <span >
-                                <a href="{% url 'case:add' %}?project={{ project.pk }}" class="plus">+</a>
-                                一个
-                            </span>
-                        </div>
+                                <span>还没有任何测试用例</span>
+                                <span >
+                                    <a href="{% url 'case:add' %}?project={{ project.pk }}" class="plus">+</a>
+                                    一个
+                                </span>
+                            </div>
                         {% endif %}
                     </div>
                 </div>
@@ -46,7 +53,7 @@
                 <div class="section">
                     <div class="title">
                         <span class="pts-icon circle"></span>
-                        测试结果列表
+                        测试结果
                     </div>
                     <div class="report-list">
                         {% if all_report %}
