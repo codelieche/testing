@@ -5,78 +5,78 @@
 
 {% block content %}
     <div class="wrap project-detail">
-                <div class="header clearfix">
-                    <div class="title">
-                        <h2>{{ project.name }}</h2>
-                    </div>
-                </div>
-                <!--测试用例列表开始-->
-                <div class="section">
-                    <div class="title">
-                        <span class="pts-icon circle"></span>
-                        测试用例
-                    </div>
-                    <div class="case-list">
-                        {% if all_case %}
-                            <ol>
-                                {% for case in all_case %}
-                                    <li class="clearfix">
-                                        <a href="" class="case">{{ case.name }}</a>
-                                        <div class="buttons fr">
-                                            <a href="{% url 'case:edit' case.pk %}" class="btn btn-default">编辑</a>
-                                            <a href="{% url 'case:execute'  case.pk %}" class="btn btn-primary">执行测试</a>
-                                        </div>
-                                    </li>
-                                {% endfor %}
-                            </ol>
-                            <div class="add-case" style="margin-top:0px;padding-top:0px;padding-bottom:0px;">
-                                <span>测试用例</span>
-                                <span style="padding-top:0px;">
-                                    <a href="{% url 'case:add' %}?project={{ project.pk }}" class="plus" style="padding-top:5px;line-height:30px;">+</a>
-                                    一个
-                                </span>
-                            </div>
-                        {% else %}
-                            <div class="add-case">
-                                <span>还没有任何测试用例</span>
-                                <span >
-                                    <a href="{% url 'case:add' %}?project={{ project.pk }}" class="plus">+</a>
-                                    一个
-                                </span>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-                <!--测试用例列表end-->
-
-                <!--section 测试报告列表-->
-                <div class="section">
-                    <div class="title">
-                        <span class="pts-icon circle"></span>
-                        测试结果
-                    </div>
-                    <div class="report-list">
-                        {% if all_report %}
-                            {% for report in all_report %}
-                                <div class="item">
-                            <div class="title">
-                                <a href="{% url 'execute:report' report.execute_id %}" target="_blank">
-                                    {{ report.execute.name }}
-                                </a>
-                            </div>
-{#                                    这里用标签来生成对应的统计信息 #}
-                            {% execute_get_stats report.execute_id %}
-                        </div>
-                            {% endfor %}
-                        {% else %}
-                            <div class="no-report">
-                                <span>还没有任何测试结果</span>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-
+        <div class="header clearfix">
+            <div class="title">
+                <h2>{{ project.name }}</h2>
             </div>
+        </div>
+        <!--测试用例列表开始-->
+        <div class="section">
+            <div class="title">
+                <span class="pts-icon circle"></span>
+                测试用例
+            </div>
+            <div class="case-list">
+                {% if all_case %}
+                    <ol>
+                        {% for case in all_case %}
+                            <li class="clearfix">
+                                <a href="" class="case">{{ case.name }}</a>
+                                <div class="buttons fr">
+                                    <a href="{% url 'case:edit'  case.pk %}" class="btn btn-default">编辑</a>
+                                    <a href="{% url 'case:execute'  case.pk %}" class="btn btn-primary">执行测试</a>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                    <div class="add-case" style="margin-top:0px;padding-top:0px;padding-bottom:0px;">
+                        <span>测试用例</span>
+                        <span style="padding-top:0px;">
+                            <a href="{% url 'case:add' %}?project={{ project.pk }}" class="plus" style="padding-top:5px;line-height:30px;">+</a>
+                            一个
+                        </span>
+                    </div>
+                {% else %}
+                    <div class="add-case">
+                    <span>还没有任何测试用例</span>
+                    <span >
+                        <a href="{% url 'case:add' %}?project={{ project.pk }}" class="plus">+</a>
+                        一个
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <!--测试用例列表end-->
+
+        <!--section 测试报告列表-->
+        <div class="section">
+            <div class="title">
+                <span class="pts-icon circle"></span>
+                测试结果
+            </div>
+            <div class="report-list">
+                {% if all_report %}
+                    {% for report in all_report %}
+                        <div class="item">
+                    <div class="title">
+                        <a href="{% url 'execute:report' report.execute_id %}" target="_blank">
+                            {{ report.execute.name }}
+                        </a>
+                    </div>
+{#                                    这里用标签来生成对应的统计信息 #}
+                    {% execute_get_stats report.execute_id %}
+                </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-report">
+                        <span>还没有任何测试结果</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
 {% endblock %}
 
 {% block sidebar_right %}
@@ -85,13 +85,26 @@
             项目信息
         </div>
         <div class="inner">
-            项目名字
-            <br>
-            生产环境地址
-            <br>
-            相关信息
-            <br>
-            项目Logo
+            <div class="row">
+                <span class="config">项目名字:</span>
+                <span class="config-value">{{ project.name }}</span>
+            </div>
+            <div class="row">
+                <span class="config">英文名字:</span>
+                <span class="config-value">{{ project.name_en }}</span>
+            </div>
+            <div class="row">
+                <span class="config">测试地址:</span>
+                <span class="config-value">{{ project.address }}</span>
+            </div>
+            <div class="row">
+                <span class="config">生产地址:</span>
+                <span class="config-value">{{ project.address_pro }}</span>
+            </div>
+            <div class="row">
+                <span class="config">其它信息:</span>
+                <span class="config-value"></span>
+            </div>
         </div>
     </div>
 {% endblock %}

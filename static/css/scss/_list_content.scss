@@ -10,6 +10,8 @@
   .item {
     padding: 10px;
     border-bottom: 1px solid #E2E2E2;
+    overflow: hidden;
+    text-overflow: ellipsis;
     &:hover {
       background-color: #F8F8F8;
     }

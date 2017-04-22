@@ -299,7 +299,9 @@ ul {
   /* item样式end */ }
   .main .content .list .item {
     padding: 10px;
-    border-bottom: 1px solid #E2E2E2; }
+    border-bottom: 1px solid #E2E2E2;
+    overflow: hidden;
+    text-overflow: ellipsis; }
     .main .content .list .item:hover {
       background-color: #F8F8F8; }
     .main .content .list .item .item-info {

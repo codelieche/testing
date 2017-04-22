@@ -172,7 +172,7 @@ class CaseAddView(LoginRequiredMixin, View):
         return redirect(reverse('project:detail', args=[case.data['project']]))
 
 
-class CaseEditView(View):
+class CaseEditView(LoginRequiredMixin, View):
     """
     测试用例编辑View
     """
