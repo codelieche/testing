@@ -44,8 +44,10 @@
                 <p>
                     <label class="required" for="id_way">编码方式:</label>
                     <select id="id_way" name="way" required="">
-                        <option value="shiwu" selected="selected">事务</option>
-                        <option value="code">代码</option>
+                        <option value="shiwu"
+                                {% ifequal  'shiwu' case.way %}selected="selected"{% endifequal %}>事务</option>
+                        <option value="code"
+                            {% ifequal  'code' case.way %}selected="selected"{% endifequal %}>代码</option>
                     </select>
                     <span class="hint">
                         只能使用一种方式
@@ -54,18 +56,29 @@
                 <div class="code-way">
                     <label class="label-block" >事务列表:</label>
                     <ol class="shiwu-list">
-                        <li class="clearfix">
-                            <a class="shiwu">事务1</a>
-                            <div class="buttons fr">
-                                <div class="btn btn-default">删除</div>
-                                <div class="btn btn-primary">编辑</div>
-                            </div>
-                        </li>
+                            {% for shiwu in case.shiwu_set %}
+                                <li class="clearfix">
+                                    <a class="shiwu">事务1</a>
+                                    <div class="buttons fr">
+                                        <div class="btn btn-default">删除</div>
+                                        <div class="btn btn-primary">编辑</div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+
                     </ol>
-                    <div class="add-shiwu">
-                        <span>还没有任何事务</span>
-                        <span><a class="plus" onclick="showShiwuMask();">+</a>一个</span>
-                    </div>
+                    {% if case.shiwu_set %}
+                        <div class="add-shiwu" style="padding-bottom: 20px;">
+                            <span>测试用例事务</span>
+                            <span><a class="plus" onclick="showShiwuMask();">+</a>一个</span>
+                        </div>
+                    {% else %}
+                        <div class="add-shiwu">
+                            <span>还没有任何事务</span>
+                            <span><a class="plus" onclick="showShiwuMask();">+</a>一个</span>
+                        </div>
+                    {% endif %}
+
                 </div>
 
                 <!--测试代码-->

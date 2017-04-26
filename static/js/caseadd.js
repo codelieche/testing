@@ -21,6 +21,15 @@ var showShiwuMask = function(){
     window.scrollTo(0, 0);
 }
 
+var wayChangen = function() {
+        if($('#id_way').val() === 'shiwu'){
+            $('.code-way').eq(0).show();
+            $('.code-way').eq(1).hide();
+        }else{
+            $('.code-way').eq(1).show();
+            $('.code-way').eq(0).hide();
+        }
+    }
 
 $(function(){
    // 关闭mask
@@ -29,13 +38,6 @@ $(function(){
     });
     $('.code-way').eq(0).show();
 
-    $('#id_way').on('change',function(){
-        if($('#id_way').val() === 'shiwu'){
-            $('.code-way').eq(0).show();
-            $('.code-way').eq(1).hide();
-        }else{
-            $('.code-way').eq(1).show();
-            $('.code-way').eq(0).hide();
-        }
-    });
+    $('#id_way').on('change', wayChangen);
+    wayChangen();
 });

@@ -10,4 +10,4 @@ class CaseForm(forms.ModelForm):
     """
     class Meta:
         model = Case
-        fields = ('project', 'name', 'desc', 'code', 'status', 'cookies')
+        fields = ('project', 'name', 'desc', 'way', 'code', 'status', 'cookies')

@@ -24,6 +24,10 @@ class Case(models.Model):
         ('stoped', '已停止'),
         ('delete', "已删除")
     )
+    WAY_CHOICES = (
+        ('shiwu', "事务"),
+        ('code', '代码')
+    )
     # 当测试用例刚保存，状态为created
     # 创建好了case_id.py文件，修改状态为`ready`状态, 当新创建了execute也改成ready
     # 当开始execute的同时，也修改case的状态为：running
@@ -35,6 +39,9 @@ class Case(models.Model):
     desc = models.CharField(max_length=512, blank=True, verbose_name="描述")
     user = models.ForeignKey(to=UserProfile, blank=True, verbose_name="添加者")
 
+    # 编码方式
+    way = models.CharField(max_length=10, choices=WAY_CHOICES, default='shiwu',
+                           verbose_name="编码方式")
     # code主要是：get、post访问页面的函数
     code = models.TextField(blank=True, null=True, verbose_name="测试代码")
     # 保存下状态
