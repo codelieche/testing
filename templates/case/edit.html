@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}编辑测试用例-{{ case.name }} | 性能测试{% endblock %}
+{% load staticfiles %}
 
 {% block content %}
     <div class="wrap case">
@@ -39,13 +40,40 @@
                         placeholder="测试用例描述信息">{{ case.desc }}</textarea>
                 </p>
 
-                <!--测试代码-->
+                <!--选择编写方式-->
                 <p>
-                    <label for="id_code" class="label-block">测试代码:</label>
-                    <textarea cols="60" id="id_code" name="code" rows="12"
-                        ondblclick="this.focus();this.select();"
-                        placeholder="请输入测试的代码" required>{{ case.code }}</textarea>
+                    <label class="required" for="id_way">编码方式:</label>
+                    <select id="id_way" name="way" required="">
+                        <option value="shiwu" selected="selected">事务</option>
+                        <option value="code">代码</option>
+                    </select>
+                    <span class="hint">
+                        只能使用一种方式
+                    </span>
                 </p>
+                <div class="code-way">
+                    <label class="label-block" >事务列表:</label>
+                    <ol class="shiwu-list">
+                        <li class="clearfix">
+                            <a class="shiwu">事务1</a>
+                            <div class="buttons fr">
+                                <div class="btn btn-default">删除</div>
+                                <div class="btn btn-primary">编辑</div>
+                            </div>
+                        </li>
+                    </ol>
+                    <div class="add-shiwu">
+                        <span>还没有任何事务</span>
+                        <span><a class="plus" onclick="showShiwuMask();">+</a>一个</span>
+                    </div>
+                </div>
+
+                <!--测试代码-->
+                <div class="code-way">
+                    <label for="id_code" class="label-block">测试代码:</label>
+                    <textarea cols="60" id="id_code" name="code" rows="16"
+                              placeholder="请输入测试的代码">{{ case.code }}</textarea>
+                </div>
 
                 <!--用例状态：edit可见-->
                 <p>
@@ -82,4 +110,68 @@
         </div>
         <!--添加case内容end-->
     </div>
+{% endblock %}
+
+{% block custom_mask %}
+    <div class="mask container mask-shiwu">
+        <div class="mask-wrap case">
+            <div class="section clearfix">
+                <div class="title fl">
+                    <span class="pts-icon circle"></span>
+                    添加事务
+                </div>
+                <div class="btn btn-default fr" id="mask-close">关闭</div>
+                <div class="clear"></div>
+                <form action="">
+                <!--事务名称-->
+                <p>
+                    <label for="id_name2">事务名称:</label>
+                    <input id="id_name2" maxlength="100" name="name" type="text" value="" required=""
+                           placeholder="首页">
+                    <label for="id_startup" style="width: 50px; margin-left: 30px;">Startup: </label>
+                    <input type="checkbox" value="startup" id="id_startup" style="width:30px;"
+                           checked>
+                </p>
+
+                <!--请求方法和网址-->
+                <p>
+                    <!--<label class="required" for="id_method">状态:</label>-->
+                    <select id="id_method" name="method" required="">
+                        <option value="GET" selected="selected">GET</option>
+                        <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
+                        <option value="DELETE">DELETE</option>
+                    </select>
+                    <input id="id_url" maxlength="120" name="url" type="text" value="" required=""
+                           placeholder="请输入网址" style="margin-left: 0px;width:80%;line-height:20px;">
+                </p>
+
+                <!--请求Body-->
+                <div class="body-content clearfix">
+                    <div class="body-title fl">请求Body:</div>
+                    <div class="body-data fl" style="margin-left: 10px">
+                        <div class="box" style="">
+                            <input type="text" class="field" name="key" placeholder="key">
+                            <input type="text" class="field" name="value" placeholder="value">
+                            <a class="fieldDel btn btn-default" onclick="fieldDelClick(this);">Del</a>
+                            <a class="fieldAdd btn btn-primary" onclick="fieldAddClick(this);">+</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--提交按钮组-->
+                <div class="buttons">
+                    <input type="reset" class="btn btn-default" value="重置">
+                    <input type="submit" class="btn btn-primary" value="添加">
+                </div>
+            </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script src="{% static 'js/zepto.min.js' %}"></script>
+    <script src="{% static 'js/caseadd.js' %}"></script>
 {% endblock %}
