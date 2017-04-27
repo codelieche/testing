@@ -58,18 +58,28 @@
                 <div class="code-way">
                     <label class="label-block" >事务列表:</label>
                     <ol class="shiwu-list">
-                        <li class="clearfix">
-                            <a class="shiwu">事务1</a>
-                            <div class="buttons fr">
-                                <div class="btn btn-default">删除</div>
-                                <div class="btn btn-primary">编辑</div>
-                            </div>
-                        </li>
+                            {% for shiwu in case.shiwu_set.all %}
+                                <li class="clearfix">
+                                    <a class="shiwu" data-id="{{ shiwu.id }}">{{ shiwu.name }}</a>
+                                    <div class="buttons fr">
+                                        <div class="btn btn-default">删除</div>
+                                        <div class="btn btn-primary">编辑</div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+
                     </ol>
-                    <div class="add-shiwu">
-                        <span>还没有任何事务</span>
-                        <span><a class="plus" onclick="showShiwuMask();">+</a>一个</span>
-                    </div>
+                    {% if case.shiwu_set %}
+                        <div class="add-shiwu" style="padding-bottom: 20px;">
+                            <span>测试用例事务</span>
+                            <span><a class="plus" onclick="showShiwuMask();">+</a>一个</span>
+                        </div>
+                    {% else %}
+                        <div class="add-shiwu">
+                            <span>还没有任何事务</span>
+                            <span><a class="plus" onclick="showShiwuMask();">+</a>一个</span>
+                        </div>
+                    {% endif %}
                 </div>
 
                 <!--测试代码-->
@@ -118,15 +128,16 @@
                 </div>
                 <div class="btn btn-default fr" id="mask-close">关闭</div>
                 <div class="clear"></div>
-                <form action="">
+                <form action="{% url 'api:shiwu:add' %}" method="POST">
                 <!--事务名称-->
                 <p>
                     <label for="id_name2">事务名称:</label>
                     <input id="id_name2" maxlength="100" name="name" type="text" value="" required=""
                            placeholder="首页">
                     <label for="id_startup" style="width: 50px; margin-left: 30px;">Startup: </label>
-                    <input type="checkbox" value="startup" id="id_startup" style="width:30px;"
+                    <input type="checkbox" name="is_startup" id="id_startup" style="width:30px;"
                            checked>
+                    {% csrf_token %}
                 </p>
 
                 <!--请求方法和网址-->

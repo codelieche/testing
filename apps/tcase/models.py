@@ -127,6 +127,9 @@ class Shiwu(models.Model):
                               verbose_name="请求方法", default='get')
     url = models.CharField(max_length=100, verbose_name="请求网址")
     body = models.TextField(blank=True, null=True, verbose_name="请求内容")
+    user = models.ForeignKey(to=UserProfile, blank=True, null=True,
+                             default='', verbose_name="添加者")
+    add_time = models.DateTimeField(auto_now_add=True, verbose_name="添加时间")
 
     def __str__(self):
         return self.name

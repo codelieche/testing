@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from django import forms
 
-from .models import Case
+from .models import Case, Shiwu
 
 
 class CaseForm(forms.ModelForm):
@@ -11,3 +11,12 @@ class CaseForm(forms.ModelForm):
     class Meta:
         model = Case
         fields = ('project', 'name', 'desc', 'way', 'code', 'status', 'cookies')
+
+
+class ShiwuForm(forms.ModelForm):
+    """
+    请求事务Model Form
+    """
+    class Meta:
+        model = Shiwu
+        fields = ('name', 'is_startup', 'method', 'url', 'body')
