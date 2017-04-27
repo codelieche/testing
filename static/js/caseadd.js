@@ -21,7 +21,7 @@ var showShiwuMask = function(){
     window.scrollTo(0, 0);
 }
 
-var wayChangen = function() {
+var wayChange = function() {
         if($('#id_way').val() === 'shiwu'){
             $('.code-way').eq(0).show();
             $('.code-way').eq(1).hide();
@@ -36,8 +36,8 @@ $(function(){
     $('#mask-close').on('click', function(){
         $('.mask').hide();
     });
-    $('.code-way').eq(0).show();
+    // $('.code-way').eq(0).show();
 
-    $('#id_way').on('change', wayChangen);
-    wayChangen();
+    $('#id_way').on('change', wayChange);
+    wayChange();
 });
