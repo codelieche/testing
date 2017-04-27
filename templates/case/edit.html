@@ -56,9 +56,9 @@
                 <div class="code-way">
                     <label class="label-block" >事务列表:</label>
                     <ol class="shiwu-list">
-                            {% for shiwu in case.shiwu_set %}
+                            {% for shiwu in case.shiwu_set.all %}
                                 <li class="clearfix">
-                                    <a class="shiwu">事务1</a>
+                                    <a class="shiwu" data-id="{{ shiwu.id }}">{{ shiwu.name }}</a>
                                     <div class="buttons fr">
                                         <div class="btn btn-default">删除</div>
                                         <div class="btn btn-primary">编辑</div>

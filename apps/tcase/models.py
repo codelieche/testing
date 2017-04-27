@@ -65,6 +65,7 @@ class Case(models.Model):
         verbose_name_plural = verbose_name
 
 
+@python_2_unicode_compatible
 class Execute(models.Model):
     """
     测试用例执行Model
@@ -103,3 +104,33 @@ class Execute(models.Model):
     class Meta:
         verbose_name = "执行测试"
         verbose_name_plural = "执行测试列表"
+
+
+@python_2_unicode_compatible
+class Shiwu(models.Model):
+    """
+    事务Modele
+    """
+    METHOD_CHOICES = (
+        ('get', 'GET'),
+        ('post', 'POST'),
+        ('put', 'PUT'),
+        ('delete', 'DELETE')
+    )
+    name = models.CharField(max_length=100, verbose_name="事务名")
+    # 用例与事务是多对多关系 一个case有多个shiwu，一个shiwu可以用到多个用例中
+    # 实务获取case: obj_shiwu.cases.all()
+    # 测试用例获取shiwu：obj_case.shiwu_set.all()
+    cases = models.ManyToManyField(to=Case, verbose_name="用例")
+    is_startup = models.BooleanField(default=False, verbose_name="启动准备")
+    method = models.CharField(max_length=10, choices=METHOD_CHOICES,
+                              verbose_name="请求方法", default='get')
+    url = models.CharField(max_length=100, verbose_name="请求网址")
+    body = models.TextField(blank=True, null=True, verbose_name="请求内容")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "请求事务"
+        verbose_name_plural = verbose_name
