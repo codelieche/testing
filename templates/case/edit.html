@@ -136,46 +136,53 @@
                 <div class="btn btn-default fr" id="mask-close">关闭</div>
                 <div class="clear"></div>
                 <form action="">
-                <!--事务名称-->
-                <p>
-                    <label for="id_name2">事务名称:</label>
-                    <input id="id_name2" maxlength="100" name="name" type="text" value="" required=""
-                           placeholder="首页">
-                    <label for="id_startup" style="width: 50px; margin-left: 30px;">Startup: </label>
-                    <input type="checkbox" name="is_startup" id="id_startup" style="width:30px;">
-                </p>
+                    <!--项目列表选项-->
+                    <p>
+                        <label class="required" for="id_project2">项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目:</label>
+                        <select id="id_project2" name="project" required="">
+                            <option value="{{ case.project_id }}" selected>{{ case.project.name }}</option>
+                        </select>
+                    </p>
+                    <!--事务名称-->
+                    <p>
+                        <label for="id_name2">事务名称:</label>
+                        <input id="id_name2" maxlength="100" name="name" type="text" value="" required=""
+                               placeholder="首页">
+                        <label for="id_startup" style="width: 50px; margin-left: 30px;">Startup: </label>
+                        <input type="checkbox" name="is_startup" id="id_startup" style="width:30px;">
+                    </p>
 
-                <!--请求方法和网址-->
-                <p>
-                    <select id="id_method" name="method" required="">
-                        <option value="get" selected="selected">GET</option>
-                        <option value="post">POST</option>
-                        <option value="put">PUT</option>
-                        <option value="delete">DELETE</option>
-                    </select>
-                    <input id="id_url" maxlength="120" name="url" type="text" value="" required=""
-                           placeholder="请输入网址" style="margin-left: 0px;width:80%;line-height:20px;">
-                </p>
+                    <!--请求方法和网址-->
+                    <p>
+                        <select id="id_method" name="method" required="">
+                            <option value="get" selected="selected">GET</option>
+                            <option value="post">POST</option>
+                            <option value="put">PUT</option>
+                            <option value="delete">DELETE</option>
+                        </select>
+                        <input id="id_url" maxlength="120" name="url" type="text" value="" required=""
+                               placeholder="请输入网址" style="margin-left: 0px;width:80%;line-height:20px;">
+                    </p>
 
-                <!--请求Body-->
-                <div class="body-content clearfix">
-                    <div class="body-title fl">请求Body:</div>
-                    <div class="body-data fl">
-                        <div class="box" style="">
-                            <input type="text" class="field" name="key" placeholder="key">
-                            <input type="text" class="field" name="value" placeholder="value">
-                            <a class="fieldDel btn btn-default" onclick="fieldDelClick(this);">Del</a>
-                            <a class="fieldAdd btn btn-primary" onclick="fieldAddClick(this);">+</a>
+                    <!--请求Body-->
+                    <div class="body-content clearfix">
+                        <div class="body-title fl">请求Body:</div>
+                        <div class="body-data fl">
+                            <div class="box" style="">
+                                <input type="text" class="field" name="key" placeholder="key">
+                                <input type="text" class="field" name="value" placeholder="value">
+                                <a class="fieldDel btn btn-default" onclick="fieldDelClick(this);">Del</a>
+                                <a class="fieldAdd btn btn-primary" onclick="fieldAddClick(this);">+</a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!--提交按钮组-->
-                <div class="buttons">
-                    <input type="reset" class="btn btn-default" value="重置">
-                    <input type="submit" class="btn btn-primary" value="添加">
-                </div>
-            </form>
+                    <!--提交按钮组-->
+                    <div class="buttons">
+                        <input type="reset" class="btn btn-default" value="重置">
+                        <input type="submit" class="btn btn-primary" value="添加">
+                    </div>
+                </form>
             </div>
         </div>
 

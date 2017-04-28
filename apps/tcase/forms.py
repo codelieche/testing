@@ -19,4 +19,4 @@ class ShiwuForm(forms.ModelForm):
     """
     class Meta:
         model = Shiwu
-        fields = ('name', 'is_startup', 'method', 'url', 'body')
+        fields = ('name', 'project', 'is_startup', 'method', 'url', 'body')

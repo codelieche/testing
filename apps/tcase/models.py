@@ -118,6 +118,7 @@ class Shiwu(models.Model):
         ('delete', 'DELETE')
     )
     name = models.CharField(max_length=100, verbose_name="事务名")
+    project = models.ForeignKey(to=Project, verbose_name="项目")
     # 用例与事务是多对多关系 一个case有多个shiwu，一个shiwu可以用到多个用例中
     # 实务获取case: obj_shiwu.cases.all()
     # 测试用例获取shiwu：obj_case.shiwu_set.all()
