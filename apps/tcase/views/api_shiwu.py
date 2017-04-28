@@ -4,11 +4,14 @@
 """
 import json
 
+from django.shortcuts import get_object_or_404
 from django.views.generic import View
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from django.template import loader, Context
 
 from utils.mixins import LoginRequiredMixin
 
+from ..models import Shiwu
 from ..forms import ShiwuForm
 
 
@@ -32,7 +35,28 @@ class ShiwuAddApiView(LoginRequiredMixin, View):
                     body[keys[i]] = values[i]
             shiwu.body = json.dumps(body)
             shiwu.save()
-            return JsonResponse({'status': "success", "msg": "OK"})
+            # 渲染li html
+            t = loader.get_template('case/shiwu_li.html')
+            # 渲染内容
+            c = Context({'shiwu': shiwu})
+            # 渲染html
+            html = t.render(c)
+            return HttpResponse(html)
         else:
             return JsonResponse({"status": "failure",
-                                 "msg": str(shiwu_form.errors)})
+                                 "msg": str(shiwu_form.errors)},
+                                status=400)
+
+
+class ShiwuEditView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        # 先获取到事务
+        shiwu = get_object_or_404(Shiwu, pk=pk)
+        # 获取loader html
+        t = loader.get_template('case/edit_shiwu.html')
+        # 渲染内容
+        all_method = Shiwu.METHOD_CHOICES
+        c = Context({'shiwu': shiwu, 'all_method':all_method})
+        # 渲染html
+        html = t.render(c)
+        return HttpResponse(html)

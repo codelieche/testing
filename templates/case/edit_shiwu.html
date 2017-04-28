@@ -1,0 +1,58 @@
+<div class="mask-wrap case">
+    <div class="section clearfix">
+        <div class="title fl">
+            <span class="pts-icon circle"></span>
+            编辑事务
+        </div>
+        <div class="btn btn-default fr" id="mask-alert-close" onclick="maskAlertClose();">关闭</div>
+        <div class="clear"></div>
+        <form action="{% url 'api:shiwu:edit' shiwu.pk %}" method="POST">
+            <!--项目列表选项-->
+            <p>
+                <label class="required" for="id_project3">项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目:</label>
+                <select id="id_project3" name="project" required="">
+                        <option value="{{ shiwu.project_id }}">{{ shiwu.project.name }}</option>
+                </select>
+            </p>
+            <!--事务名称-->
+            <p>
+                <label for="id_name3">事务名称:</label>
+                <input id="id_name3" maxlength="100" name="name" type="text" value="{{ shiwu.name }}" required=""
+                       placeholder="首页">
+                <label for="id_startup" style="width: 50px; margin-left: 30px;">Startup: </label>
+                <input type="checkbox" name="is_startup" id="id_startup" style="width:30px;">
+                {% csrf_token %}
+            </p>
+
+            <!--请求方法和网址-->
+            <p>
+                <select id="id_method" name="method" required="">
+                    {% for method in all_method %}
+                        <option value="{{ method.0 }}" {% ifequal method.0 shiwu.method %}selected="selected"{% endifequal %}>{{ method.1 }}</option>
+                    {% endfor %}
+                </select>
+                <input maxlength="120" name="url" type="text" value="{{ shiwu.url }}" required=""
+                       placeholder="请输入网址" style="margin-left: 0px;width:80%;line-height:20px;">
+            </p>
+
+            <!--请求Body-->
+            <div class="body-content clearfix">
+                <div class="body-title fl">请求Body:</div>
+                <div class="body-data fl">
+                    <div class="box" style="">
+                        <input type="text" class="field" name="key" placeholder="key">
+                        <input type="text" class="field" name="value" placeholder="value">
+                        <a class="fieldDel btn btn-default" onclick="fieldDelClick(this);">Del</a>
+                        <a class="fieldAdd btn btn-primary" onclick="fieldAddClick(this);">+</a>
+                    </div>
+                </div>
+            </div>
+
+            <!--提交按钮组-->
+            <div class="buttons">
+                <input type="reset" class="btn btn-default" value="重置">
+                <input type="submit" class="btn btn-primary" value="编辑">
+            </div>
+        </form>
+    </div>
+</div>

@@ -682,47 +682,47 @@ ul {
 
 /* 统计结果表单样式end */
 /* case header样式 */
-.container .case {
+.case {
   padding: 10px 15px; }
-  .container .case form p {
+  .case form p {
     padding: 2px 10px; }
-  .container .case form label {
+  .case form label {
     width: 80px;
     display: inline-block;
     text-align: left; }
-    .container .case form label.label-block {
+    .case form label.label-block {
       display: block; }
-  .container .case form select {
+  .case form select {
     padding: 4px 6px;
     font-size: 14px;
     line-height: 30px;
     height: 30px;
     outline: none;
     border: 1px solid #ccc; }
-  .container .case form input {
+  .case form input {
     padding: 4px 6px;
     font-size: 14px;
     border-radius: 5px;
     border: 1px solid #ccc;
     outline: none; }
-  .container .case form textarea {
+  .case form textarea {
     border-radius: 5px;
     border: 1px solid #cccccc;
     outline: none;
     width: 100%;
     line-height: 24px;
     overflow-y: visible; }
-  .container .case form label + textarea {
+  .case form label + textarea {
     margin-top: 5px; }
-  .container .case form .buttons {
+  .case form .buttons {
     padding: 5px;
     text-align: center; }
-    .container .case form .buttons .btn {
+    .case form .buttons .btn {
       width: 80px;
       padding: 8px; }
-    .container .case form .buttons .btn + .btn {
+    .case form .buttons .btn + .btn {
       margin-left: 20px; }
-  .container .case form .hint {
+  .case form .hint {
     margin-left: 6px;
     font-size: 12px;
     color: #999;
@@ -730,16 +730,16 @@ ul {
     top: 5px; }
 
 /* 添加Case tools page样式*/
-.container .case .body-content {
+.case .body-content {
   padding: 2px 10px; }
-.container .case .body-title {
+.case .body-title {
   width: 80px; }
-.container .case .body-data .box {
+.case .body-data .box {
   margin-bottom: 10px; }
-  .container .case .body-data .box input + input {
+  .case .body-data .box input + input {
     margin-left: 10px;
     margin-right: 10px; }
-  .container .case .body-data .box .btn {
+  .case .body-data .box .btn {
     margin-left: 5px;
     width: 25px;
     padding: 2px 10px; }
@@ -765,36 +765,36 @@ ul {
     border-radius: 5px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5); }
 
-.container .case .code-way {
+.case .code-way {
   display: none;
   padding: 2px 10px; }
-  .container .case .code-way .shiwu-list {
+  .case .code-way .shiwu-list {
     margin-top: 0px; }
-  .container .case .code-way ul, .container .case .code-way ol {
+  .case .code-way ul, .case .code-way ol {
     margin-left: 15px;
     padding-left: 15px; }
-    .container .case .code-way ul li, .container .case .code-way ol li {
+    .case .code-way ul li, .case .code-way ol li {
       padding: 3px;
       border-bottom: 1px dashed #d9d9d9; }
-      .container .case .code-way ul li .shiwu, .container .case .code-way ol li .shiwu {
+      .case .code-way ul li .shiwu, .case .code-way ol li .shiwu {
         display: none; }
-      .container .case .code-way ul li span, .container .case .code-way ol li span {
+      .case .code-way ul li span, .case .code-way ol li span {
         display: inline-block;
         margin-top: 12px; }
-      .container .case .code-way ul li .buttons, .container .case .code-way ol li .buttons {
+      .case .code-way ul li .buttons, .case .code-way ol li .buttons {
         padding-right: 10px; }
-        .container .case .code-way ul li .buttons .btn, .container .case .code-way ol li .buttons .btn {
+        .case .code-way ul li .buttons .btn, .case .code-way ol li .buttons .btn {
           font-size: 14px;
           padding: 3px 5px;
           margin-bottom: 0px;
           width: 70px; }
-        .container .case .code-way ul li .buttons .btn + .btn, .container .case .code-way ol li .buttons .btn + .btn {
+        .case .code-way ul li .buttons .btn + .btn, .case .code-way ol li .buttons .btn + .btn {
           margin-left: 10px; }
-  .container .case .code-way .add-shiwu {
+  .case .code-way .add-shiwu {
     text-align: center;
     padding: 0 10px;
     position: relative; }
-    .container .case .code-way .add-shiwu .plus {
+    .case .code-way .add-shiwu .plus {
       font-size: 60px;
       color: #009dff;
       margin: 0 5px;

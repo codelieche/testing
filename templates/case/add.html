@@ -64,7 +64,7 @@
                                 <input class="shiwu" name="shiwu" value="{{ shiwu.id }}" type="checkbox">
                                 <span>{{ shiwu.name }}</span>
                                 <div class="buttons fr">
-                                    <div class="btn btn-default">删除</div>
+                                    <div class="btn btn-default" onclick="removeShiwu(this);">移出</div>
                                     <div class="btn btn-primary">编辑</div>
                                 </div>
                             </li>
@@ -125,7 +125,10 @@
 {% endblock %}
 
 {% block custom_mask %}
-    <div class="mask container mask-shiwu">
+    <div class="mask mask-alert">
+
+    </div>
+    <div class="mask mask-shiwu">
         <div class="mask-wrap case">
             <div class="section clearfix">
                 <div class="title fl">
