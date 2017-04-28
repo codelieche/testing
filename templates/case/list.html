@@ -95,7 +95,7 @@
         <div class="inner">
             <div class="right-list">
                 {% get_latest_cases as latest_cases %}
-                <ur>
+                <ul>
                     {% for case in latest_cases %}
                         <li>
                             <a href="{% url 'project:detail' case.project_id %}" target="_blank">
@@ -103,7 +103,7 @@
                             </a>
                         </li>
                     {% endfor %}
-                </ur>
+                </ul>
             </div>
         </div>
     </div>

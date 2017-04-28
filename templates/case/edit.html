@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}编辑测试用例-{{ case.name }} | 性能测试{% endblock %}
 {% load staticfiles %}
+{% load case_tags %}
 
 {% block content %}
     <div class="wrap case">
@@ -123,6 +124,11 @@
         </div>
         <!--添加case内容end-->
     </div>
+{% endblock %}
+
+{% block sidebar_right %}
+    <!--获取项目最新的请求事务列表-->
+    {% get_project_shiwu case.project_id %}
 {% endblock %}
 
 {% block custom_mask %}

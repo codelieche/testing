@@ -290,6 +290,24 @@ ul {
         .container .main .sidebar .inner .right-list li a:hover {
           color: #4A90E2; }
 
+.container .main .sidebar .panel .inner ol.shiwu-list {
+  margin: 0 5px;
+  padding-left: 20px; }
+  .container .main .sidebar .panel .inner ol.shiwu-list li {
+    list-style: decimal !important;
+    padding: 3px;
+    border-bottom: 1px dashed #d9d9d9; }
+    .container .main .sidebar .panel .inner ol.shiwu-list li span {
+      display: inline-block;
+      margin-top: 12px; }
+    .container .main .sidebar .panel .inner ol.shiwu-list li .buttons {
+      padding-right: 10px; }
+      .container .main .sidebar .panel .inner ol.shiwu-list li .buttons .btn {
+        font-size: 14px;
+        padding: 3px 5px;
+        margin-bottom: 0px;
+        width: 70px; }
+
 /*
 这个文件主要是编写，首页，项目列表的样式
 */

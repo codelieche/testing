@@ -1,0 +1,17 @@
+<div class="panel">
+    <div class="header">
+        事务列表
+    </div>
+    <div class="inner">
+        <ol class="right-list shiwu-list">
+            {% for shiwu in all_shiwu %}
+                <li class="clearfix">
+                    <span>{{ shiwu.name }}</span>
+                    <div class="buttons fr" data-id="{{ shiwu.id }}">
+                        <div class="btn btn-default">添加</div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
