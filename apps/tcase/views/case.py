@@ -13,7 +13,7 @@ from django.core.urlresolvers import reverse
 from tproject.models import Project
 from utils.mixins import LoginRequiredMixin
 from utils.make_case_file import make_case_file
-from ..models import Case, Execute
+from ..models import Case, Execute, Shiwu
 from ..forms import CaseForm
 
 # Create your views here.
@@ -160,19 +160,24 @@ class CaseAddView(LoginRequiredMixin, View):
         # post添加case
         # 因为case需要user字段，但是user_id不从前端传入，直接去request.user.pk
         # 这样在实例化CaseForm的时候，传入个instance对象
-        case = CaseForm(request.POST, instance=Case(user_id=request.user.pk))
+        case_form = CaseForm(request.POST, instance=Case(user_id=request.user.pk))
         # print(case)
         print(request.POST.getlist('shiwu'))
-        # 获取到shiwu的列表
 
-        if case.is_valid():
+        if case_form.is_valid():
             # 传入的数据ok
             # print(case.data, case.data['project'])
-            case.save()
+            case = case_form.save()
+            # 获取到shiwu的列表
+            shiwu_id_list = request.POST.getlist('shiwu')
+            # 给case添加请求事务
+            shiwu_list = Shiwu.objects.filter(pk__in=shiwu_id_list)
+            for shiwu in shiwu_list:
+                case.shiwu_set.add(shiwu)
         else:
             # 传入的数据不正确
-            print(case.errors)
-        return redirect(reverse('project:detail', args=[case.data['project']]))
+            print(case_form.errors)
+        return redirect(reverse('project:detail', args=[case_form.data['project']]))
 
 
 class CaseEditView(LoginRequiredMixin, View):
@@ -196,6 +201,14 @@ class CaseEditView(LoginRequiredMixin, View):
         if case_form.is_valid():
             # 保存新的case
             case_new = case_form.save()
+            # 获取到shiwu的列表
+            shiwu_id_list = request.POST.getlist('shiwu')
+            # 给case添加请求事务
+            shiwu_list = Shiwu.objects.filter(pk__in=shiwu_id_list)
+            # 清楚开始所有的事务列表，重新添加一次
+            case_new.shiwu_set.clear()
+            for shiwu in shiwu_list:
+                case_new.shiwu_set.add(shiwu)
             return redirect(to=reverse('project:detail',
                                        args=(case_new.project_id,)))
         else:

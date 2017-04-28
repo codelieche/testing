@@ -56,7 +56,14 @@ class ShiwuEditView(LoginRequiredMixin, View):
         t = loader.get_template('case/edit_shiwu.html')
         # 渲染内容
         all_method = Shiwu.METHOD_CHOICES
-        c = Context({'shiwu': shiwu, 'all_method':all_method})
+        # 处理请求事务的body信息
+        body = json.loads(shiwu.body)
+
+        c = Context({
+            'shiwu': shiwu,
+            'all_method': all_method,
+            'body': body
+        })
         # 渲染html
         html = t.render(c)
         return HttpResponse(html)

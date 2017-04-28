@@ -39,7 +39,7 @@ var removeShiwu = function(ele){
 // 点击添加事务，到事务列表
 var addShiwu = function(ele){
     var html = '<li class="clearfix">' +
-    '<input class="shiwu" name="shiwu" value="VALUE" type="checkbox">' +
+    '<input class="shiwu" name="shiwu" value="VALUE" type="checkbox" checked>' +
     '<span>NAME</span>' +
     '<div class="buttons fr">' +
         '<div class="btn btn-default" onclick="removeShiwu(this);">移出</div>' +
