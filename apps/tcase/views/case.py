@@ -162,6 +162,9 @@ class CaseAddView(LoginRequiredMixin, View):
         # 这样在实例化CaseForm的时候，传入个instance对象
         case = CaseForm(request.POST, instance=Case(user_id=request.user.pk))
         # print(case)
+        print(request.POST.getlist('shiwu'))
+        # 获取到shiwu的列表
+
         if case.is_valid():
             # 传入的数据ok
             # print(case.data, case.data['project'])

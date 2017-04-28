@@ -28,7 +28,8 @@ class ShiwuAddApiView(LoginRequiredMixin, View):
             values = request.POST.getlist('value')
             body = {}
             for i in range(len(keys)):
-                body[keys[i]] = values[i]
+                if keys[i] and values[i]:
+                    body[keys[i]] = values[i]
             shiwu.body = json.dumps(body)
             shiwu.save()
             return JsonResponse({'status': "success", "msg": "OK"})

@@ -750,23 +750,27 @@ ul {
 .container .case .code-way {
   display: none;
   padding: 2px 10px; }
-  .container .case .code-way ol {
+  .container .case .code-way .shiwu-list {
+    margin-top: 0px; }
+  .container .case .code-way ul, .container .case .code-way ol {
     margin-left: 15px;
     padding-left: 15px; }
-    .container .case .code-way ol li {
-      margin-bottom: 5px;
+    .container .case .code-way ul li, .container .case .code-way ol li {
+      padding: 3px;
       border-bottom: 1px dashed #d9d9d9; }
-      .container .case .code-way ol li .shiwu {
+      .container .case .code-way ul li .shiwu, .container .case .code-way ol li .shiwu {
+        display: none; }
+      .container .case .code-way ul li span, .container .case .code-way ol li span {
         display: inline-block;
-        padding-top: 10px; }
-      .container .case .code-way ol li .buttons {
+        margin-top: 12px; }
+      .container .case .code-way ul li .buttons, .container .case .code-way ol li .buttons {
         padding-right: 10px; }
-        .container .case .code-way ol li .buttons .btn {
+        .container .case .code-way ul li .buttons .btn, .container .case .code-way ol li .buttons .btn {
           font-size: 14px;
           padding: 3px 5px;
-          margin-bottom: 5px;
+          margin-bottom: 0px;
           width: 70px; }
-        .container .case .code-way ol li .buttons .btn + .btn {
+        .container .case .code-way ul li .buttons .btn + .btn, .container .case .code-way ol li .buttons .btn + .btn {
           margin-left: 10px; }
   .container .case .code-way .add-shiwu {
     text-align: center;
