@@ -6,8 +6,9 @@ import json
 
 from django.shortcuts import get_object_or_404
 from django.views.generic import View
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, Http404
 from django.template import loader, Context
+from django.template.loader import render_to_string
 
 from utils.mixins import LoginRequiredMixin
 
@@ -50,20 +51,41 @@ class ShiwuAddApiView(LoginRequiredMixin, View):
 
 class ShiwuEditView(LoginRequiredMixin, View):
     def get(self, request, pk):
+        # edit的页面，只给ajax访问
+        if not request.is_ajax():
+            raise Http404
         # 先获取到事务
         shiwu = get_object_or_404(Shiwu, pk=pk)
-        # 获取loader html
-        t = loader.get_template('case/edit_shiwu.html')
         # 渲染内容
         all_method = Shiwu.METHOD_CHOICES
         # 处理请求事务的body信息
         body = json.loads(shiwu.body)
-
-        c = Context({
+        c = {
             'shiwu': shiwu,
             'all_method': all_method,
             'body': body
-        })
-        # 渲染html
-        html = t.render(c)
+        }
+        # 渲染内容
+        html = render_to_string('case/edit_shiwu.html', c, request=request)
         return HttpResponse(html)
+
+    def post(self, request, pk):
+        # 先获取到事务
+        shiwu = get_object_or_404(Shiwu, pk=pk)
+        form = ShiwuForm(request.POST, instance=shiwu)
+        # 是否通过验证
+        if form.is_valid():
+            shiwu = form.save()
+            # 保存 请求事务数据
+            keys = request.POST.getlist('key')
+            values = request.POST.getlist('value')
+            body = {}
+            for i in range(len(keys)):
+                if keys[i] and values[i]:
+                    body[keys[i]] = values[i]
+            shiwu.body = json.dumps(body)
+            shiwu.save()
+            return JsonResponse({"status": "success"})
+        else:
+            return JsonResponse({"status": "error", "msg": str(form.errors)})
+

@@ -20,3 +20,14 @@ class ShiwuForm(forms.ModelForm):
     class Meta:
         model = Shiwu
         fields = ('name', 'project', 'is_startup', 'method', 'url', 'body')
+
+
+class ShiwuEditForm(forms.Form):
+    """
+    事务编辑Form
+    """
+    name = forms.CharField(label="事务名", max_length=100)
+    project = forms.IntegerField(widget=forms.Select, label="项目")
+    is_startup = forms.BooleanField(widget=forms.CheckboxInput, label="启动准备")
+    method = forms.CharField(widget=forms.Select, label="请求类型")
+    url = forms.CharField(max_length=100, label="网址")

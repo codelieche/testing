@@ -61,6 +61,7 @@ var editShiwu = function(ele){
     var id = $(ele).parent().parent().find('input').val();
     if(id){
         var url = '/api/1.0/shiwu/' + id + '/edit/';
+        window.scrollTo(0, 0);
         $.ajax({
             url: url,
             type: 'GET',
@@ -69,12 +70,47 @@ var editShiwu = function(ele){
             },
         });
     }
-}
+};
 
 // 点击关闭mask-弹窗
 var maskAlertClose = function(){
     $('.mask-alert').hide().html('');
-}
+};
+
+// post edit shiwu
+var postEditShiwu = function(ele, event){
+    // 获取表单信息
+    var form = $('.mask-alert .case form')[0];
+    var formData = new FormData(form);
+    // 防止冒泡和默认行为
+    event.stopPropagation();
+    event.preventDefault();
+    // post 传递数据
+    var that = this;
+    $(this).attr('disabled', true);
+    var url = $(form).attr('action');
+    $.ajax({
+            type: "POST",
+            url: url,
+            data: formData,
+            contentType: false,
+            async: true,
+            processData: false,
+            success: function(data){
+                console.log(data);
+                // 关闭弹窗
+                maskAlertClose();
+                // 把编辑的shiwu的前端name修改下。
+                var shiwu_id = url.match(/shiwu\/(\d+)\/edit/)[1];
+                $('.shiwu[value="' + shiwu_id + '"]').parent().find('span').text(formData.get('name'));
+            },
+            error: function(err){
+                console.log(err);
+                // 关闭弹窗
+                maskAlertClose();
+            }
+        });
+};
 
 $(function(){
    // 关闭mask
