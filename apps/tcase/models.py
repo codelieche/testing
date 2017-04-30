@@ -127,6 +127,7 @@ class Shiwu(models.Model):
     method = models.CharField(max_length=10, choices=METHOD_CHOICES,
                               verbose_name="请求方法", default='get')
     url = models.CharField(max_length=100, verbose_name="请求网址")
+    cycle = models.BooleanField(default=True, verbose_name="数据可循环")
     body = models.TextField(blank=True, null=True, verbose_name="请求内容")
     user = models.ForeignKey(to=UserProfile, blank=True, null=True,
                              default='', verbose_name="添加者")

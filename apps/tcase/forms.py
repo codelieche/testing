@@ -19,7 +19,8 @@ class ShiwuForm(forms.ModelForm):
     """
     class Meta:
         model = Shiwu
-        fields = ('name', 'project', 'is_startup', 'method', 'url', 'body')
+        fields = ('name', 'project', 'is_startup', 'method', 'url', 'cycle',
+                  'body')
 
 
 class ShiwuEditForm(forms.Form):
@@ -31,3 +32,4 @@ class ShiwuEditForm(forms.Form):
     is_startup = forms.BooleanField(widget=forms.CheckboxInput, label="启动准备")
     method = forms.CharField(widget=forms.Select, label="请求类型")
     url = forms.CharField(max_length=100, label="网址")
+    cycle = forms.BooleanField(widget=forms.CheckboxInput, label="数据可循环")

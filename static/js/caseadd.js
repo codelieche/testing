@@ -112,6 +112,8 @@ var postEditShiwu = function(ele, event){
         });
 };
 
+//  请求body
+
 $(function(){
    // 关闭mask
     $('#mask-close').on('click', function(){
