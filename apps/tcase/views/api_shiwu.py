@@ -11,7 +11,7 @@ from django.template import loader, Context
 from django.template.loader import render_to_string
 
 from utils.mixins import LoginRequiredMixin
-
+from utils.shiwu_handle import shiwu_str_to_json, shiwu_str_to_list
 from ..models import Shiwu
 from ..forms import ShiwuForm
 
@@ -28,13 +28,14 @@ class ShiwuAddApiView(LoginRequiredMixin, View):
             # 保存user id
             shiwu.user_id = request.user.id
             # 保存 请求事务数据
+            types = request.POST.getlist('type')
             keys = request.POST.getlist('key')
             values = request.POST.getlist('value')
-            body = {}
-            for i in range(len(keys)):
-                if keys[i] and values[i]:
-                    body[keys[i]] = values[i]
-            shiwu.body = json.dumps(body)
+            body = shiwu_str_to_json(types, keys, values)
+            # for i in range(len(keys)):
+            #     if keys[i] and values[i]:
+            #         body[keys[i]] = values[i]
+            shiwu.body = body
             shiwu.save()
             # 渲染li html
             t = loader.get_template('case/shiwu_li.html')
@@ -58,11 +59,18 @@ class ShiwuEditView(LoginRequiredMixin, View):
         shiwu = get_object_or_404(Shiwu, pk=pk)
         # 渲染内容
         all_method = Shiwu.METHOD_CHOICES
+        # key_value的类型：
+        types = (
+            ('one', "单值"),
+            ('many', "多值"),
+            ('list', "列表")
+        )
         # 处理请求事务的body信息
-        body = json.loads(shiwu.body)
+        body = shiwu_str_to_list(shiwu.body)
         c = {
             'shiwu': shiwu,
             'all_method': all_method,
+            'types': types,
             'body': body
         }
         # 渲染内容
@@ -76,13 +84,12 @@ class ShiwuEditView(LoginRequiredMixin, View):
         # 是否通过验证
         if form.is_valid():
             shiwu = form.save()
-            # 保存 请求事务数据
+
+            # 请求事务body数据：转成json然后保存其字符串
+            types = request.POST.getlist('type')
             keys = request.POST.getlist('key')
             values = request.POST.getlist('value')
-            body = {}
-            for i in range(len(keys)):
-                if keys[i] and values[i]:
-                    body[keys[i]] = values[i]
+            body = shiwu_str_to_json(types, keys, values)
             shiwu.body = json.dumps(body)
             shiwu.save()
             return JsonResponse({"status": "success"})

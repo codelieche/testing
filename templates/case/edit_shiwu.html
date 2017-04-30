@@ -68,23 +68,28 @@
                 <div class="body-title fl">请求Body:</div>
                 <div class="body-data fl">
                     {% if body %}
-                        {% for item in body.items %}
+                        {% for item in body %}
                             <div class="box" style="">
                                 <select name="type" id="">
-                                    <option value="one">单值</option>
-                                    <option value="many">多值</option>
-                                    <option value="list">列表</option>
+                                    {% for type_ in types %}
+                                        <option value="{{ type_.0 }}" {% ifequal type_.0 item.0 %}selected="selected"{% endifequal %}>{{ type_.1 }}</option>
+                                    {% endfor %}
                                 </select>
-                                <input type="text" class="field" name="key" placeholder="key" value="{{ item.0 }}">
+                                <input type="text" class="field" name="key" placeholder="key" value="{{ item.1 }}">
 {#                                <input type="text" class="field" name="value" placeholder="value" value="{{ item.1 }}">#}
                                 <a class="fieldDel btn btn-default" onclick="fieldDelClick(this);">Del</a>
                                 <a class="fieldAdd btn btn-primary" onclick="fieldAddClick(this);">+</a>
-                                <textarea class="field" name="value" placeholder="value"
-                                style="margin-left: 0px;margin-top: 5px;width: 575px;display: block;overflow-y: auto;" value="">{{ item.1 }}</textarea>
+                                <textarea class="field" name="value" style="margin-left: 0px;margin-top: 5px;width: 575px;display: block;overflow-y: auto;"
+                                          placeholder="value">{% if item.0 == "list" or item.0 == 'many' %}{% for i in item.2 %}{{ i }}{% endfor %}{% else %}{{ item.2 }}{% endif %}</textarea>
                              </div>
                         {% endfor %}
                     {% else %}
                         <div class="box" style="">
+                                <select name="type" id="">
+                                    <option value="one" selected="selected">单值</option>
+                                    <option value="many">多值</option>
+                                    <option value="list">列表</option>
+                                </select>
                                 <input type="text" class="field" name="key" placeholder="key">
 {#                                <input type="text" class="field" name="value" placeholder="value">#}
                                 <a class="fieldDel btn btn-default" onclick="fieldDelClick(this);">Del</a>
