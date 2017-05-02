@@ -21,8 +21,7 @@ from locust import runners
 import requests
 
 from db_collect import CollectOperation
-from locust_events_ext import LocustEventsExt
-
+from locust_events_ext import LocustEventsExt, ShiwuDataHandle
 
 '''
 

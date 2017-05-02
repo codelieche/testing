@@ -12,6 +12,7 @@ from django.core.urlresolvers import reverse
 
 from tproject.models import Project
 from utils.mixins import LoginRequiredMixin
+from utils.make_case_code import make_case_code
 from utils.make_case_file import make_case_file
 from ..models import Case, Execute, Shiwu
 from ..forms import CaseForm
@@ -82,17 +83,23 @@ class CaseExecuteView(LoginRequiredMixin, View):
             os.remove(case_file_path)
         # 每次都写入新的文件，以为脚本中可能会有cookies
         host_target = request.META['HTTP_HOST']
-        case_code = case.code
-        # 如果代码中有COOKIES_FOR_REPLACE 且 cookies不为空，就替换
-        # 注意："COOKIES_FOR_REPLACE" 以后在脚本中的set_up中的cookie就写成这个
-        if case_code.find("COOKIES_FOR_REPLACE") > 0 and case.cookies:
-            case_code = case_code.replace("COOKIES_FOR_REPLACE", case.cookies)
+        # 根据Case的编码方式 way字段
+        if case.way == 'code':
+            case_code = case.code
+            # 如果代码中有COOKIES_FOR_REPLACE 且 cookies不为空，就替换
+            # 注意："COOKIES_FOR_REPLACE" 以后在脚本中的set_up中的cookie就写成这个
+            if case_code.find("COOKIES_FOR_REPLACE") > 0 and case.cookies:
+                case_code = case_code.replace("COOKIES_FOR_REPLACE", case.cookies)
+        else:
+            # 其它方式就是使用shiwu的模式编码
+            case_code = make_case_code(case)
         result = make_case_file(
             code_content=case_code,
             file_name=case_file_name,
             case_id=pk,
             host_target=host_target
         )
+
         # 如果result是False就需要抛出500错误:报个403吧
         if not result:
             raise PermissionDenied

@@ -71,4 +71,59 @@ class LocustEventsExt(object):
         self.operator.add_log(log_type='start')
 
 
+class ShiwuDataHandle:
+    """
+    事务数据处理
+    """
+    def __init__(self, body, cycle=True):
+        """
+        实例化
+        :param body: 事务 body的json内容
+        :param cycle: 事务 数据是否可循环
+        """
+        self.cycle = cycle
+        if 'types' in body:
+            self.types = body['types']
+            del body['types']
+            self.data = body
+        else:
+            self.data = body
+            self.types = {}
+        self.max_cycle_num = 100000
 
+    def handle(self):
+        # 处理数据
+        if not self.cycle:
+            # 如果数据是不可以循环的，那么可能是只有一条数据，有可能是多条数据
+            self.max_cycle_num = 1
+            for key in self.data:
+                # 如果value是list，而且types中key是manay
+                if type(self.data[key]) == list and self.types[key] == 'many':
+                    l = len(self.data[key])
+                    # 如果长度大于max_cycle_num 就 重新赋值
+                    if l > self.max_cycle_num:
+                        self.max_cycle_num = l
+
+    def get(self):
+        # 返回body中的 key-> value数据
+        data = {}
+        if not self.cycle and self.max_cycle_num <= 0:
+            # 如果循环是False 且 max_cycle_num次数已经成为0了
+            return data
+
+        for key in self.data:
+            if self.types[key] == 'many':
+                # 如果数值是many就需要处理下
+                if self.cycle:
+                    data[key] = random.sample(self.data[key], 1)[0]
+                else:
+                    self.max_cycle_num -= 1
+                    l = len(self.data[key])
+                    if l > self.max_cycle_num:
+                        data[key] = self.data[key][self.max_cycle_num]
+                    else:
+                        data[key] = self.data[key][0]
+            else:
+                # 如果数据type是one 或者 list  直接返回值即可
+                data[key] = self.data[key]
+        return data
