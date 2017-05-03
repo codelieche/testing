@@ -164,7 +164,6 @@ def make_case_code(case):
     # 编写WebsiteTask类  和WebsiteUser类
     tasks_str = "{"
     on_start_str = ""
-    print(shiwu_list)
     for shiwu in shiwu_list:
         if shiwu.is_startup:
             on_start_str += "shiwu_{}(self);".format(shiwu.id)
@@ -174,7 +173,6 @@ def make_case_code(case):
     # 闭合tasks_str
     tasks_str += '}'
     # 替换字符串
-    print(tasks_str)
     locust_code = locust_code_model.format(tasks=tasks_str,
                                            cookies=case.cookies,
                                            on_start=on_start_str)
