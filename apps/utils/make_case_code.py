@@ -29,7 +29,7 @@ class WebsiteTasks(TaskSet):
     def on_start(self):
         cookies_str = "{cookies}"
         jar = requests.cookies.RequestsCookieJar()
-        for cookie in [i.split('=') for i in cookies_str.split(';')]:
+        for cookie in [i.split('=') for i in cookies_str.split(';') if i]:
             jar.set(cookie[0], cookie[1])
         self.client.cookies = jar
         pass
