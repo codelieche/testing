@@ -9,6 +9,7 @@ from django.views.generic import View
 from django.db import connection
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.core.exceptions import PermissionDenied
 
 from tproject.models import Project
 from tcase.models import Case, Execute
@@ -20,6 +21,10 @@ class ReportView(View):
     测试报告view
     """
     def get(self, request, pk):
+        # 权限判断：需要tcase.can_view_report的权限
+        if not request.user.has_perm('tcase.can_view_report'):
+            raise PermissionDenied
+
         # 先获取到execute对象
         execute = get_object_or_404(Execute, pk=pk)
 

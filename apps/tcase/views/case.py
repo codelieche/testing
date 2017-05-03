@@ -70,7 +70,10 @@ class CaseExecuteView(LoginRequiredMixin, View):
         case = get_object_or_404(Case, pk=pk)
         # 这里还需要对user进行权限判断，是否有执行的权限：
         user = request.user
-        # TODO：权限判断
+        # 权限判断
+        # 需要拥有can_run_case的权限才可以访问
+        if not user.has_perm('tcase.can_run_case'):
+            raise PermissionDenied
 
         # 第一步：先判断case_id.py的文件是否存在
         base_dir_parent = os.path.dirname(settings.BASE_DIR)
@@ -139,6 +142,10 @@ class CaseAddView(LoginRequiredMixin, View):
     需要登陆
     """
     def get(self, request):
+        # 权限判断：需要tcase.add_case的权限
+        if not request.user.has_perm('tcase.add_case'):
+            raise PermissionDenied
+
         # 先获取到所有项目
         all_projects = Project.objects.all()
         # 获取get project 的id, 前台根据这个选中默认的project
@@ -169,7 +176,11 @@ class CaseAddView(LoginRequiredMixin, View):
         # 这样在实例化CaseForm的时候，传入个instance对象
         case_form = CaseForm(request.POST, instance=Case(user_id=request.user.pk))
         # print(case)
-        print(request.POST.getlist('shiwu'))
+        # print(request.POST.getlist('shiwu'))
+
+        # 权限判断：需要tcase.add_case的权限
+        if not request.user.has_perm('tcase.add_case'):
+            raise PermissionDenied
 
         if case_form.is_valid():
             # 传入的数据ok
@@ -192,6 +203,10 @@ class CaseEditView(LoginRequiredMixin, View):
     测试用例编辑View
     """
     def get(self, request, pk):
+        # 权限判断：需要tcase.change_case的权限
+        if not request.user.has_perm('tcase.change_case'):
+            raise PermissionDenied
+
         # 先获取到case实例对象
         case = get_object_or_404(Case, pk=pk)
         return render(request, 'case/edit.html', {
@@ -200,6 +215,10 @@ class CaseEditView(LoginRequiredMixin, View):
         })
 
     def post(self, request, pk):
+        # 权限判断：需要tcase.change_case的权限
+        if not request.user.has_perm('tcase.change_case'):
+            raise PermissionDenied
+
         # 先获取到case实例对象
         case = get_object_or_404(Case, pk=pk)
         # 实例化CaseForm

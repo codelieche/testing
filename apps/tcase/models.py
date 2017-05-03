@@ -64,6 +64,14 @@ class Case(models.Model):
         verbose_name = "测试用例"
         verbose_name_plural = verbose_name
 
+        # 设置Object权限
+        # Django会自动添加：add_case, change_case, delete_case权限
+        # 通过user.has_perm('tcase.add_case')
+        permissions = (
+            ('can_view_case', '查看测试用例'),
+            ('can_run_case', '执行测试用例'),
+        )
+
 
 @python_2_unicode_compatible
 class Execute(models.Model):
@@ -105,6 +113,11 @@ class Execute(models.Model):
         verbose_name = "执行测试"
         verbose_name_plural = "执行测试列表"
 
+        # 添加权限
+        permissions = (
+            ('can_view_report', '查看测试报告'),
+        )
+
 
 @python_2_unicode_compatible
 class Shiwu(models.Model):
@@ -139,3 +152,8 @@ class Shiwu(models.Model):
     class Meta:
         verbose_name = "请求事务"
         verbose_name_plural = verbose_name
+
+        # 添加权限
+        permissions = (
+            ('can_view_shiwu', '查看事务'),
+        )

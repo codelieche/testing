@@ -9,6 +9,7 @@ from django.views.generic import View
 from django.http import JsonResponse, HttpResponse, Http404
 from django.template import loader, Context
 from django.template.loader import render_to_string
+from django.core.exceptions import PermissionDenied
 
 from utils.mixins import LoginRequiredMixin
 from utils.shiwu_handle import shiwu_str_to_json, shiwu_str_to_list
@@ -21,6 +22,11 @@ class ShiwuAddApiView(LoginRequiredMixin, View):
     添加事务的api
     """
     def post(self, request):
+        # 权限判断：需要tcase.add_case的权限
+        # 有了add_case的权限，也就有了add_shiwu的权限
+        if not request.user.has_perm('tcase.add_case'):
+            raise PermissionDenied
+
         # 先获取post过来的数据
         shiwu_form = ShiwuForm(request.POST)
         if shiwu_form.is_valid():
