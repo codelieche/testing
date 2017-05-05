@@ -11,10 +11,10 @@ class ProjectModelAdmin(admin.ModelAdmin):
     Project Model Admin
     """
     list_display = ('id', 'name_en', 'name', 'address', 'address_pro',
-                    'checked')
+                    'need_test')
     list_display_links = ('name_en',)
     search_fields = ('name', 'name_en', 'address', 'address_pro')
-    list_filter = ('checked',)
+    list_filter = ('need_test',)
     ordering = ('id',)
 
 admin.site.register(Project, ProjectModelAdmin)

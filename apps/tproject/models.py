@@ -19,6 +19,7 @@ class Project(models.Model):
                                    blank=True, null=True)
     jira_key = models.CharField(max_length=64, verbose_name="jira_key",
                                 blank=True, null=True)
+    need_test = models.BooleanField(default=True, verbose_name="是否需要测试")
 
     def __str__(self):
         return self.name
