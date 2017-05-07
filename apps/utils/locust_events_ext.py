@@ -113,21 +113,21 @@ class ShiwuDataHandle:
         if not self.cycle and self.max_cycle_num <= 0:
             # 如果循环是False 且 max_cycle_num次数已经成为0了
             return data
-
+        self.max_cycle_num -= 1
         for key in self.data:
             if self.types[key] == 'many':
                 # 如果数值是many就需要处理下
                 if self.cycle:
                     data[key] = random.sample(self.data[key], 1)[0]
                 else:
-                    self.max_cycle_num -= 1
                     l = len(self.data[key])
-                    if l > self.max_cycle_num:
-                        data[key] = self.data[key][self.max_cycle_num]
+                    # 按照顺序取值
+                    index = l - self.max_cycle_num - 1
+                    if index >= 0:
+                        data[key] = self.data[key][index]
                     else:
                         data[key] = self.data[key][0]
             else:
                 # 如果数据type是one 或者 list  直接返回值即可
-                self.max_cycle_num -= 1
                 data[key] = self.data[key]
         return data

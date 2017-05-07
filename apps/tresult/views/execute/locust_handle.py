@@ -37,8 +37,12 @@ class LocustStart(CsrfExemptMixin, View):
                     'hatch_rate': hatch_rate
                 }
                 # 发送post数据
-                r = requests.post(post_url, post_data)
-                return JsonResponse(r.json(), status=r.status_code)
+                try:
+                    r = requests.post(post_url, post_data)
+                    return JsonResponse(r.json(), status=r.status_code)
+                except Exception as e:
+                    print("LocustStart返回出现错误：%s" % e)
+
         return JsonResponse({'status': 'failure'}, status=400)
 
 
