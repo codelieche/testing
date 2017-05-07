@@ -59,7 +59,7 @@
                     <ol class="shiwu-list">
                         {% for shiwu in case.shiwu_set.all %}
                             <li class="clearfix">
-                                <input class="shiwu" name="shiwu" value="{{ shiwu.id }}" type="checkbox">
+                                <input class="shiwu" name="shiwu" value="{{ shiwu.id }}" type="checkbox" checked>
                                 <span>{{ shiwu.name }}</span>
                                 <div class="buttons fr">
                                     <div class="btn btn-default" onclick="removeShiwu(this);">移出</div>
@@ -160,6 +160,7 @@
                                placeholder="首页">
                         <label for="id_startup" style="width: 50px; margin-left: 10px;">Startup: </label>
                         <input type="checkbox" name="is_startup" id="id_startup" style="width:30px;">
+                        {% csrf_token %}
                     </p>
 
                     <!--请求方法和网址-->

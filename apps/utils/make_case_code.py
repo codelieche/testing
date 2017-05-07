@@ -18,7 +18,7 @@ def shiwu_{id}(l):
     data = data_{id}.get()
     if data:
         l.client.{method}('{url}', {arg_name}=data)
-    else:
+    elif "{method}" == "get":
         l.client.{method}('{url}')
 '''
 
@@ -62,6 +62,7 @@ class ShiwuDataHandle:
             self.data = body
             self.types = {}
         self.max_cycle_num = 100000
+        self.handle()
 
     def handle(self):
         # 处理数据

@@ -20,9 +20,8 @@
                 <input id="id_name3" maxlength="100" name="name" type="text" value="{{ shiwu.name }}" required=""
                        placeholder="首页">
                 <label for="id_startup" style="width: 50px; margin-left: 30px;">Startup: </label>
-                <input type="checkbox" name="is_startup" id="id_startup" style="width:30px;">
+                <input type="checkbox" name="is_startup" id="id_startup" style="width:30px;" {% if shiwu.is_startup %}checked{% endif %}>
                 {% csrf_token %}
-                <input type="hidden" name="csrf_token", value="{{ csrf_token }}">
             </p>
 
             <!--请求方法和网址-->

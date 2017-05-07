@@ -2,6 +2,8 @@
 """
 Locust性能测试事件拓展
 """
+import random
+
 from locust import runners
 
 
@@ -90,6 +92,7 @@ class ShiwuDataHandle:
             self.data = body
             self.types = {}
         self.max_cycle_num = 100000
+        self.handle()
 
     def handle(self):
         # 处理数据
@@ -125,5 +128,6 @@ class ShiwuDataHandle:
                         data[key] = self.data[key][0]
             else:
                 # 如果数据type是one 或者 list  直接返回值即可
+                self.max_cycle_num -= 1
                 data[key] = self.data[key]
         return data
