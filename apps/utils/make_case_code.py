@@ -17,9 +17,9 @@ shiwu_code_model = '''
 def shiwu_{id}(l):
     data = data_{id}.get()
     if data:
-        l.client.{method}('{url}', {arg_name}=data)
+        l.client.{method}('{url}', {arg_name}=data, name='{name}')
     elif "{method}" == "get":
-        l.client.{method}('{url}')
+        l.client.{method}('{url}', name='{name}')
 '''
 
 locust_code_model = '''
@@ -120,6 +120,7 @@ def make_shiwu_code(shiwu):
         method=shiwu.method,
         url=shiwu.url,
         arg_name=arg_name,
+        name=shiwu.name
     )
     return code_content
 
