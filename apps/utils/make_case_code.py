@@ -109,7 +109,7 @@ def make_shiwu_code(shiwu):
     :return: 返回代码
     """
     # get使用params参数，其它使用data
-    if shiwu.method == 'get':
+    if shiwu.method == 'get' or shiwu.method == "delete":
         arg_name = 'params'
     else:
         arg_name = 'data'
