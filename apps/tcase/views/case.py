@@ -14,6 +14,7 @@ from tproject.models import Project
 from utils.mixins import LoginRequiredMixin
 from utils.make_case_code import make_case_code
 from utils.make_case_file import make_case_file
+from utils.paginator import get_page_num_list
 from ..models import Case, Execute, Shiwu
 from ..forms import CaseForm
 
@@ -37,15 +38,18 @@ class CaseListView(View):
 
         # 分页处理
         if page:
-            page_num = page
+            page_num = int(page)
         else:
             page_num = 1
         p = Paginator(all_case, 10)
         cases = p.page(page_num)
 
+        # 获取分页器的页码列表，得到当前页面最近的7个页码列表
+        page_num_list = get_page_num_list(p.num_pages, page_num, 7)
+
         return render(request, 'case/list.html', {
             'all_case': cases,
-            'page_num_list': range(1, p.num_pages + 1),
+            'page_num_list': page_num_list,
             'last_page': p.num_pages,
             'keyword': keyword,
         })
