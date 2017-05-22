@@ -114,6 +114,10 @@
         </div>
         <div class="inner">
             <div class="row">
+                <span class="config">执行者:</span>
+                <span class="config-value">{{ execute.user }}</span>
+            </div>
+            <div class="row">
                 <span class="config">持续时长:</span>
                 <span class="config-value">{{ execute.time_start | get_time_sub:execute.time_end }}</span>
             </div>

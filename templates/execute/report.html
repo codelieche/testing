@@ -170,6 +170,10 @@
         </div>
         <div class="inner">
             <div class="row">
+                <span class="config">执行者:</span>
+                <span class="config-value">{{ execute.user }}</span>
+            </div>
+            <div class="row">
                 <span class="config">持续时长:</span>
                 <span class="config-value">{{ execute.time_start | get_time_sub:execute.time_end }}</span>
             </div>
@@ -185,6 +189,7 @@
                 <span class="config">http响应码:</span>
                 <span class="config-value">2XX</span>
             </div>
+
         </div>
     </div>
     <!--右边面板：结果预览 end-->
