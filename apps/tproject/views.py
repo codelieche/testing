@@ -8,6 +8,7 @@ from utils.mixins import CsrfExemptMixin
 from tcase.models import Execute
 from tresult.models import Summary
 
+from utils.paginator import get_page_num_list
 from .models import Project
 # Create your views here.
 
@@ -35,15 +36,17 @@ class ProjectListView(CsrfExemptMixin, View):
 
         # 对项目列表进行分页
         if page:
-            page_num = page
+            page_num = int(page)
         else:
             page_num = 1
         p = Paginator(all_projects, 10)
         projects = p.page(page_num)
 
+        # 获取分页器的页码列表，得到当前页面最近的7个页码列表
+        page_num_list = get_page_num_list(p.num_pages, page_num, 7)
         content = {
             'projects': projects,
-            'page_num_list': range(1, p.num_pages + 1),
+            'page_num_list': page_num_list,
             'last_page': p.num_pages,
             'keyword': keyword,
         }
