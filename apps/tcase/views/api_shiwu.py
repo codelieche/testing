@@ -2,6 +2,7 @@
 """
 这个是事务相关的api
 """
+import os
 import json
 
 from django.shortcuts import get_object_or_404
@@ -10,9 +11,12 @@ from django.http import JsonResponse, HttpResponse, Http404
 from django.template import loader, Context
 from django.template.loader import render_to_string
 from django.core.exceptions import PermissionDenied
+from django.conf import settings
+import requests
 
-from utils.mixins import LoginRequiredMixin
+from utils.mixins import LoginRequiredMixin, CsrfExemptMixin
 from utils.shiwu_handle import shiwu_str_to_json, shiwu_str_to_list
+from utils.make_check_shiwu_code import make_check_shiwu_code
 from ..models import Shiwu
 from ..forms import ShiwuForm
 
@@ -102,3 +106,33 @@ class ShiwuEditView(LoginRequiredMixin, View):
         else:
             return JsonResponse({"status": "error", "msg": str(form.errors)})
 
+
+class ShiwuCheckApiView(CsrfExemptMixin, View):
+    """
+    验证请求事务的API
+    """
+    def post(self, request):
+        # 需要传递事务的shiwu_id, case_id, cookies
+        # 而且只有编辑事务的时候，才有验证的功能
+
+        shiwu_id = request.POST.get('shiwu_id', 0)
+        shiwu = get_object_or_404(Shiwu, pk=shiwu_id)
+        # start_shiwu
+        if shiwu.is_startup:
+            start_shiwu = None
+        else:
+            start_shiwu = Shiwu.objects.filter(project=shiwu.project,
+                                               is_startup=True).first()
+        cookies = request.POST.get('cookies', '')
+        base_dir_parent = os.path.dirname(settings.BASE_DIR)
+        script_dir = os.path.join(base_dir_parent, 'scripts')
+        check_file_name = 'shiwu_{}_check.py'.format(shiwu_id)
+        file_path = os.path.join(script_dir, check_file_name)
+        with open(file_path, 'w', encoding='utf-8') as f:
+            file_code = make_check_shiwu_code(shiwu, start_shiwu, cookies)
+            f.write(file_code)
+        # 执行代码
+        p = os.popen('python %s' % file_path)
+        content = p.read()
+        # print(content)
+        return HttpResponse(content)

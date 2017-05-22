@@ -112,8 +112,40 @@ var postEditShiwu = function(ele, event){
         });
 };
 
-//  请求body
 
+// post Check shiwu
+var postCheckShiwu = function(ele, event){
+    // 获取表单信息
+    // 防止冒泡和默认行为
+    event.stopPropagation();
+    event.preventDefault();
+    // post 传递数据
+    var that = this;
+    $(this).attr('disabled', true);
+    var post_data = {
+        shiwu_id: $(ele).data('id'),
+        cookies: $('#id_cookies').val()
+    }
+    $.ajax({
+            type: "POST",
+            url: '/api/1.0/shiwu/check/',
+            data: post_data,
+            // contentType: false,
+            // async: true,
+            // processData: false,
+            success: function(data){
+                console.log(data);
+                alert(data);
+            },
+            error: function(err){
+                console.log(err);
+                alert('error');
+            }
+        });
+};
+
+
+//  请求body
 $(function(){
    // 关闭mask
     $('#mask-close').on('click', function(){
