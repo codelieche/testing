@@ -38,6 +38,10 @@
                             </span>
                         </div>
                         {% endif %}
+                        <div class="meta-item">
+                            <span class="name">添加者:</span>
+                            <span class="meta-content">{{ case.user }}</span>
+                        </div>
                     </div>
                 </div>
                 <a href="{% url 'project:detail' case.project_id %}">
