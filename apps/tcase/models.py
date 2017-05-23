@@ -144,6 +144,12 @@ class Shiwu(models.Model):
     body = models.TextField(blank=True, null=True, verbose_name="请求内容")
     user = models.ForeignKey(to=UserProfile, blank=True, null=True,
                              default='', verbose_name="添加者")
+    # 请求事务可以克隆，每个人员维护自己的事务
+    # 添加测试用例页面可以clone别人的事务
+    is_clone = models.BooleanField(default=False, verbose_name="克隆")
+    # 克隆母体，因为源头与克隆事务不互相影响，这里不用外键，而是仅保存源事务的ID
+    parent = models.IntegerField(blank=True, null=True, default=0,
+                                 verbose_name="源头")
     add_time = models.DateTimeField(auto_now_add=True, verbose_name="添加时间")
 
     def __str__(self):
