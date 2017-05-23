@@ -136,3 +136,43 @@ class ShiwuCheckApiView(CsrfExemptMixin, View):
         content = p.read()
         # print(content)
         return HttpResponse(content)
+
+
+class ShiwuCloneApiView(CsrfExemptMixin, View):
+    """
+    克隆事务给当前用户Api View
+    """
+    def post(self, request):
+        # 先获取到shiwu_id 和 user_id
+        shiwu_id = request.POST.get('shiwu_id', '')
+        user_id = int(request.POST.get('user_id', 0))
+        # 先验证目标的user_id和request.user.pk是否相等
+        if request.user.pk != user_id:
+            return JsonResponse({
+                "status": "failure",
+                'msg': "user id is not current user."
+            }, status=400)
+        # 先获取到事务obj
+        shiwu = get_object_or_404(Shiwu, pk=shiwu_id)
+        # 判断这个shiwu是否已经克隆了
+        cloned_shiwu = Shiwu.objects.filter(user=user_id, parent=shiwu_id).first()
+        if cloned_shiwu:
+            msg = "已经克隆了"
+            shiwu = cloned_shiwu
+        else:
+            # 开始克隆事务
+            shiwu.pk = None
+            shiwu.name = "【Clone】" + shiwu.name
+            shiwu.user = request.user
+            shiwu.parent = shiwu_id
+            shiwu.is_clone = True
+            shiwu.save()
+            msg = "克隆成功"
+
+        # 返回数据
+        return JsonResponse({
+            "status": "success",
+            "id": shiwu.pk,
+            "name": shiwu.name,
+            "msg": msg
+        })
