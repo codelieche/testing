@@ -128,7 +128,7 @@
 
 {% block sidebar_right %}
     <!--获取项目最新的请求事务列表-->
-    {% get_project_shiwu case.project_id %}
+    {% get_project_shiwu case.project_id request.user %}
 {% endblock %}
 
 {% block custom_mask %}

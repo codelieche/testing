@@ -56,6 +56,27 @@ var addShiwu = function(ele){
     }
 }
 
+// 点击clone事务，并添加到事务列表
+var cloneShiwu = function(shiwu_id, user_id){
+    alert("Clone shiwu " + shiwu_id +" to user " + user_id +" TODO!");
+    // 通过ajax把shiwu clone成 user_id的，返回status, id, name
+    var html = '<li class="clearfix">' +
+    '<input class="shiwu" name="shiwu" value="VALUE" type="checkbox" checked>' +
+    '<span>NAME</span>' +
+    '<div class="buttons fr">' +
+        '<div class="btn btn-default" onclick="removeShiwu(this);">移出</div>' +
+        '<div class="btn btn-primary" onclick="editShiwu(this);">编辑</div>' +
+    '</div>' +
+'</li>'
+//     html = html.replace('VALUE', value);
+//     html = html.replace('NAME', name);
+//     var x = $('.code-way .shiwu-list').find('input[value="' + value +'"]').length
+//     if(value && html && x === 0){
+//          $('.code-way .shiwu-list').append(html)
+//     }
+}
+
+
 // 点击编辑事务
 var editShiwu = function(ele){
     var id = $(ele).parent().parent().find('input').val();
