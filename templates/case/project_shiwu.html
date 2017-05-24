@@ -11,6 +11,7 @@
                         {% ifequal shiwu.user user %}
                             <div class="btn btn-default" onclick="addShiwu(this);">添加</div>
                         {% else %}
+                            <div class="btn btn-default" onclick="editShiwu({{ shiwu.id }}, 'view');">查看</div>
                             <div class="btn btn-primary" onclick="cloneShiwu({{ shiwu.id }}, {{ user.pk }});">克隆</div>
                         {% endifequal %}
                     </div>

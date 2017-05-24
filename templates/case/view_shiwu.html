@@ -1,0 +1,83 @@
+<div class="mask-wrap case">
+    <div class="section clearfix">
+        <div class="title fl">
+            <span class="pts-icon circle"></span>
+            查看事务【不可编辑】
+        </div>
+        <div class="btn btn-default fr" id="mask-alert-close" onclick="maskAlertClose();">关闭</div>
+        <div class="clear"></div>
+        <form disabled>
+            <!--项目列表选项-->
+            <p>
+                <label class="required" for="id_project3">项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目:</label>
+                <select id="id_project3" name="project" required="" disabled>
+                        <option value="{{ shiwu.project_id }}">{{ shiwu.project.name }}</option>
+                </select>
+            </p>
+            <!--事务名称-->
+            <p>
+                <label for="id_name3">事务名称:</label>
+                <input id="id_name3" maxlength="100" name="name" type="text" value="{{ shiwu.name }}" required=""
+                       placeholder="首页" disabled>
+                <label for="id_startup" style="width: 50px; margin-left: 30px;">Startup: </label>
+                <input type="checkbox" name="is_startup" id="id_startup" style="width:30px;" {% if shiwu.is_startup %}checked{% endif %} disabled>
+            </p>
+
+            <!--请求方法和网址-->
+            <p>
+                <select id="id_method" name="method" required="" disabled>
+                    {% for method in all_method %}
+                        <option value="{{ method.0 }}" {% ifequal method.0 shiwu.method %}selected="selected"{% endifequal %}>{{ method.1 }}</option>
+                    {% endfor %}
+                </select>
+                <input maxlength="120" name="url" type="text" value="{{ shiwu.url }}" required=""
+                       placeholder="请输入网址" style="margin-left: 0px;width:80%;line-height:20px;" disabled>
+            </p>
+
+            <!--数据可循环-->
+            <p>
+                <label for="id_cycle">数据可循环: </label>
+                <input type="checkbox" name="cycle" id="id_cycle" style="width:30px;"
+                       {% if shiwu.cycle  %}checked{% endif %} disabled>
+            </p>
+
+            <!--请求Body-->
+            <div class="body-content clearfix">
+                <div class="body-title fl">请求Body:</div>
+                <div class="body-data fl">
+                    {% if body %}
+                        {% for item in body %}
+                            <div class="box" style="">
+                                <select name="type" id="" disabled>
+                                    {% for type_ in types %}
+                                        <option value="{{ type_.0 }}" {% ifequal type_.0 item.0 %}selected="selected"{% endifequal %}>{{ type_.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                                <input type="text" class="field" name="key" placeholder="key" value="{{ item.1 }}" disabled>
+                                <textarea class="field" name="value" style="margin-left: 0px;margin-top: 5px;width: 575px;display: block;overflow-y: auto;" disabled
+                                          placeholder="value">{% if item.0 == "list" or item.0 == 'many' %}{% for i in item.2 %}{{ i }}{% endfor %}{% else %}{{ item.2 }}{% endif %}</textarea>
+                             </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="box" style="">
+                                <select name="type" id="" disabled>
+                                    <option value="one" selected="selected">单值</option>
+                                    <option value="many">多值</option>
+                                    <option value="list">列表</option>
+                                </select>
+                                <input type="text" class="field" name="key" placeholder="key">
+                                <textarea class="field" name="value" placeholder="value"
+                                    style="margin-left: 0px;margin-top: 5px;width: 575px;display: block;overflow-y: auto;" disabled></textarea>
+                            </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!--提交按钮组-->
+            <div class="buttons">
+{#                <input type="reset" class="btn btn-default" value="重置">#}
+                <input class="btn btn-primary" value="克隆" onclick="cloneShiwu({{ shiwu.id }}, {{ request.user.pk }});">
+            </div>
+        </form>
+    </div>
+</div>

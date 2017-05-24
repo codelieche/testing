@@ -684,6 +684,12 @@ ul {
 /* case header样式 */
 .case {
   padding: 10px 15px; }
+  .case form select, .case form input, .case form textarea {
+    /* 设置disable的背景色，鼠标放上去显示pointer */ }
+    .case form select:disabled, .case form input:disabled, .case form textarea:disabled {
+      background-color: #F8F8F8; }
+      .case form select:disabled:hover, .case form input:disabled:hover, .case form textarea:disabled:hover {
+        cursor: pointer; }
   .case form p {
     padding: 2px 10px; }
   .case form label {

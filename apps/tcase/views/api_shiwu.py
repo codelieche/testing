@@ -83,8 +83,15 @@ class ShiwuEditView(LoginRequiredMixin, View):
             'types': types,
             'body': body
         }
+        # 根据GET传过来的参数action来判断是编辑，还是查看
+        # 默认动作是edit
+        action = request.GET.get('action', 'edit')
         # 渲染内容
-        html = render_to_string('case/edit_shiwu.html', c, request=request)
+        if action == 'view':
+            html = render_to_string('case/view_shiwu.html', c, request=request)
+        else:
+            # 不是view的话就是edit
+            html = render_to_string('case/edit_shiwu.html', c, request=request)
         return HttpResponse(html)
 
     def post(self, request, pk):

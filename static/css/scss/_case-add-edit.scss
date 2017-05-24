@@ -8,6 +8,15 @@
   }
   // form
   form {
+    select, input, textarea{
+      /* 设置disable的背景色，鼠标放上去显示pointer */
+      &:disabled {
+        background-color: #F8F8F8;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
     p {
       padding: 2px 10px;
       //select, label, input, textare{

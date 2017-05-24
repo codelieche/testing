@@ -78,21 +78,38 @@ var cloneShiwu = function(shiwu_id, user_id){
             if(data.status == 'success'){
                 html = html.replace('VALUE', data.id);
                 html = html.replace('NAME', data.name);
-                var x = $('.code-way .shiwu-list').find('input[value="' + data.id +'"]').length
+                var x = $('.code-way .shiwu-list').find('input[value="' + data.id +'"]').length;
                 if(data.id && html && x === 0){
                      $('.code-way .shiwu-list').append(html)
                 }
+                // 需要删掉克隆的元素
+                $('.sidebar .shiwu-list div[data-id="' + shiwu_id + '"]').parent().remove();
+            }else{
+                console.log('status is not success');
             }
+            // 关闭弹窗
+            maskAlertClose();
+        },
+        error: function(err){
+                console.log(err);
+                // 关闭弹窗
+                maskAlertClose();
         }
     })
 }
 
 
 // 点击编辑事务
-var editShiwu = function(ele){
-    var id = $(ele).parent().parent().find('input').val();
+var editShiwu = function(ele, action){
+    var url, id;
+    if(action && action == 'view'){
+            id = ele;
+            url = '/api/1.0/shiwu/' + id + '/edit/?action=view';
+        }else{
+            id = $(ele).parent().parent().find('input').val();
+            url = '/api/1.0/shiwu/' + id + '/edit/';
+    }
     if(id){
-        var url = '/api/1.0/shiwu/' + id + '/edit/';
         window.scrollTo(0, 0);
         $.ajax({
             url: url,
