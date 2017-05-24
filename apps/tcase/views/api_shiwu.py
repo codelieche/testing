@@ -154,6 +154,14 @@ class ShiwuCloneApiView(CsrfExemptMixin, View):
             }, status=400)
         # 先获取到事务obj
         shiwu = get_object_or_404(Shiwu, pk=shiwu_id)
+
+        # 不能克隆自己的事务
+        if shiwu.user == request.user:
+            return JsonResponse({
+                'status': 'failure',
+                'msg': "Cound not clone self shiwu"
+            }, status=400)
+
         # 判断这个shiwu是否已经克隆了
         cloned_shiwu = Shiwu.objects.filter(user=user_id, parent=shiwu_id).first()
         if cloned_shiwu:
