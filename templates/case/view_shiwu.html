@@ -21,6 +21,7 @@
                        placeholder="首页" disabled>
                 <label for="id_startup" style="width: 50px; margin-left: 30px;">Startup: </label>
                 <input type="checkbox" name="is_startup" id="id_startup" style="width:30px;" {% if shiwu.is_startup %}checked{% endif %} disabled>
+                <span class="hint">创建者：{{ shiwu.user }}</span>
             </p>
 
             <!--请求方法和网址-->
