@@ -149,6 +149,7 @@
                 <div class="title">
                     <span class="pts-icon circle"></span>
                     图表展示
+                    <span style="display: inline-block;float: right;color: #999;font-weight: 300;cursor:pointer;" id="zhankai">展开</span>
                 </div>
                 <div class="echarts inner" id="echarts"></div>
             </div>
@@ -224,7 +225,9 @@
 
 {% block custom_js %}
     <script src="{% static 'js/echarts.js' %}"></script>
+    <script src="{% static 'js/zepto.min.js' %}"></script>
 	<script>
+    function drawImage(){
 		// 基于准备好的dom，初始化echarts实例
 		var myChart = echarts.init(document.getElementById('echarts'));
 		var colors = ['#5793f3', '#d14a61', '#675bba'];
@@ -365,5 +368,27 @@
 
 		// 使用刚指定的配置项和数据显示图表
 		myChart.setOption(option);
+    }
+
+    $(document).ready(function(){
+            drawImage();
+            $('.main').on('resize', function() {
+                drawImage();
+            });
+            $('#zhankai').on("click", function () {
+                var flag = $(this).text();
+                if(flag == "展开"){
+                    $(this).text("收缩");
+                    $('.sidebar').hide();
+                    drawImage();
+                }else{
+                    $(this).text("展开");
+                    $('.sidebar').show();
+                    drawImage();
+                }
+
+            });
+        }
+    );
 	</script>
 {% endblock %}

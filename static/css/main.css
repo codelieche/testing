@@ -135,7 +135,7 @@ ul {
   .container .main .content {
     flex: 1;
     margin-left: 190px;
-    padding: 20px 25px 0;
+    padding: 10px 15px 0;
     overflow: hidden;
     min-height: 560px; }
     .container .main .content .wrap {
@@ -155,7 +155,7 @@ ul {
           color: #555; }
   .container .main .sidebar {
     width: 300px;
-    padding-top: 20px;
+    padding-top: 10px;
     padding-right: 5px;
     min-height: 560px; }
 
