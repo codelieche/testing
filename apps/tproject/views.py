@@ -40,7 +40,11 @@ class ProjectListView(CsrfExemptMixin, View):
         else:
             page_num = 1
         p = Paginator(all_projects, 10)
-        projects = p.page(page_num)
+        # 如果page total < page_num项目列表为空
+        if p.num_pages < page_num:
+            projects = []
+        else:
+            projects = p.page(page_num)
 
         # 获取分页器的页码列表，得到当前页面最近的7个页码列表
         page_num_list = get_page_num_list(p.num_pages, page_num, 7)
