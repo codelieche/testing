@@ -17,6 +17,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from tproject.views import ProjectListView
+from account.views import page_403, page_404, page_500
+
 
 urlpatterns = [
     # 首页
@@ -33,3 +35,8 @@ urlpatterns = [
     # execute相关的路由
     url(r'^execute/', include('tcase.urls.execute', namespace='execute')),
 ]
+
+
+handler403 = page_403
+handler404 = page_404
+handler500 = page_500
