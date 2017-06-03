@@ -135,7 +135,7 @@
 
   /* list search 样式开始 */
 .content .list .header{
-  padding: 5px 10px;
+  padding: 5px 10px 0 0;
   margin: 0 10px;
   /*list 没设置padding，这样header下边线左右空10px就设置个margin*/
 
@@ -143,7 +143,7 @@
     display: inline-block;
     width: 300px;
     text-align: left;
-    margin-top: 10px;
+    margin-top: 6px;
     .input-search {
       display: inline-block;
       width: 200px;
