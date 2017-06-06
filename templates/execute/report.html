@@ -227,6 +227,7 @@
     <script src="{% static 'js/echarts.js' %}"></script>
     <script src="{% static 'js/zepto.min.js' %}"></script>
 	<script>
+    var x_data = {{ echarts_data.add_time|safe }};
     function drawImage(){
 		// 基于准备好的dom，初始化echarts实例
 		var myChart = echarts.init(document.getElementById('echarts'));
@@ -262,7 +263,7 @@
 				data: ['并发用户数', "响应时间", "每秒响应数"]
 			},
 			xAxis: {
-				data: {{ echarts_data.add_time }},
+				data: x_data,
 				type: 'category',
 				name: '时间',
 				nameGap:20,

@@ -46,12 +46,11 @@ class ReportView(View):
         for data in data_zip:
             data = list(data)
             i_index += 1
+            # 1是时间，2是user_count, 3是time_avg,4是total_rps
             if i_index == 1:
                 time_new = []
-
-                for i in range(len(data)):
-                    time_new.append(i)
-                #     time_new.append(str(i.strftime('%H:%M:%S')))
+                for i in data:
+                    time_new.append(str(i.strftime('%H:%M:%S')))
                 echarts_data['add_time'] = time_new
             elif i_index == 2:
                 echarts_data['user_count'] = data
