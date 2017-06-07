@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from tproject.views import ProjectListView
+from tproject.views.project import ProjectListView
 from account.views import page_403, page_404, page_500
 
 
@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^$', ProjectListView.as_view(), name="index"),
     url(r'^admin/', admin.site.urls),
     # 项目相关的路由
-    url(r'^project/', include('tproject.urls', namespace='project')),
+    url(r'^project/', include('tproject.urls.project', namespace='project')),
     # 用户相关的路由
     url(r'^user/', include('account.urls', namespace='user')),
     # 网站api

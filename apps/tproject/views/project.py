@@ -9,7 +9,7 @@ from tcase.models import Execute
 from tresult.models import Summary
 
 from utils.paginator import get_page_num_list
-from .models import Project
+from tproject.models import Project
 # Create your views here.
 
 
