@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^case/', include('tcase.urls.api_case', namespace='case')),
     # 请求事务相关的api
     url('^shiwu/', include('tcase.urls.api_shiwu', namespace='shiwu')),
+    # 项目相关的api
+    url('^project/', include('tproject.urls.api_project', namespace='project')),
 ]
