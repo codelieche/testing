@@ -5,8 +5,11 @@
 from django.conf.urls import url, include
 
 urlpatterns = [
-    url(r'^execute/', include('tresult.urls.api_execute', namespace="execute")),
     url(r'^case/', include('tcase.urls.api_case', namespace='case')),
+    # 执行测试用例 execute的api
+    url(r'^execute/', include('tresult.urls.api_execute', namespace="execute")),
+    # execute删除api
+    url(r'^execute/', include('tcase.urls.api_execute', namespace='execute')),
     # 请求事务相关的api
     url('^shiwu/', include('tcase.urls.api_shiwu', namespace='shiwu')),
     # 项目相关的api
