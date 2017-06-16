@@ -205,6 +205,12 @@ $(function(){
     $('#id_way').on('change', wayChange);
     wayChange();
 
+    // 当url出现修改，把网址前缀去掉
+    $('#id_url').on('change',function(){
+        var url = $(this).val();
+        $(this).val(url.replace(/https?:\/\/.*?\//, '/'));
+    });
+
     $('.mask-shiwu .mask-wrap form input[type="submit"]').on('click', function(event){
 
         // 获取shiwu的表单 html5新特性，老浏览器不支持
