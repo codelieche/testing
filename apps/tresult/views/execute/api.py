@@ -177,10 +177,19 @@ class ExecuteGetSummary(CsrfExemptMixin, View):
     def post(self, request):
         execute_id = request.POST.get('execute_id', '')
         if execute_id:
+            # 需要判断execute是否已经是停止了
+            execute = get_object_or_404(Execute, pk=execute_id)
+            if execute.status != 'running':
+                content = {
+                    'status': 'stop'
+                }
+                # 前台js根据stop来刷新下页面
+                return JsonResponse(content)
             detail = Detail.objects.order_by('-id').filter(
                 execute_id=execute_id).first()
             if detail:
                 summary_dic = {
+                    'status': 'success',
                     'user_count': detail.user_count,
                     'num_failures': detail.num_failures,
                     'time_avg': detail.time_avg,
@@ -188,6 +197,7 @@ class ExecuteGetSummary(CsrfExemptMixin, View):
                 }
                 return JsonResponse(summary_dic)
             else:
-                return JsonResponse({'status': 'failure'}, status=400)
+                # 如果获取到的detail是空，一般是程序正在运行
+                return JsonResponse({'status': 'null'})
         else:
             return JsonResponse({'status': 'failure'}, status=400)
