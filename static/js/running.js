@@ -10,11 +10,19 @@ function update_summary(){
         dataType: 'json',
         timeout: 3000,
         success: function(data){
-          // 渲染数据到html中
-            $('.users .box-stats .count').text(data.user_count);
-            $('.rps .box-stats .count').text(data.total_rps);
-            $('.errors .box-stats .count').text(data.num_failures);
-            $('.response .box-stats .count').text(data.time_avg);
+          if(data.status == 'success'){
+               // 渲染数据到html中
+                $('.users .box-stats .count').text(data.user_count);
+                $('.rps .box-stats .count').text(data.total_rps);
+                $('.errors .box-stats .count').text(data.num_failures);
+                $('.response .box-stats .count').text(data.time_avg);
+            }else if(data.status == 'stop'){
+                // 重新刷新网页
+                alert("性能测试脚本已经执行完毕了，页面将刷新！");
+                location.reload();
+            }else if(data.status == 'null'){
+                console.log(new Date(), "还没summary数据，稍后刷新");
+            };
         },
     })
 }
