@@ -12,7 +12,9 @@
                 <h2>Report:{{ execute.name }}</h2>
             </div>
             <div class="controls fr">
-{#                <a class="btn btn-default">删除</a>#}
+                {% if can_delete %}
+                    <a class="btn btn-default" id="execute-delete">删除</a>
+                {% endif %}
                 <a class="btn btn-primary" href="{% url 'case:execute' execute.case_id %}">重新运行</a>
             </div>
         </div>
@@ -389,6 +391,19 @@
                 }
 
             });
+            {% if can_delete %}
+                // 删除execute操作
+                $("#execute-delete").on('click', function () {
+                    $.ajax({
+                        type: "DELETE",
+                        url: '/api/1.0/execute/{{ execute.pk }}/delete/',
+                        success: function (data) {
+                            alert(data.message);
+                            top.location = "/";
+                        }
+                    });
+                });
+            {% endif %}
         }
     );
 	</script>

@@ -3,6 +3,7 @@
 这个是显示execute相关的View
 """
 import json
+import datetime
 
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
@@ -98,6 +99,13 @@ class ReportView(View):
             log_dic['user_count'] = j['user_count']
             all_error.append(log_dic)
 
+        # 对能否删除进行处理
+        if request.user == execute.user and execute.time_end:
+            can_delete = execute.time_end >= datetime.datetime.now() \
+                                             - datetime.timedelta(days=1)
+        else:
+            can_delete = False
+
         content = {
             'execute': execute,
             'summary': summary,
@@ -106,6 +114,7 @@ class ReportView(View):
             # 'stats_response': stats_response,
             'stats_response': [],
             'all_error': all_error,
+            'can_delete': can_delete
         }
         return render(request, 'execute/report.html', content)
 
