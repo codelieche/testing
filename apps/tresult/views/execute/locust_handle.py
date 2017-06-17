@@ -86,7 +86,7 @@ class LocustStop(CsrfExemptMixin, View):
             # 获取execute的port
             port = execute.port
             if execute.status == 'running':
-                # 开始发送开始命令
+                # 开始发送停止命令
                 stop_url = 'http://127.0.0.1:%s/stop' % port
                 try:
                     r = requests.get(stop_url)

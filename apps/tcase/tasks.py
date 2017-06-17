@@ -8,7 +8,6 @@ from time import sleep
 from datetime import datetime
 
 import requests
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from celery import shared_task
@@ -24,7 +23,7 @@ def port_can_use(port):
     """
     url = 'http://127.0.0.1:%s' % port
     try:
-        r = requests.get(url, timeout=3)
+        requests.get(url, timeout=3)
         return False
     except Exception as e:
         print(e)
@@ -49,15 +48,16 @@ def run_execute(execute_id, host,
         port += 1
         port_can_use_flag = port_can_use(port)
     # 把port写入execute中
-    execute = Execute.objects.get(pk=execute_id)
-    if execute.status in ['created', 'ready']:
+    # print(execute_id, Execute.objects.filter(pk=execute_id))
+    execute = Execute.objects.filter(pk=execute_id).first()
+    if execute and execute.status in ['created', 'ready']:
         # 保存status和port信息
         execute.port = port
         # 开始执行execute
         # 1. 找到脚本目录
         base_dir_parent = os.path.dirname(settings.BASE_DIR)
         scripts_dir = os.path.join(base_dir_parent, 'scripts')
-        case_file_path = os.path.join(scripts_dir, 'case_%s.py' % \
+        case_file_path = os.path.join(scripts_dir, 'case_%s.py' %
                                       execute.case_id)
 
         cmd = '{} --locustfile={} --port={} --host={}'.format(locust_path,
@@ -67,10 +67,10 @@ def run_execute(execute_id, host,
         execute.time_start = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         execute.save()
         try:
-            result = subprocess.getstatusoutput(cmd)
+            subprocess.getstatusoutput(cmd)
             # 这里会只等待命令的执行
         except Exception as e:
-            pass
+            print(e)
         finally:
             # 判断execute是否还在运行。停止服务
             pass
@@ -82,6 +82,8 @@ def post_locust_start(host, execute_id, locust_count=10, hatch_rate=1):
     触发启动locust的api
     :param host: Django服务的host, request.META['HTTP_HOST']
     :param execute_id: execute的id
+    :param locust_count: 并发用户数
+    :param hatch_rate: hatch rate
     :return:
     """
     sleep(3)
@@ -114,12 +116,15 @@ def post_locust_stop(host, execute_id):
 
 
 @shared_task
-def post_locust_user_add(host, execute_id, locust_count=5, hatch_rate=1):
+def post_locust_user_add(host, execute_id, locust_count=5, hatch_rate=1,
+                         max_minute=60):
     """
     触发添加并发用户数locust的api
     :param host: Django服务的host, request.META['HTTP_HOST']
     :param execute_id: execute的id
     :param locust_count: 增加的用户数
+    :param hatch_rate: 默认1
+    :param max_minute: 最多执行多少分钟
     :return:
     """
     ok = True
@@ -135,5 +140,17 @@ def post_locust_user_add(host, execute_id, locust_count=5, hatch_rate=1):
         try:
             r = requests.post(post_url, post_data)
             ok = r.ok
-        except Exception:
-            ok = False
+        except Exception as e:
+            print(e)
+        try:
+            # 对时间进行判断，如果分钟数大于max_minute,就触发停止
+            execute = Execute.objects.get(pk=execute_id)
+            time_sub = datetime.now() - execute.time_start
+            if time_sub.seconds > max_minute * 60:
+                if execute.status == 'running':
+                    # 开始发送停止命令
+                    stop_url = 'http://127.0.0.1:%s/stop' % execute.port
+                    r = requests.get(stop_url)
+                    print(r)
+        except Exception as e:
+            print(e)

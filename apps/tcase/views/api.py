@@ -34,8 +34,11 @@ class CaseExecute(CsrfExemptMixin, View):
         need_create_execute = False
         if case.execute_id:
             # 根据execute状态来判断这个execute是否可用
-            execute = Execute.objects.get(pk=case.execute_id)
-            if execute.status in ['failure', 'success', 'stoped']:
+            execute = Execute.objects.filter(pk=case.execute_id).first()
+            # if execute and execute.status in ['failure', 'success', 'stoped']:
+            if execute and execute.status in ['created', 'ready', 'running']:
+                need_create_execute = False
+            else:
                 need_create_execute = True
         else:
             need_create_execute = True
