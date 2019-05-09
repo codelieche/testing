@@ -1,20 +1,5 @@
+
 .DS_modules
 .DS_Store
 
-*.css.map
-.sass-cache
-
-*pyc
-.idea/**
-.python-version
-
-migrations
-__pycache__
-db.sqlite3
-media
-
-settings.py
-extra_apps/locust/dist/
-
-
-
+.idea
